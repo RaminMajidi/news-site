@@ -2,7 +2,7 @@ import Users from "../models/userModel.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
 import path from "path"
-import { where } from "sequelize";
+import fs from "fs"
 
 
 //Start function for get All Users
@@ -186,7 +186,9 @@ export const updateProfile = async (req, res) => {
       id: req.params.id
     }
   })
+
   if (!avatar) return res.status(404).json({ messgae: "کاربری یافت نشد !!" })
+
   let fileName = "";
   if (req.files === null) {
     fileName = avatar.image
@@ -195,14 +197,21 @@ export const updateProfile = async (req, res) => {
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
     let dateNow = Math.round(Date.now())
-    const fileName = dateNow + ext;
+    fileName = dateNow + ext;
     const allowedType = [".png", ".jpg", ".jpeg"]
     if (!allowedType.includes(ext.toLowerCase())) {
       return res.json({ message: "عکس معتبر نیست !! فرمت های مجاز jpeg png jpg" })
     }
     if (fileSize > 1000000) return res.json({ message: "حداکثر سایز عکس باید 1 مگابایت باشد !!" })
+
+    if (avatar.image) {
+      const filePath = `./public/avatars/${avatar.image}`;
+      fs.unlinkSync(filePath)
+    }
+
+
     file.mv(`./public/avatars/${fileName}`, (err) => {
-      return res.json({ message: err.message })
+      if (err) return res.json({ message: err })
     })
   }
 
@@ -213,4 +222,39 @@ export const updateProfile = async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt)
 
+  const url = `${req.protocol}://${req.get('host')}/avatars/${fileName}`;
+
+  try {
+    await Users.update({
+      name: name,
+      password: hashPassword,
+      image: fileName,
+      url: url
+    },
+      {
+        where: { id: req.params.id }
+      }
+    )
+    res.status(201).json({ message: 'عملیات با موفقیت انجام شد', data: { name, url } })
+
+  } catch (error) {
+    res.status(400).json({ error: 'عملیات نا موفق بود' })
+  }
+}
+
+
+export const getProfile = async (req, res) => {
+
+  try {
+    const id = req.userId
+    const user = await Users.findByPk(id)
+    if (user) {
+      res.json({ id: user.id, name: user.name, url: user.url, email: user.email })
+    } else {
+      res.json({ error: "کاربر یافت نشد" })
+    }
+
+  } catch (err) {
+    console.log(err)
+  }
 }

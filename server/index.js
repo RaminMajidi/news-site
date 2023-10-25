@@ -12,19 +12,20 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload());
+app.use(express.static('public'))
 
 
-try{
+try {
     await db.authenticate();
     console.log("DataBase conencted")
     // await db.sync()
 
-}catch(error){
+} catch (error) {
     console.log(error)
 }
 
 app.use(userRoutes)
 
-app.listen(5000,()=>{
+app.listen(5000, () => {
     console.log("server is running")
 })

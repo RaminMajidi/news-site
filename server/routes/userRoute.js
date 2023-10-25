@@ -1,5 +1,14 @@
 import express from "express";
-import { deleteUser, getAllUsers, loginUser, logOutUser, registerUser, updateProfile, updateUser } from "../controllers/user.js";
+import {
+    deleteUser,
+    getAllUsers,
+    loginUser,
+    logOutUser,
+    registerUser,
+    updateProfile,
+    updateUser,
+    getProfile
+} from "../controllers/user.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/refreshToken.js";
 
@@ -14,5 +23,6 @@ router.get("/api/users", verifyToken, getAllUsers)
 router.delete("/api/users/:id", verifyToken, deleteUser)
 router.put("/api/users/:id", verifyToken, updateUser)
 router.put("/api/users/profile/:id", verifyToken, updateProfile)
+router.get("/api/users/profile", verifyToken, getProfile)
 
 export default router
