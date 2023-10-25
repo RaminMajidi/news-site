@@ -1,6 +1,7 @@
 import express from "express";
 import db from "./config/DataBase.js";
 import userRoutes from "./routes/userRoute.js";
+import categoryRoutes from "./routes/categoryRoute.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
@@ -19,12 +20,12 @@ try {
     await db.authenticate();
     console.log("DataBase conencted")
     // await db.sync()
-
 } catch (error) {
     console.log(error)
 }
 
 app.use(userRoutes)
+app.use(categoryRoutes)
 
 app.listen(5000, () => {
     console.log("server is running")
