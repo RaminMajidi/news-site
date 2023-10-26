@@ -1,17 +1,20 @@
 import News from "../models/newsModel.js";
 import path from 'path'
 import fs from 'fs'
+import Category from "../models/categoryModels.js";
+import Users from "../models/userModel.js";
+
+
 
 
 export const getNews = async (req, res) => {
     try {
         const news = await News.findAll({})
-        res.status(200).json({ message: 'عملیات با موفقیت انجام شد', data: news })
+        res.status(200).json({ data: news })
     } catch (err) {
         res.status(500).json({ error: "خطایی رخ داده است" })
     }
 }
-
 
 export const createNews = async (req, res) => {
 
@@ -46,13 +49,12 @@ export const createNews = async (req, res) => {
                 url: url
             })
 
-            res.status(200).json({ data: news })
+            res.status(200).json({ message: "عملیات با موفقیت انجام شد", data: news })
         } catch (err) {
-            res.status(500).json({ error: "خطایی رخ داده است" })
+            res.status(500).json({ error: err.message || "خطایی رخ داده است" })
         }
     })
 }
-
 
 export const getNewsById = async (req, res) => {
 
@@ -64,7 +66,6 @@ export const getNewsById = async (req, res) => {
         res.status(500).json({ error: "خطایی رخ داده است" })
     }
 }
-
 
 export const updateNews = async (req, res) => {
 
@@ -118,4 +119,88 @@ export const updateNews = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message || "خطایی رخ داده است" })
     }
-} 
+}
+
+export const deleteNews = async (req, res) => {
+
+    const id = req.params.id
+    const news = await News.findByPk(id)
+    if (!news) {
+        return res.status(403).json({ error: 'آیتمی یافت نشد' })
+    }
+
+    try {
+        const filePath = `./public/images/${news.image}`
+        fs.unlinkSync(filePath)
+        await News.destroy({ where: { id: id } })
+        res.status(200).json({ message: 'عملیات با موفقیت انجام شد', data: news })
+    } catch (err) {
+        res.status(500).json({ error: err.message || "خطایی رخ داده است" })
+    }
+}
+
+export const getLastnews = async (req, res) => {
+
+    try {
+        const news = await News.findAll({
+            limit: 2,
+            order: [['id', 'DESC']],
+            include: [Category],
+        })
+        res.status(200).json({ data: news })
+    } catch (err) {
+        res.status(500).json({ error: err.message || "خطایی رخ داده است" })
+    }
+}
+
+
+export const getDetailNews = async (req, res) => {
+
+    try {
+        const news = await News.findOne({ where: { id: req.params.id } })
+        if (news) {
+            const numViews = news.numViews + 1;
+            await News.update({ numViews }, { where: { id: req.params.id } })
+            return res.status(200).json({ data: news })
+        }
+        throw new Error("آیتمی یافت نشد")
+    } catch (err) {
+        res.status(500).json({ error: err.message || "خطایی رخ داده است" })
+    }
+}
+
+export const getPopularNews = async (req, res) => {
+
+    try {
+        const news = await News.findAll({
+            limit: 3,
+            order: [['numViews', 'DESC']],
+            include: [{
+                model: Users,
+                attributes: ['id', 'name', 'email', 'url']
+            }]
+        })
+
+        res.status(200).json({ data: news })
+
+    } catch (err) {
+        res.status(500).json({ error: err.message || "خطایی رخ داده است" })
+    }
+}
+
+export const getCategoryNews = async (req, res) => {
+
+    try {
+        const hasCategory = req.query.cat
+        const news = hasCategory ?
+            await News.findAll({
+                where: { catId: hasCategory },
+                order: ['id', 'DESC']
+            }) :
+            await News.findAll({ order: ['id', "DESC"] })
+
+        res.status(200).json({ data: news })
+    } catch (err) {
+        res.status(500).json({ error: err.message || "خطایی رخ داده است" })
+    }
+}
