@@ -1,0 +1,15 @@
+.hero {
+    background: url('../../assets/images/bg-03.jpg') no-repeat center,#000000e6 ;
+    background-size: cover;
+    position: relative;
+
+}
+
+.hero::before{
+    background-color: rgba(0, 0, 0, 0.7);
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
