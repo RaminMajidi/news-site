@@ -4,6 +4,8 @@ import userRoutes from "./routes/userRoute.js";
 import categoryRoutes from "./routes/categoryRoute.js";
 import videoRoutes from "./routes/videoRoute.js";
 import newsRoutes from "./routes/newsRoute.js";
+import commentRoutes from "./routes/commentsRoute.js";
+import emailRoutes from "./routes/emailMsgRoute.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
@@ -30,6 +32,8 @@ app.use(userRoutes)
 app.use(categoryRoutes)
 app.use(videoRoutes)
 app.use(newsRoutes)
+app.use(commentRoutes)
+app.use(emailRoutes)
 
 app.listen(5000, () => {
     console.log("server is running")

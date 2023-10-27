@@ -153,7 +153,6 @@ export const getLastnews = async (req, res) => {
     }
 }
 
-
 export const getDetailNews = async (req, res) => {
 
     try {
@@ -204,3 +203,5 @@ export const getCategoryNews = async (req, res) => {
         res.status(500).json({ error: err.message || "خطایی رخ داده است" })
     }
 }
+
+
