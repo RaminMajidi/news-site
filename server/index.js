@@ -9,11 +9,14 @@ import emailRoutes from "./routes/emailMsgRoute.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import corse from "cors"
 
 
 
 dotenv.config();
 const app = express();
+
+app.use(corse({ credentials: true, origin:"http://localhost:5173"}))
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload());
