@@ -1,19 +1,38 @@
 import jwt from "jsonwebtoken";
 import Users from "../models/userModel.js"
 
-export const refreshToken = async (req, res) => {
+
+export const refreshToken = async (req, res, next) => {
+    const error = new Error()
+
     try {
         const refreshToken = req.cookies.refreshToken;
-        if (!refreshToken) return res.sendStatus(401).json({ messgae: "نیاز به ورود  !" });
+        if (!refreshToken) {
+            error.statusCode = 401
+            error.message = "نیاز به ورود  !"
+            return next(error)
+        }
 
         const user = await Users.findAll({
             where: {
                 refresh_token: refreshToken
             },
         })
-        if (!user[0]) return res.sendStatus(403).json({ messgae: "عدم تطابق اطلاعات !!" })
+
+        if (!user[0]) {
+            error.message = "عدم تطابق اطلاعات !!"
+            error.statusCode = 403
+            return next(error)
+        }
+
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (error, decoded) => {
-            if (error) return res.sendStatus(403).json({ messgae: "نیاز به ورود مجدد !!" })
+
+            if (error) {
+                error.statusCode = 403
+                error.message = "نیاز به ورود مجدد !!"
+                return next(error)
+            }
+
             const { id, name, email, isAdmin } = user[0];
             const accessToken = jwt.sign(
                 { id, name, email, isAdmin },
@@ -21,10 +40,10 @@ export const refreshToken = async (req, res) => {
                 {
                     expiresIn: "5m"
                 });
-            res.json({ accessToken })
+            res.status(200).json({ accessToken })
         });
 
     } catch (err) {
-        console.log(err)
+        next(err)
     }
 }

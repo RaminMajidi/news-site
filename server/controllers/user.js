@@ -5,33 +5,40 @@ import path from "path"
 import fs from "fs"
 
 
-//Start function for get All Users
-export const getAllUsers = async (req, res) => {
+const error = new Error()
+
+
+//start *********************
+export const getAllUsers = async (req, res, next) => {
   try {
     const users = await Users.findAll({});
-    res.status(200).json({
-      data: users,
-      message: "دریافت اطلاعات موفقیت آمیز بود"
-    })
-
-  } catch (error) {
-    res.status(401).json({ message: "خطا ! اطلاعات دریافت نشد" })
+    res.status(200).json({ users })
+  } catch (err) {
+    next(error)
   }
 }
-//End function for get All Users
+//End *********************
 
-//Start function for registerUser 
-export const registerUser = async (req, res) => {
+//Start ****************************** 
+export const registerUser = async (req, res, next) => {
+
   const { name, email, password, confPassword, isAdmin } = req.body;
+
   if (password !== confPassword) {
-    return res.status(401).json("پسورد و تکرارآن برابر نیست !!")
+    error.statusCode = 406
+    error.message = "پسورد و تکرارآن برابر نیست !!"
+    return next(error)
   }
+
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt)
+
   try {
     const found = await Users.findOne({ where: { email: email } });
     if (found) {
-      return res.status(401).json({ message: "ایمیل تکراری است!" })
+      error.statusCode = 406
+      error.message = "ایمیل تکراری است!"
+      return next(error)
     }
     await Users.create({
       name: name,
@@ -41,14 +48,14 @@ export const registerUser = async (req, res) => {
     })
     res.status(200).json({ message: "ثبت نام موفقیت آمیز بود " })
 
-  } catch (error) {
-    res.status(401).json({ message: "خطا ! ثبت نام انجام نشد" })
+  } catch (err) {
+    next(err)
   }
 }
-//End function for registerUser 
+//End ************************************* 
 
-//Start function for LogIn user 
-export const loginUser = async (req, res) => {
+//Start *********************************
+export const loginUser = async (req, res, next) => {
 
   try {
     const user = await Users.findAll({
@@ -57,56 +64,74 @@ export const loginUser = async (req, res) => {
       }
     })
 
+    if (!user) {
+      error.message = "ایمیل نامعتبر است !"
+      error.statusCode = 401
+      return next(error)
+    }
+
     const match = await bcrypt.compare(req.body.password, user[0].password)
     if (!match) {
-      return res.status(401).json({ message: "اطلاعات ورود نامعتبر است!" })
-    } else {
-      const { id, name, email, isAdmin } = user[0];
+      error.message = "رمز عبور اشتباه است !"
+      error.statusCode = 401
+      return next(error)
+    }
 
-      const accessToken = await jwt.sign(
-        { id, name, email, isAdmin },
-        process.env.ACCESS_TOKEN_SECRET,
-        {
-          expiresIn: "5m"
-        });
+    const { id, name, email, isAdmin } = user[0];
+    const accessToken = await jwt.sign(
+      { id, name, email, isAdmin },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "5m"
+      });
 
-      const refreshToken = await jwt.sign(
-        { id, name, email, isAdmin },
-        process.env.REFRESH_TOKEN_SECRET,
-        {
-          expiresIn: "1d"
-        })
-
-      await Users.update(
-        { refresh_token: refreshToken },
-        { where: { id: id } })
-
-      res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000
+    const refreshToken = await jwt.sign(
+      { id, name, email, isAdmin },
+      process.env.REFRESH_TOKEN_SECRET,
+      {
+        expiresIn: "1d"
       })
 
-      return res.status(200).json(
-        {
-          data: { id, name, email, isAdmin, accessToken },
-          message: "ورود با موفقیت انجام شد !"
-        })
-    }
-  } catch (error) {
-    res.status(403).json({ error: "کاربر وجود ندارد !" })
+    await Users.update(
+      { refresh_token: refreshToken },
+      { where: { id: id } })
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000
+    })
+
+    return res.status(200).json(
+      {
+        user: { id, name, email, isAdmin, accessToken },
+        message: "ورود با موفقیت انجام شد !"
+      })
+
+  } catch (err) {
+    next(err)
   }
 }
-//End function for LogIn user 
+//End ************************************
 
 
-//Start function for logOut user 
-export const logOutUser = async (req, res) => {
+//Start ***********************************
+export const logOutUser = async (req, res, next) => {
 
   try {
     const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) return res.status(403).json({ message: "توکن پیدا نشد !" })
+    if (!refreshToken) {
+      error.statusCode = 403
+      error.message = "درخواست نامعتبر است !"
+      return next(error)
+    }
+
     const user = await Users.findOne({ refresh_token: refreshToken })
-    if (!user) return res.status(401).json({ message: "کاربر یافت نشد !" })
+    if (!user) {
+      error.message = "کاربر یافت نشد !"
+      error.statusCode = 404
+      return next(error)
+    }
+
     const clr = null;
     await Users.update({
       refresh_token: clr
@@ -118,20 +143,26 @@ export const logOutUser = async (req, res) => {
     res.clearCookie("refreshToken")
     res.status(200).json({ message: "خروج موفقیت آمیز بود !" })
   } catch (err) {
-    res.status(401).json({ message: "خروج انجام نشد !!!" })
+    next(err)
   }
 }
-//End function for logOut user 
+//End ******************************************* 
 
-//Start function for delete user  
-export const deleteUser = async (req, res) => {
+//Start ************************************ 
+export const deleteUser = async (req, res, next) => {
 
   const user = await Users.findOne({
     where: {
       id: req.params.id
     }
   })
-  if (!user) return res.status(403).json({ message: "کاربری یافت نشد !" })
+
+  if (!user) {
+    error.statusCode = 404
+    error.message = "کاربری یافت نشد !"
+    return next(error)
+  }
+
   try {
     await Users.destroy({
       where: {
@@ -140,12 +171,14 @@ export const deleteUser = async (req, res) => {
     })
     res.status(200).json({ message: "کاربر با موفقیت حذف شد" })
   } catch (err) {
-    res.status(401).json({ message: "خطا !! حذف انجام نشد" })
+    next(err)
   }
 }
-//End function for delete user 
+//End **************************************
 
-export const updateUser = async (req, res) => {
+
+//start **************************************
+export const updateUser = async (req, res, next) => {
 
   const { name, email, password, confPassword, isAdmin } = req.body
 
@@ -154,11 +187,18 @@ export const updateUser = async (req, res) => {
       id: req.params.id
     }
   })
-  if (!user) return res.status(403).json({ message: "کاربری یافت نشد !" })
+  if (!user) {
+    error.statusCode = 404
+    error.message = "کاربری یافت نشد !"
+    return next(error)
+  }
 
   if (password !== confPassword) {
-    return res.status(401).json({ message: "مقادیر پسوردوتکرار برابر نیست !!" })
+    error.message = "مقادیر پسوردوتکرار برابر نیست !!"
+    error.statusCode = 406
+    return next(error)
   }
+
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
 
@@ -176,85 +216,106 @@ export const updateUser = async (req, res) => {
 
     res.status(201).json({ message: "ویرایش موفقیت آمیزبود!" })
   } catch (err) {
-    res.status(401).json({ error: "خطا!! بروزرسانی انجام نشد" })
+    next(err)
   }
 }
+//End **************************************
 
-export const updateProfile = async (req, res) => {
+//start **************************************
+export const updateProfile = async (req, res, next) => {
   const avatar = await Users.findOne({
     where: {
       id: req.params.id
     }
   })
 
-  if (!avatar) return res.status(404).json({ messgae: "کاربری یافت نشد !!" })
-
-  let fileName = "";
-  if (req.files === null) {
-    fileName = avatar.image
-  } else {
-    const file = req.files.file;
-    const fileSize = file.data.length;
-    const ext = path.extname(file.name);
-    let dateNow = Math.round(Date.now())
-    fileName = dateNow + ext;
-    const allowedType = [".png", ".jpg", ".jpeg"]
-    if (!allowedType.includes(ext.toLowerCase())) {
-      return res.json({ message: "عکس معتبر نیست !! فرمت های مجاز jpeg png jpg" })
-    }
-    if (fileSize > 1000000) return res.json({ message: "حداکثر سایز عکس باید 1 مگابایت باشد !!" })
-
-    if (avatar.image) {
-      const filePath = `./public/avatars/${avatar.image}`;
-      fs.unlinkSync(filePath)
-    }
-
-
-    file.mv(`./public/avatars/${fileName}`, (err) => {
-      if (err) return res.json({ message: err })
-    })
+  if (!avatar) {
+    error.statusCode = 404
+    error.message = "کاربری پیدا نشد"
+    return next(error)
   }
 
   const { name, password, confPassword } = req.body;
   if (password !== confPassword) {
-    return res.json({ error: "پسورد و تکرا آن باهم برابر نیست !" })
+    error.message = "پسوورد و تکرار آن با هم برابر نیست"
+    error.statusCode = 406
+    return next(error)
   }
+
+  let fileName = null;
+  let url = null
+  if (req.files === null) {
+    fileName = avatar.image
+    url = avatar.url
+  } else {
+    const file = req.files.file
+    const fileSize = file.data.length;
+    const ext = path.extname(file.name)
+    let dateNow = Math.round(Date.now());
+    fileName = dateNow + ext
+    url = `${req.protocol}://${req.get("host")}/avatars/${fileName}`
+    const allowedType = ['.png', '.jpg', '.jpeg'];
+
+    if (!allowedType.includes(ext.toLowerCase())) {
+      error.message = "jpeg jpg png عکس معتبر نیست * فرمت های مجاز "
+      error.statusCode = 406
+      return next(error)
+    }
+
+    if (fileSize > 1000000) {
+      error.message = "حجم عکس نباید بیشتر از 1 مگابایت باشد"
+      error.statusCode = 406
+      return next(error)
+    }
+
+    file.mv(`./public/avatars/${fileName}`, (err) => {
+      if (err) {
+        error.message = err
+        error.statusCode = 501
+        return next(error)
+      }
+    })
+
+    if (avatar.image) {
+      try {
+        const filePath = `./public/avatars/${avatar.image}`
+        fs.unlinkSync(filePath)
+      } catch (err) {
+        next(err)
+      }
+    }
+
+  }
+
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt)
-
-  const url = `${req.protocol}://${req.get('host')}/avatars/${fileName}`;
-
   try {
-    await Users.update({
-      name: name,
-      password: hashPassword,
-      image: fileName,
-      url: url
-    },
-      {
-        where: { id: req.params.id }
+    await Users.update({ name: name, password: hashPassword, image: fileName, url: url }, {
+      where: {
+        id: req.params.id
       }
-    )
-    res.status(201).json({ message: 'عملیات با موفقیت انجام شد', data: { name, url } })
-
+    })
+    res.json({ msg: "کاربر با موفقیت ویرایش شد" })
   } catch (error) {
-    res.status(400).json({ error: 'عملیات نا موفق بود' })
+    console.log(error);
   }
 }
+// End **************************************************
 
-
-export const getProfile = async (req, res) => {
+//start **************************************
+export const getProfile = async (req, res, next) => {
 
   try {
     const id = req.userId
     const user = await Users.findByPk(id)
-    if (user) {
-      res.json({ id: user.id, name: user.name, url: user.url, email: user.email })
-    } else {
-      res.json({ error: "کاربر یافت نشد" })
+    if (!user) {
+      error.message = "کاربر یافت نشد"
+      error.statusCode = 404
+      return next(error)
     }
-
+    res.json({ user: { id: user.id, name: user.name, url: user.url, email: user.email } })
   } catch (err) {
-    console.log(err)
+    next(err)
   }
 }
+// End **************************************************
