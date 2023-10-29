@@ -1,17 +1,21 @@
 import Category from "../models/categoryModels.js";
 
+const error = new Error()
 
-export const getCategory = async (req, res) => {
+// start ********************************************
+export const getCategory = async (req, res, next) => {
     try {
         const categories = await Category.findAll({})
         res.status(200).json({ data: categories })
 
     } catch (err) {
-        res.status(500).json({ error: err })
+        next(err)
     }
 }
+// end ********************************************
 
-export const createCategory = async (req, res) => {
+// start ********************************************
+export const createCategory = async (req, res, next) => {
     const { name } = req.body
 
     try {
@@ -21,11 +25,13 @@ export const createCategory = async (req, res) => {
         res.status(200).json({ message: "دسته بندی افزوده شد", data: category })
 
     } catch (err) {
-        console.log(err)
+        next(err)
     }
 }
+// end ********************************************
 
-export const updateCategory = async (req, res) => {
+// start ********************************************
+export const updateCategory = async (req, res, next) => {
 
     const { name } = req.body
     try {
@@ -39,11 +45,15 @@ export const updateCategory = async (req, res) => {
         })
 
     } catch (err) {
-        res.status(400).json({ message: "خطا ! عملیات انجام نشد" })
+        error.status = 501
+        error.message = err
+        next(error)
     }
 }
+// end ********************************************
 
-export const deleteCategory = async (req, res) => {
+// start ********************************************
+export const deleteCategory = async (req, res, next) => {
 
     try {
         const category = await Category.destroy({ where: { id: req.params.id } })
@@ -52,9 +62,12 @@ export const deleteCategory = async (req, res) => {
                 message: "عملیات با موفقیت انجام شد"
             })
         }
-        res.status(400).json({ message: "خطا ! عملیات انجام نشد" })
+        error.message = "خطا ! عملیات انجام نشد"
+        error.statusCode = 501
+        return next(error)
 
     } catch (err) {
-        res.status(500).json({ error: "خطا ! عملیات انجام نشد" })
+        next(err)
     }
 }
+// end ********************************************

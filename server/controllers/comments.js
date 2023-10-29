@@ -1,17 +1,21 @@
 import Comments from "../models/commentModel.js";
 
+const error = new Error()
 
-export const getAllComment = async (req, res) => {
+// start ********************************************
+export const getAllComment = async (req, res, next) => {
 
     try {
         const comments = await Comments.findAll({})
         res.status(200).json({ data: comments })
     } catch (err) {
-        res.json({ error: err.message || 'خطایی رخ داده است' })
+        next(err)
     }
 }
+// end ********************************************
 
-export const createComment = async (req, res) => {
+// start ********************************************
+export const createComment = async (req, res, next) => {
 
     const { newsId, description, name, email, subject } = req.body
 
@@ -26,12 +30,13 @@ export const createComment = async (req, res) => {
 
         res.status(200).json({ message: "نظر شما ثبت شد و بعد از تایید مدیریت قابل مشاهده خواهد بود" })
     } catch (err) {
-        res.json({ error: err.message || 'خطایی رخ داده است' })
+        next(err)
     }
 }
+// end ********************************************
 
-
-export const updateComment = async (req, res) => {
+// start ********************************************
+export const updateComment = async (req, res, next) => {
 
     const { description, name, subject } = req.body
     try {
@@ -47,33 +52,34 @@ export const updateComment = async (req, res) => {
         if (comment == 1) {
             return res.status(200).json({ message: 'عملیات با موفقیت انجام شد', data: comment })
         }
-        const error = new Error()
         error.message = "آیتمی یافت نشد ، عملیات ناموفق"
         error.status = 404
-        throw error
+        return next(error)
 
     } catch (err) {
-        res.status(err.status || 500).json({ error: err.message || 'خطایی رخ داده است' })
+        next(err)
     }
 }
+// end ********************************************
 
-
-export const deleteComment = async (req, res) => {
+// start ********************************************
+export const deleteComment = async (req, res, next) => {
     try {
         const comment = await Comments.destroy({ where: { id: req.params.id } })
         if (comment) {
             return res.status(200).json({ message: "عملیات با موفقیت انجام شد", data: comment })
         }
-        const error = new Error()
         error.message = "آیتمی یافت نشد ، عملیات ناموفق"
         error.status = 404
-        throw error
+        return next(error)
     } catch (err) {
-        res.status(err.status || 500).json({ error: err.message || 'خطایی رخ داده است' })
+        next(err)
     }
 }
+// end ********************************************
 
-export const activeComment = async (req, res) => {
+// start ********************************************
+export const activeComment = async (req, res, next) => {
 
     const { isActive } = req.body
     try {
@@ -84,16 +90,18 @@ export const activeComment = async (req, res) => {
         if (comment == 1) {
             return res.status(200).json({ message: "عملیات با موفقیت انجام شد" })
         }
-        const error = new Error()
-        error.message = "آیتمی یافت نشد ، عملیات ناموفق"
+        error.message = "عملیات ناموفق"
         error.status = 404
-        throw error
+        return next(error)
+
     } catch (err) {
-        res.status(err.status || 500).json({ error: err.message || 'خطایی رخ داده است' })
+        next(err)
     }
 }
+// end ********************************************
 
-export const getNewsComment = async (req, res) => {
+// start ********************************************
+export const getNewsComment = async (req, res, next) => {
 
     try {
         const newsId = req.params.newsId
@@ -101,7 +109,8 @@ export const getNewsComment = async (req, res) => {
         res.status(200).json({ data: comments })
 
     } catch (err) {
-        res.status(err.status || 500).json({ error: err.message || 'خطایی رخ داده است' })
+        next(err)
     }
 }
+// end ********************************************
 

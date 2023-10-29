@@ -2,21 +2,30 @@ import Video from "../models/videoModel.js";
 import path from 'path'
 import fs from 'fs'
 
-export const getAllVideo = async (req, res) => {
+
+const error = new Error()
+
+// start ********************************************
+export const getAllVideo = async (req, res, next) => {
 
     try {
         const videos = await Video.findAll({});
         res.status(200).json({ data: videos })
 
     } catch (err) {
-        res.status(503).json({ error: "عملیات با خطا مواجه شد" })
+        next(err)
     }
 }
+// end ********************************************
 
-export const createVideo = async (req, res) => {
+
+// start ********************************************
+export const createVideo = async (req, res, next) => {
 
     if (req.files == null) {
-        return res.status(401).json({ message: 'فایل ویدیو الزامی است' })
+        error.message = 'فایل ویدیو الزامی است'
+        error.statusCode = 406
+        return next(error)
     }
 
     const file = req.files.file
@@ -28,27 +37,38 @@ export const createVideo = async (req, res) => {
     const allowedType = ['.mp4']
 
     if (!allowedType.includes(ext.toLowerCase())) {
-        return res.status(401).json({ message: 'فرمت فایل نامعتبر است فقط فرمت * .mp4' })
+        error.message = 'فرمت فایل نامعتبر است فقط فرمت * .mp4'
+        error.statusCode = 406
+        return next(error)
     }
+
     if (fileSize > 10000000) {
-        return res.status(401).json({ message: 'حجم ویدیو نباید بیشتر از 10 مگابایت باشد' })
+        error.message = 'حجم ویدیو نباید بیشتر از 10 مگابایت باشد'
+        error.statusCode = 406
+        return next(error)
     }
 
     file.mv(`./public/videos/${fileName}`, async (err) => {
-        if (err) return res.status(500).json({ error: err.message })
+        if (err) {
+            error.message = err
+            error.statusCode = 501
+            return next(error)
+        }
 
         try {
             const video = await Video.create({ video: fileName, url: url })
             res.status(200).json({ message: "عملیات با موفقیت انجام شد", data: video })
 
         } catch (err) {
-            res.status(503).json({ error: "عملیات با خطا مواجه شد" })
+            next(err)
         }
     })
 
 }
+// end ********************************************
 
-export const getSingleVideo = async (req, res) => {
+// start ********************************************
+export const getSingleVideo = async (req, res, next) => {
 
     try {
         // ASC or DESC
@@ -56,15 +76,19 @@ export const getSingleVideo = async (req, res) => {
         res.status(200).json({ data: video })
 
     } catch (err) {
-        res.status(503).json({ error: "عملیات با خطا مواجه شد" })
+        next(err)
     }
 }
+// end ********************************************
 
-export const deleteVideo = async (req, res) => {
+// start ********************************************
+export const deleteVideo = async (req, res, next) => {
 
     const video = await Video.findOne({ where: { id: req.params.id } })
     if (!video) {
-        return res.status(403).json({ error: "ویدیو یافت نشد" })
+        error.statusCode = 404
+        error.message = "ویدیو یافت نشد"
+        return next(error)
     }
 
     try {
@@ -74,7 +98,9 @@ export const deleteVideo = async (req, res) => {
         res.status(201).json({ message: "عملیات حذف با موفقیت انجام شد", data: video })
 
     } catch (err) {
-        res.status(503).json({ error: "عملیات با خطا مواجه شد" })
+        next(err)
     }
 }
+// end ********************************************
+
 
