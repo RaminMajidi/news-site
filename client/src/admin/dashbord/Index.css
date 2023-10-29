@@ -1,0 +1,8 @@
+.dashbord-wrapper {
+    display: flex;
+}
+
+.main-info {
+    width: calc(100% - 250px);
+    background-color: blue;
+}

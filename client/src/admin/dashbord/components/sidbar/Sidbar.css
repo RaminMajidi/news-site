@@ -1,0 +1,18 @@
+.sidbar {
+    width: 250px;
+    max-width: 250px;
+    height: 100dvh;
+}
+
+.sidbar li {
+    cursor: pointer;
+}
+.sidbar li:hover a {
+
+}
+
+.navbar-logo {
+    width: 100%;
+    max-width: 150px;
+    filter: drop-shadow(5px 5px 10px #f1f1f1);
+}

@@ -57,6 +57,7 @@ export const registerUser = async (req, res, next) => {
 //Start *********************************
 export const loginUser = async (req, res, next) => {
 
+
   try {
     const user = await Users.findAll({
       where: {
@@ -64,7 +65,8 @@ export const loginUser = async (req, res, next) => {
       }
     })
 
-    if (!user) {
+
+    if (!user.length) {
       error.message = "ایمیل نامعتبر است !"
       error.statusCode = 401
       return next(error)

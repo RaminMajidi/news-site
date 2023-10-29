@@ -6,14 +6,18 @@ import './index.css'
 import "boxicons"
 import { AdminContextProvider } from './admin/context/context.jsx'
 import axios from 'axios'
+import { BrowserRouter } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 axios.defaults.withCredentials = true;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AdminContextProvider>
-      <App />
-    </AdminContextProvider>
+    <BrowserRouter>
+      <AdminContextProvider>
+        <App />
+      </AdminContextProvider>
+    </BrowserRouter>
   </React.StrictMode>,
 )
