@@ -33,14 +33,14 @@ export const refreshToken = async (req, res, next) => {
                 return next(error)
             }
 
-            const { id, name, email, isAdmin } = user[0];
+            const { id, name, email, isAdmin, url } = user[0];
             const accessToken = jwt.sign(
                 { id, name, email, isAdmin },
                 process.env.ACCESS_TOKEN_SECRET,
                 {
                     expiresIn: "5m"
                 });
-            res.status(200).json({ accessToken })
+            res.status(200).json({ accessToken, url })
         });
 
     } catch (err) {

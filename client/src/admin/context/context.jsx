@@ -23,7 +23,8 @@ export const AdminContextProvider = ({ children }) => {
                 setUserData({
                     email: decoded.email,
                     name: decoded.name,
-                    isAdmin: decoded.isAdmin
+                    isAdmin: decoded.isAdmin,
+                    url: res.data.url
                 })
                 setExpire(decoded.exp)
                 setToken(token)
@@ -48,15 +49,16 @@ export const AdminContextProvider = ({ children }) => {
             const currentDate = new Date();
             if (expire * 1000 < currentDate.getTime()) {
                 const res = await axios.get(`http://localhost:5000/token`)
-                console.log(res);
                 if (res.status === 200) {
+                    console.log(res);
                     const token = await res.data.accessToken
                     config.headers.Authorization = `Bearer ${token}`
                     const decoded = jwtDecode(token)
                     setUserData({
                         email: decoded.email,
                         name: decoded.name,
-                        isAdmin: decoded.isAdmin
+                        isAdmin: decoded.isAdmin,
+                        url: res.data.url
                     })
                     setExpire(decoded.exp)
                     setToken(token)
@@ -79,7 +81,8 @@ export const AdminContextProvider = ({ children }) => {
                 setUserData({
                     email: user.email,
                     name: user.name,
-                    isAdmin: user.isAdmin
+                    isAdmin: user.isAdmin,
+                    url: user.url
                 })
                 navigate('/dashbord')
                 toast.success(res.data.message, {
@@ -117,7 +120,7 @@ export const AdminContextProvider = ({ children }) => {
 
 
     return (
-        <AdminContext.Provider value={{ login, userData ,getAllUser}}>
+        <AdminContext.Provider value={{ login, userData, getAllUser }}>
             {children}
         </AdminContext.Provider>
     )

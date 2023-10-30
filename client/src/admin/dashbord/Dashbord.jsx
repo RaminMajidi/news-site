@@ -9,10 +9,11 @@ const Dashbord = () => {
     return (
         <div className='dashbord-wrapper'>
             <Sidbar />
-            <div className="main-info">
+            <div className="main-info has-background-grey">
                 <Information />
-                <div className="main">
-                    <h4>به پنل ادمین خوش آمدید</h4>
+                <div className="main has-text-light">
+                    <h1 className='is-size-3'>سلام ، به پنل مدیریت خوش آمدید</h1>
+                    <h3 className='is-size-5 mt-3'>امیدوارم خبرهای خوبی داشته باشی</h3>
                 </div>
             </div>
         </div>

@@ -1,18 +1,52 @@
 .sidbar {
-    width: 250px;
-    max-width: 250px;
+    width: 300px;
+    max-width: 300px;
     height: 100dvh;
 }
 
 .sidbar li {
+    margin-bottom: 10px 0;
+    padding: .6rem .5rem;
+    border-bottom: 1px solid rgb(92, 92, 92);
+    border-radius: .2rem;
     cursor: pointer;
+    transition: all .3s ease-in-out;
 }
-.sidbar li:hover a {
 
+.sidbar li:hover {
+    background-color: #f1f1f1;
+}
+
+.sidbar a {
+    color: #f1f1f1;
+    transition: all .3s ease-in-out;
+}
+
+.sidbar li:hover a {
+    color: rgb(40, 40, 40);
 }
 
 .navbar-logo {
     width: 100%;
     max-width: 150px;
     filter: drop-shadow(5px 5px 10px #f1f1f1);
+}
+
+@media screen and (max-width:1400px) {
+    .sidbar {
+        width: 200px;
+    }
+
+    .sidbar .navbar-logo {
+        width: 100px;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .sidbar {
+        width: 60px;
+    }
+    .sidbar .navbar-logo {
+        width: 40px;
+    }
 }

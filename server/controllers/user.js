@@ -79,7 +79,7 @@ export const loginUser = async (req, res, next) => {
       return next(error)
     }
 
-    const { id, name, email, isAdmin } = user[0];
+    const { id, name, email, isAdmin, url } = user[0];
     const accessToken = await jwt.sign(
       { id, name, email, isAdmin },
       process.env.ACCESS_TOKEN_SECRET,
@@ -103,9 +103,10 @@ export const loginUser = async (req, res, next) => {
       maxAge: 24 * 60 * 60 * 1000
     })
 
+    console.log(refreshToken);
     return res.status(200).json(
       {
-        user: { id, name, email, isAdmin, accessToken },
+        user: { id, name, email, isAdmin, accessToken, url },
         message: "ورود با موفقیت انجام شد !"
       })
 
