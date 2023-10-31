@@ -3,37 +3,14 @@ import Dashbord from "../../Dashbord"
 import './News.css'
 import { useContext, useEffect, useState } from "react"
 import { AdminContext } from "../../../context/context"
-import { toast } from "react-toastify"
+
 
 const ViewNews = () => {
-    const [newsData, setNewsData] = useState(null)
-    const { token, axiosJWT } = useContext(AdminContext)
 
-    const getNewsHandler = async () => {
-        try {
-            const res = await axiosJWT(`http://localhost:5000/api/news`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            })
-            if (res.status === 200) {
-                console.log(res.data);
-                setNewsData(res.data.news)
-            }
-        } catch (error) {
-            toast.error(error.response.data.message, {
-                position: 'top-left',
-                autoClose: 1500,
-                closeOnClick: true,
-                pauseOnHover: true
-            })
-        }
-    }
-
+    const { newsData, getNewsHandler, deleteNews } = useContext(AdminContext)
     useEffect(() => {
         getNewsHandler()
     }, [])
-
 
     return (
         <Dashbord>
@@ -71,7 +48,9 @@ const ViewNews = () => {
                                         <button className="button mx-1 is-success">
                                             ویرایش
                                         </button>
-                                        <button className="button mx-1 is-danger">
+                                        <button
+                                            onClick={() => deleteNews(news.id)}
+                                            className="button mx-1 is-danger">
                                             حذف
                                         </button>
                                     </td>

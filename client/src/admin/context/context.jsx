@@ -12,6 +12,7 @@ export const AdminContextProvider = ({ children }) => {
     const [token, setToken] = useState('')
     const [userData, setUserData] = useState(null)
     const [expire, setExpire] = useState(null)
+    const [newsData, setNewsData] = useState(null)
 
 
     // start ********************************************
@@ -163,6 +164,46 @@ export const AdminContextProvider = ({ children }) => {
     }
     // end ********************************************
 
+    // start ********************************************
+    const getNewsHandler = async () => {
+        try {
+            const res = await axiosJWT(`http://localhost:5000/api/news`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+            if (res.status === 200) {
+                console.log(res.data);
+                setNewsData(res.data.news)
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, {
+                position: 'top-left',
+                autoClose: 1500,
+                closeOnClick: true,
+                pauseOnHover: true
+            })
+        }
+    }
+    // end ********************************************
+
+    // start ********************************************
+    const deleteNews = async (id) => {
+        try {
+            console.log(id);
+
+        } catch (error) {
+            toast.error(error.response.data.message, {
+                position: 'top-left',
+                autoClose: 1500,
+                closeOnClick: true,
+                pauseOnHover: true
+            })
+        }
+    }
+
+    // end ********************************************
+
 
     // start ********************************************
     useEffect(() => {
@@ -171,7 +212,17 @@ export const AdminContextProvider = ({ children }) => {
     // end ********************************************
 
     return (
-        <AdminContext.Provider value={{ login, userData, getAllUser, axiosJWT, token, createNews }}>
+        <AdminContext.Provider value={{
+            login,
+            userData,
+            getAllUser,
+            axiosJWT,
+            token,
+            createNews,
+            newsData,
+            getNewsHandler,
+            deleteNews
+        }}>
             {children}
         </AdminContext.Provider>
     )
