@@ -25,18 +25,25 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 3px !important;
 }
 
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   background: #47acff;
 }
 
-::-webkit-scrollbar-thumb:hover{
+::-webkit-scrollbar-thumb:hover {
   background: #0e73c6;
+}
+
+
+.table-image {
+  width: 90px;
+  max-height: 55px;
+  object-fit: cover;
 }

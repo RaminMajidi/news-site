@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import "./Sidbar.css"
 import logo from '@src/assets/images/logo.png'
 import { useState } from "react"
@@ -16,11 +16,11 @@ const Sidbar = () => {
             </div>
             <ul>
                 <li className="">
-                    <Link
+                    <NavLink
                         className=""
                         to={'/main'}>
                         داشبورد
-                    </Link>
+                    </NavLink>
                 </li>
 
                 <li className="">
@@ -28,18 +28,18 @@ const Sidbar = () => {
                     {showNews &&
                         <ul >
                             <li>
-                                <Link
+                                <NavLink
                                     className=""
                                     to={'/add-news'}>
                                     افزودن خبر
-                                </Link>
+                                </NavLink>
                             </li>
                             <li>
-                                <Link
+                                <NavLink
                                     className=""
                                     to={'/view-news'}>
                                     مشاهده خبر
-                                </Link>
+                                </NavLink>
                             </li>
                         </ul>
                     }
@@ -47,43 +47,43 @@ const Sidbar = () => {
                 </li>
 
                 <li className="">
-                    <Link
+                    <NavLink
                         className=""
                         to={''}>
                         دسته بندی
-                    </Link>
+                    </NavLink>
                 </li>
 
                 <li className="">
-                    <Link
+                    <NavLink
                         className=""
                         to={''}>
                         ویدیو
-                    </Link>
+                    </NavLink>
                 </li>
 
                 <li className="">
-                    <Link
+                    <NavLink
                         className=""
                         to={''}>
                         کاربران
-                    </Link>
+                    </NavLink>
                 </li>
 
                 <li className="">
-                    <Link
+                    <NavLink
                         className=""
                         to={''}>
                         نظرات
-                    </Link>
+                    </NavLink>
                 </li>
 
                 <li className="">
-                    <Link
+                    <NavLink
                         className=""
                         to={''}>
                         خروج
-                    </Link>
+                    </NavLink>
                 </li>
             </ul>
         </div>

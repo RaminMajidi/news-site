@@ -10,8 +10,13 @@ const error = new Error()
 // start ********************************************
 export const getNews = async (req, res, next) => {
     try {
-        const news = await News.findAll({})
-        res.status(200).json({ data: news })
+        const news = await News.findAll({
+            include: [{
+                model: Users,
+                attributes: ['name']
+            }]
+        })
+        res.status(200).json({ news })
     } catch (err) {
         next(err)
     }
@@ -74,7 +79,13 @@ export const createNews = async (req, res, next) => {
 export const getNewsById = async (req, res, next) => {
 
     try {
-        const news = await News.findOne({ where: { id: req.params.id } })
+        const news = await News.findOne({
+            where: { id: req.params.id },
+            include: [{
+                model: Users,
+                attributes: ['id', 'name', 'email', 'url']
+            }]
+        })
         res.status(200).json({ data: news })
 
     } catch (err) {
