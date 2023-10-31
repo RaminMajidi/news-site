@@ -1,7 +1,7 @@
 .sidbar {
     width: 300px;
     max-width: 300px;
-    height: 100dvh;
+    height: 100vh;
 }
 
 .sidbar li {
@@ -17,12 +17,15 @@
     background-color: #f1f1f1;
 }
 
-.sidbar a {
+.sidbar a,
+span {
+    display: block;
     color: #f1f1f1;
     transition: all .3s ease-in-out;
 }
 
-.sidbar li:hover a {
+.sidbar li:hover a,
+.sidbar li:hover span {
     color: rgb(40, 40, 40);
 }
 
@@ -46,6 +49,7 @@
     .sidbar {
         width: 60px;
     }
+
     .sidbar .navbar-logo {
         width: 40px;
     }

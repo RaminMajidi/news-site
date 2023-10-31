@@ -1,0 +1,4 @@
+.table th:not([align]),
+.table td {
+    text-align: center !important;
+}

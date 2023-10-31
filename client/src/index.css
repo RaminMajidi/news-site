@@ -17,3 +17,26 @@
   text-align: right;
   text-decoration: none !important;
 }
+
+/* scrollbars ------------------ */
+
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar{
+  width: 3px !important;
+}
+
+::-webkit-scrollbar-track{
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb{
+  background: #47acff;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background: #0e73c6;
+}

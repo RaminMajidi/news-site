@@ -5,6 +5,8 @@
 .main-info {
     padding: 1rem;
     width: calc(100% - 250px);
+    max-height: 100dvh;
+    overflow-y: auto;
 }
 
 @media screen and (max-width:1400px) {
