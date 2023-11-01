@@ -11,7 +11,7 @@ const EditNews = () => {
     const { state } = useLocation()
     const { categoryList, getCategory, getNewsById, editNews } = useContext(AdminContext)
     const [file, setFile] = useState([])
-    const [preview, setPreview] = useState(state.url)
+    const [preview, setPreview] = useState(state?.url || "")
 
     // start ***************************************
     const loadImage = (e) => {
@@ -30,9 +30,9 @@ const EditNews = () => {
     const formik = useFormik({
         initialValues: {
             id: id,
-            title: state.title,
-            desc: state.desc,
-            catId: state.catId,
+            title: state?.title,
+            desc: state?.desc,
+            catId: state?.catId,
             file: null
         },
         onSubmit: (values) => {

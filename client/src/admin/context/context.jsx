@@ -4,6 +4,8 @@ import axios from 'axios'
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export const AdminContext = createContext();
 
 export const AdminContextProvider = ({ children }) => {
@@ -17,38 +19,16 @@ export const AdminContextProvider = ({ children }) => {
     const [singleNews, setSingleNews] = useState(null)
 
 
-    // start ********************************************
-    const refreshToken = async () => {
-        try {
-            const res = await axios.get(`http://localhost:5000/token`)
-            if (res.status === 200) {
-                const token = res.data.accessToken
-                const decoded = jwtDecode(token)
-                setUserData({
-                    id: decoded.id,
-                    email: decoded.email,
-                    name: decoded.name,
-                    isAdmin: decoded.isAdmin,
-                    url: res.data.url
-                })
-                setExpire(decoded.exp)
-                setToken(token)
-            }
-        } catch (error) {
-            toast.error(error.response.data.message, {
-                position: 'top-left',
-                autoClose: 1500,
-                closeOnClick: true,
-                pauseOnHover: true
-            })
-        }
-    }
-    // end ********************************************
 
     // start ********************************************
-    const axiosJWT = axios.create()
+    const axiosJWT = axios.create({
+        baseURL: BASE_URL
+    })
     axiosJWT.interceptors.request.use(
         async (config) => {
+            if (!token) {
+                return config
+            }
             const currentDate = new Date();
             if (expire * 1000 < currentDate.getTime()) {
                 const res = await axios.get(`http://localhost:5000/token`)
@@ -73,12 +53,56 @@ export const AdminContextProvider = ({ children }) => {
             return Promise.reject(error)
         }
     )
+
+    axiosJWT.interceptors.response.use(
+        (response) => response,
+        async (error) => {
+            const pathname = window.location.pathname
+            if (error.response.status === 404) {
+                navigate('/404')
+            }
+            if ((error.response.status === 401 || error.response.status === 403) && pathname !== "/administrator") {
+                navigate('/administrator')
+            }
+            return Promise.reject(error)
+        }
+    )
     // end ********************************************
+
+
+    // start ********************************************
+    const refreshToken = async () => {
+        try {
+            const res = await axiosJWT.get(`${prose}/token`)
+            if (res.status === 200) {
+                const token = res.data.accessToken
+                const decoded = jwtDecode(token)
+                setUserData({
+                    id: decoded.id,
+                    email: decoded.email,
+                    name: decoded.name,
+                    isAdmin: decoded.isAdmin,
+                    url: res.data.url
+                })
+                setExpire(decoded.exp)
+                setToken(token)
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message, {
+                position: 'top-left',
+                autoClose: 1500,
+                closeOnClick: true,
+                pauseOnHover: true
+            })
+        }
+    }
+    // end ********************************************
+
 
     // start ********************************************
     const login = async (inputs) => {
         try {
-            const res = await axios.post(`http://localhost:5000/api/users/login`, inputs)
+            const res = await axiosJWT.post(`/api/users/login`, inputs)
             if (res.status === 200) {
                 const user = await res.data.user
                 setToken(user.accessToken)
@@ -112,7 +136,7 @@ export const AdminContextProvider = ({ children }) => {
     const getAllUser = async () => {
 
         try {
-            const res = await axiosJWT.get('http://localhost:5000/api/users', {
+            const res = await axiosJWT.get('/api/users', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -139,7 +163,7 @@ export const AdminContextProvider = ({ children }) => {
         formData.append('file', data.file)
         formData.append('userId', userData.id)
         try {
-            const res = await axiosJWT.post(`http://localhost:5000/api/news`, formData, {
+            const res = await axiosJWT.post(`/api/news`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -169,7 +193,7 @@ export const AdminContextProvider = ({ children }) => {
     // start ********************************************
     const getNewsHandler = async () => {
         try {
-            const res = await axiosJWT(`http://localhost:5000/api/news`, {
+            const res = await axiosJWT(`/api/news`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -191,7 +215,7 @@ export const AdminContextProvider = ({ children }) => {
     // start ********************************************
     const deleteNews = async (id) => {
         try {
-            const res = await axiosJWT.delete(`http://localhost:5000/api/news/${id}`, {
+            const res = await axiosJWT.delete(`/api/news/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -220,7 +244,7 @@ export const AdminContextProvider = ({ children }) => {
     // start ********************************************
     const getNewsById = async (id) => {
         try {
-            const res = await axiosJWT.get(`http://localhost:5000/api/news/${id}`, {
+            const res = await axiosJWT.get(`/api/news/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -252,7 +276,7 @@ export const AdminContextProvider = ({ children }) => {
         formData.append('file', data.file)
         formData.append('userId', userData.id)
         try {
-            const res = await axiosJWT.put(`http://localhost:5000/api/news/${data.id}`, formData, {
+            const res = await axiosJWT.put(`/api/news/${data.id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -282,7 +306,7 @@ export const AdminContextProvider = ({ children }) => {
     // start ********************************************
     const getCategory = async () => {
         try {
-            const res = await axiosJWT.get(`http://localhost:5000/api/get-category`, {
+            const res = await axiosJWT.get(`/api/get-category`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

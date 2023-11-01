@@ -18,6 +18,7 @@
   text-decoration: none !important;
 }
 
+
 /* scrollbars ------------------ */
 
 
@@ -51,6 +52,14 @@ body::-webkit-scrollbar {
 .h_100dvh {
   height: 100dvb;
 }
-.text_center{
+
+.text_center {
   text-align: center !important;
+}
+
+.my_container {
+  padding: 10px;
+  width: 100% !important;
+  max-width: 1400px !important;
+  margin: 0 auto;
 }

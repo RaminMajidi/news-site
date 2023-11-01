@@ -24,7 +24,7 @@ const ViewNews = () => {
             </div>
 
             {newsData &&
-                <article className="px-4">
+                <article className="px-4 my_container">
                     <table className="table is-fullwidth">
                         <thead className="is-fullwidth">
                             <tr>

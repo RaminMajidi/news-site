@@ -4,7 +4,7 @@
     height: 100vh;
 }
 
-.sidbar li {
+.sidbar .nav_linK {
     margin-bottom: 10px 0;
     padding: .6rem .5rem;
     border-bottom: 1px solid rgb(92, 92, 92);
@@ -13,26 +13,27 @@
     transition: all .3s ease-in-out;
 }
 
-.sidbar li:hover {
+.sidbar .nav_linK:hover {
     background-color: #f1f1f1;
+    color: rgb(40, 40, 40);
 }
 
-.sidbar a,
-span {
+.sidbar .nav_linK {
     display: block;
     color: #f1f1f1;
     transition: all .3s ease-in-out;
 }
 
-.sidbar li:hover a,
-.sidbar li:hover span {
-    color: rgb(40, 40, 40);
-}
 
 .navbar-logo {
     width: 100%;
     max-width: 150px;
     filter: drop-shadow(5px 5px 10px #f1f1f1);
+}
+
+.nav_linK.active {
+    background-color: #f1f1f1;
+    color: rgb(40, 40, 40);
 }
 
 @media screen and (max-width:1400px) {

@@ -17,7 +17,9 @@ const Sidbar = () => {
             <ul>
                 <li className="">
                     <NavLink
-                        className=""
+                        className={({ isActive }) =>
+                            isActive ? "nav_linK active" : "nav_linK"
+                        }
                         to={'/main'}>
                         داشبورد
                     </NavLink>
@@ -25,7 +27,9 @@ const Sidbar = () => {
 
                 <li className="">
                     <NavLink
-                        className=""
+                        className={({ isActive }) =>
+                            isActive ? "nav_linK active" : "nav_linK"
+                        }
                         to={'/view-news'}>
                         اخبار
                     </NavLink>
@@ -33,15 +37,19 @@ const Sidbar = () => {
 
                 <li className="">
                     <NavLink
-                        className=""
-                        to={''}>
+                        className={({ isActive }) =>
+                            isActive ? "nav_linK active" : "nav_linK"
+                        }
+                        to={'/view-category'}>
                         دسته بندی
                     </NavLink>
                 </li>
 
-                <li className="">
+                {/* <li className="">
                     <NavLink
-                        className=""
+                        className={({ isActive }) =>
+                            isActive ? "nav_linK active" : "nav_linK"
+                        }
                         to={''}>
                         ویدیو
                     </NavLink>
@@ -49,7 +57,9 @@ const Sidbar = () => {
 
                 <li className="">
                     <NavLink
-                        className=""
+                        className={({ isActive }) =>
+                            isActive ? "nav_linK active" : "nav_linK"
+                        }
                         to={''}>
                         کاربران
                     </NavLink>
@@ -57,7 +67,9 @@ const Sidbar = () => {
 
                 <li className="">
                     <NavLink
-                        className=""
+                        className={({ isActive }) =>
+                            isActive ? "nav_linK active" : "nav_linK"
+                        }
                         to={''}>
                         نظرات
                     </NavLink>
@@ -65,11 +77,13 @@ const Sidbar = () => {
 
                 <li className="">
                     <NavLink
-                        className=""
+                        className={({ isActive }) =>
+                            isActive ? "nav_linK active" : "nav_linK"
+                        }
                         to={''}>
                         خروج
                     </NavLink>
-                </li>
+                </li> */}
             </ul>
         </div>
     )
