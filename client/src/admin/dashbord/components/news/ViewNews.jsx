@@ -3,11 +3,14 @@ import Dashbord from "../../Dashbord"
 import './News.css'
 import { useContext, useEffect, useState } from "react"
 import { AdminContext } from "../../../context/context"
+import Modal from "../../../../components/Modal"
 
 
 const ViewNews = () => {
-
+    const [showModal, setShowModal] = useState(false)
     const { newsData, getNewsHandler, deleteNews } = useContext(AdminContext)
+    const [newsId, setNewsId] = useState(null)
+
     useEffect(() => {
         getNewsHandler()
     }, [])
@@ -49,9 +52,11 @@ const ViewNews = () => {
                                             ویرایش
                                         </button>
                                         <button
-                                            onClick={() => deleteNews(news.id)}
+                                            onClick={() => setNewsId(news.id)}
                                             className="button mx-1 is-danger">
-                                            حذف
+                                            <span onClick={() => setShowModal(true)}>
+                                                حذف
+                                            </span>
                                         </button>
                                     </td>
                                 </tr>
@@ -60,6 +65,21 @@ const ViewNews = () => {
                     </tbody>
                 </table>
             }
+            {showModal &&
+                <Modal
+                    isOpen={setShowModal}
+                    title={"آیا از حذف اطمینان دارید؟"} >
+                    <button
+                        onClick={() => deleteNews(newsId)}
+                        className="button is-danger mx-1"
+                        type="button">
+                        <span onClick={() => setShowModal(false)}>
+                            تایید
+                        </span>
+                    </button>
+                </Modal>
+            }
+
         </Dashbord>
     )
 }

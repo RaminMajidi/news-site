@@ -173,7 +173,7 @@ export const deleteNews = async (req, res, next) => {
         const filePath = `./public/images/${news.image}`
         fs.unlinkSync(filePath)
         await News.destroy({ where: { id: id } })
-        res.status(200).json({ message: 'عملیات با موفقیت انجام شد', data: news })
+        res.status(200).json({ message: 'عملیات با موفقیت انجام شد' })
     } catch (err) {
         next(err)
     }

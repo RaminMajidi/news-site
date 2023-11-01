@@ -12,7 +12,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "IRANSansWeb";
+  font-family: "IRANSansWeb", sans-serif !important;
   direction: rtl;
   text-align: right;
   text-decoration: none !important;

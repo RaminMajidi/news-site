@@ -173,7 +173,6 @@ export const AdminContextProvider = ({ children }) => {
                 }
             })
             if (res.status === 200) {
-                console.log(res.data);
                 setNewsData(res.data.news)
             }
         } catch (error) {
@@ -190,10 +189,23 @@ export const AdminContextProvider = ({ children }) => {
     // start ********************************************
     const deleteNews = async (id) => {
         try {
-            console.log(id);
+            const res = await axiosJWT.delete(`http://localhost:5000/api/news/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                setNewsData(newsData.filter(item => item.id != id))
+                toast.success(res.data.message, {
+                    position: 'top-left',
+                    autoClose: 1500,
+                    closeOnClick: true,
+                    pauseOnHover: true
+                })
+            }
 
         } catch (error) {
-            toast.error(error.response.data.message, {
+            toast.error(error?.response?.data?.message, {
                 position: 'top-left',
                 autoClose: 1500,
                 closeOnClick: true,
