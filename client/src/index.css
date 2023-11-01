@@ -47,3 +47,10 @@ body::-webkit-scrollbar {
   max-height: 55px;
   object-fit: cover;
 }
+
+.h_100dvh {
+  height: 100dvb;
+}
+.text_center{
+  text-align: center !important;
+}

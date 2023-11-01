@@ -86,7 +86,12 @@ export const getNewsById = async (req, res, next) => {
                 attributes: ['id', 'name', 'email', 'url']
             }]
         })
-        res.status(200).json({ data: news })
+        if (!news) {
+            error.message = "آیتمی یافت نشد"
+            error.statusCode = 404
+            return next(error)
+        }
+        res.status(200).json({ news })
 
     } catch (err) {
         next(err)

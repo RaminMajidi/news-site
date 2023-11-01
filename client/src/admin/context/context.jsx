@@ -13,6 +13,8 @@ export const AdminContextProvider = ({ children }) => {
     const [userData, setUserData] = useState(null)
     const [expire, setExpire] = useState(null)
     const [newsData, setNewsData] = useState(null)
+    const [categoryList, setCategoryList] = useState(null)
+    const [singleNews, setSingleNews] = useState(null)
 
 
     // start ********************************************
@@ -213,9 +215,53 @@ export const AdminContextProvider = ({ children }) => {
             })
         }
     }
-
     // end ********************************************
 
+    // start ********************************************
+    const getNewsById = async (id) => {
+        try {
+            const res = await axiosJWT.get(`http://localhost:5000/api/news/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                setSingleNews(res.data.news)
+            }
+        } catch (error) {
+            if (error.response.status === 404) {
+                navigate("/404")
+            }
+            toast.error(error?.response?.data?.message, {
+                position: 'top-left',
+                autoClose: 1500,
+                closeOnClick: true,
+                pauseOnHover: true
+            })
+        }
+    }
+    // end ********************************************
+
+    const getCategory = async () => {
+        try {
+            const res = await axiosJWT.get(`http://localhost:5000/api/get-category`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (res.status == 200) {
+                setCategoryList(res.data.categories)
+            }
+
+        } catch (error) {
+            toast.error(error.response.data.message, {
+                position: 'top-left',
+                autoClose: 1500,
+                closeOnClick: true,
+                pauseOnHover: true
+            })
+        }
+    }
 
     // start ********************************************
     useEffect(() => {
@@ -233,7 +279,11 @@ export const AdminContextProvider = ({ children }) => {
             createNews,
             newsData,
             getNewsHandler,
-            deleteNews
+            deleteNews,
+            getNewsById,
+            getCategory,
+            categoryList,
+            singleNews
         }}>
             {children}
         </AdminContext.Provider>

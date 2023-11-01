@@ -1,52 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Dashbord from '../../Dashbord'
+import Dashbord from '@src/admin/dashbord/Dashbord'
 import { useFormik } from "formik"
-import { formSchema } from './core'
+import { formSchema, initialValues } from './core'
 import HelpMessage from '@src/components/HelpMessage'
 import { AdminContext } from '@src/admin/context/context'
-import { toast } from 'react-toastify'
+
 
 const AddNews = () => {
-    const [categoryList, setCategoryList] = useState(null)
-    const { axiosJWT, token, createNews } = useContext(AdminContext)
+    const { categoryList, getCategory, createNews } = useContext(AdminContext)
     const [file, setFile] = useState([])
     const [preview, setPreview] = useState("")
 
+    // start ***************************
     const loadImage = (e) => {
         const image = e.target.files[0]
         setFile(image)
         setPreview(URL.createObjectURL(image))
     }
+    // end ***************************
 
 
-    const getCategory = async () => {
-        try {
-            const res = await axiosJWT.get(`http://localhost:5000/api/get-category`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            if (res.status == 200) {
-                setCategoryList(res.data.categories)
-            }
 
-        } catch (error) {
-            toast.error(error.response.data.message, {
-                position: 'top-left',
-                autoClose: 1500,
-                closeOnClick: true,
-                pauseOnHover: true
-            })
-        }
-    }
-
+    // start ***************************
     const formik = useFormik({
-        initialValues: {
-            title: "",
-            desc: "",
-            catId: "",
-            file: null
-        },
+        initialValues: initialValues,
         onSubmit: (values) => {
             const data = {
                 ...values,
@@ -56,11 +33,15 @@ const AddNews = () => {
         },
         validationSchema: formSchema
     })
+    // end ***************************
 
 
+
+    // start ***************************
     useEffect(() => {
         getCategory()
     }, [])
+    // end ***************************
 
     return (
         <Dashbord>

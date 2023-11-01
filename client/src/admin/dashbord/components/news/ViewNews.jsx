@@ -48,9 +48,9 @@ const ViewNews = () => {
                                     </td>
                                     <td>{news?.user?.name}</td>
                                     <td>
-                                        <button className="button mx-1 is-success">
+                                        <Link to={`/edit-news/${news.id}`} className="button mx-1 is-success">
                                             ویرایش
-                                        </button>
+                                        </Link>
                                         <button
                                             onClick={() => setNewsId(news.id)}
                                             className="button mx-1 is-danger">
