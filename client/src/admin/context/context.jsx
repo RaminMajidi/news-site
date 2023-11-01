@@ -242,6 +242,44 @@ export const AdminContextProvider = ({ children }) => {
     }
     // end ********************************************
 
+
+    // start ********************************************
+    const editNews = async (data) => {
+        const formData = new FormData();
+        formData.append('title', data.title)
+        formData.append('desc', data.desc)
+        formData.append('catId', data.catId)
+        formData.append('file', data.file)
+        formData.append('userId', userData.id)
+        try {
+            const res = await axiosJWT.put(`http://localhost:5000/api/news/${data.id}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+            if (res.status === 201) {
+                toast.success(res.data.message, {
+                    position: 'top-left',
+                    autoClose: 2000,
+                    closeOnClick: true,
+                    pauseOnHover: true
+                })
+                navigate('/view-news')
+
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, {
+                position: 'top-left',
+                autoClose: 1500,
+                closeOnClick: true,
+                pauseOnHover: true
+            })
+        }
+    }
+    // end ********************************************
+
+
+    // start ********************************************
     const getCategory = async () => {
         try {
             const res = await axiosJWT.get(`http://localhost:5000/api/get-category`, {
@@ -262,6 +300,7 @@ export const AdminContextProvider = ({ children }) => {
             })
         }
     }
+    // end ********************************************
 
     // start ********************************************
     useEffect(() => {
@@ -283,7 +322,8 @@ export const AdminContextProvider = ({ children }) => {
             getNewsById,
             getCategory,
             categoryList,
-            singleNews
+            singleNews,
+            editNews
         }}>
             {children}
         </AdminContext.Provider>

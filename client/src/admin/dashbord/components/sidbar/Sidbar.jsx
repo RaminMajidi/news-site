@@ -24,26 +24,11 @@ const Sidbar = () => {
                 </li>
 
                 <li className="">
-                    <span onClick={() => setShowNews(!showNews)} >اخبار</span>
-                    {showNews &&
-                        <ul >
-                            <li>
-                                <NavLink
-                                    className=""
-                                    to={'/add-news'}>
-                                    افزودن خبر
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink
-                                    className=""
-                                    to={'/view-news'}>
-                                    مشاهده خبر
-                                </NavLink>
-                            </li>
-                        </ul>
-                    }
-
+                    <NavLink
+                        className=""
+                        to={'/view-news'}>
+                        اخبار
+                    </NavLink>
                 </li>
 
                 <li className="">

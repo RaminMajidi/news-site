@@ -8,7 +8,7 @@ const Dashbord = ({ children }) => {
             <Sidbar />
             <div className="main-info has-background-grey">
                 <Information />
-                <div className="main has-text-light">
+                <div className="main has-text-light container">
                     {children}
                 </div>
             </div>

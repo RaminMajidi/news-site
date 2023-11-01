@@ -10,8 +10,8 @@ const Information = () => {
   const { userData } = useContext(AdminContext)
 
   return (
-    <div className="information">
-      <div className="view-web is-flex is-justify-content-space-between is-align-items-center">
+    <div className="information container">
+      <div className="view-web is-flex is-justify-content-space-between is-align-items-center px-4">
         <div className="view-webpage">
           <a className="button has-background-info has-text-light" href="/">مشاهده وب سایت</a>
         </div>
@@ -25,7 +25,7 @@ const Information = () => {
         </div>
       </div>
 
-      <div className="is-flex is-align-item-center is-justify-content-space-between py-4">
+      <div className="is-flex is-flex-wrap-wrap is-align-item-center is-justify-content-space-between py-4">
         <InfoItem
           title={'خبرها'}
           value={"16"}
