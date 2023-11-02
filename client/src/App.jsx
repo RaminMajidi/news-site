@@ -7,6 +7,8 @@ import NotFound from './pages/NotFound';
 import ViewCategories from './admin/dashbord/components/category/ViewCategories';
 import AddOrEditCategory from './admin/dashbord/components/category/AddOrEditCategory';
 import AddOrEditNews from './admin/dashbord/components/news/AddOrEditNews';
+import ViewVideo from './admin/dashbord/components/videos/ViewVideo';
+import AddVideo from './admin/dashbord/components/videos/AddVideo';
 
 function App() {
 
@@ -25,6 +27,9 @@ function App() {
         <Route path="/view-category" element={<ViewCategories />} />
         <Route path="/add-category" element={<AddOrEditCategory />} />
         <Route path="/edit-category/:id" element={<AddOrEditCategory />} />
+
+        <Route path='/view-video' element={<ViewVideo />} />
+        <Route path='/add-video' element={<AddVideo />} />
 
 
         <Route path="/404" element={<NotFound />} />

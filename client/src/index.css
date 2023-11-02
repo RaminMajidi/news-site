@@ -83,6 +83,7 @@ table tbody tr:hover {
 }
 
 @media(max-width:780px) {
+
   table th,
   table td {
     min-width: 200px;

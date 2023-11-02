@@ -1,59 +1,54 @@
-import { Link } from "react-router-dom"
 import Dashbord from "../../Dashbord"
-import './News.css'
+import BtnAdd from "@src/components/Btns/BtnAdd"
+import Modal from "@src/components/Modal"
+import Table from "@src/components/Table"
 import { useContext, useEffect, useState } from "react"
 import { AdminContext } from "../../../context/context"
-import Modal from "@src/components/Modal"
-import BtnAdd from "@src/components/Btns/BtnAdd"
-import Table from "@src/components/Table"
 
 
-const ViewNews = () => {
+const ViewVideo = () => {
     const [showModal, setShowModal] = useState(false)
-    const { newsData, getAllNews, deleteNews } = useContext(AdminContext)
-    const [newsId, setNewsId] = useState(null)
+    const [videoId, setVideoId] = useState(null)
+    const { deleteVideo, getAllVideo, videoList } = useContext(AdminContext)
 
 
     const deleteHandler = (id) => {
-        deleteNews(id)
+        deleteVideo(id)
         setShowModal(false)
     }
 
     useEffect(() => {
-        getAllNews()
+        getAllVideo()
     }, [])
 
+
     return (
-        <Dashbord title={"مدیریت اخبار"}>
+        <Dashbord title={'مدیریت ویدیوها'}>
             {/* start btn add */}
             <BtnAdd
-                text={'افزودن خبر'}
-                url={'/add-news'} />
+                text={'افزودن ویدیو'}
+                url={'/add-video'} />
             {/* end btn add */}
 
+
+
             {/* start  table */}
-            {newsData &&
-                < Table titles={['شماره', 'عنوان', 'تصویر', 'نویسنده', 'عملیات']}>
+            {videoList &&
+                < Table titles={['شماره', 'ویدیو', 'عملیات']}>
                     {
-                        newsData.map((news, index) => (
-                            <tr key={news?.id}>
+                        videoList.map((item, index) => (
+                            <tr key={item?.id}>
                                 <td>{index + 1}</td>
-                                <td>{news?.title}</td>
                                 <td>
-                                    <img
-                                        className="table-image"
-                                        src={news?.url}
-                                        alt={news?.title} />
+                                    <video
+                                        controls
+                                        style={{ width: "100%", height: "80px" }}
+                                        src={item.url}>
+                                    </video>
                                 </td>
-                                <td>{news?.user?.name}</td>
                                 <td>
-                                    <Link state={news}
-                                        to={`/edit-news/${news.id}`}
-                                        className="button m-1 is-info">
-                                        ویرایش
-                                    </Link>
                                     <button
-                                        onClick={() => setNewsId(news.id)}
+                                        onClick={() => setVideoId(item.id)}
                                         className="button m-1 is-danger">
                                         <span onClick={() => setShowModal(true)}>
                                             حذف
@@ -67,6 +62,8 @@ const ViewNews = () => {
             }
             {/* end  table */}
 
+
+
             {/* start delete  modal */}
             {
                 showModal &&
@@ -74,7 +71,7 @@ const ViewNews = () => {
                     isOpen={setShowModal}
                     title={"آیا از حذف اطمینان دارید؟"} >
                     <button
-                        onClick={() => deleteHandler(newsId)}
+                        onClick={() => deleteHandler(videoId)}
                         className="button is-danger mx-1"
                         type="button">
                         تایید
@@ -82,9 +79,8 @@ const ViewNews = () => {
                 </Modal>
             }
             {/* end delete  moda */}
-
-        </Dashbord >
+        </Dashbord>
     )
 }
 
-export default ViewNews
+export default ViewVideo

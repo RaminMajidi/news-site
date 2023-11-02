@@ -1,6 +1,7 @@
 
 const InputFile = ({
     label,
+    name = "file",
     onChange,
     preview
 }) => {
@@ -11,6 +12,7 @@ const InputFile = ({
             </label>
             <div className="control ">
                 <input
+                    name={name}
                     onChange={onChange}
                     type="file"
                     className='input has-background-grey-lighter'

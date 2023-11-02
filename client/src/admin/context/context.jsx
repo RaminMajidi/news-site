@@ -17,6 +17,7 @@ export const AdminContextProvider = ({ children }) => {
     const [newsData, setNewsData] = useState(null)
     const [categoryList, setCategoryList] = useState(null)
     const [singleNews, setSingleNews] = useState(null)
+    const [videoList, setVideoList] = useState(null)
 
 
     //Axios code start ***************
@@ -139,7 +140,7 @@ export const AdminContextProvider = ({ children }) => {
     // end *********
 
     // start ************************
-    const getNewsHandler = async () => {
+    const getAllNews = async () => {
         try {
             const res = await axiosJWT(`/api/news`)
             if (res.status === 200) {
@@ -268,6 +269,59 @@ export const AdminContextProvider = ({ children }) => {
     // Ctegories APIs end
 
 
+
+    // Videos APIs start
+
+    // start *******************
+    const getAllVideo = async () => {
+        try {
+            const res = await axiosJWT(`/api/allVideo`)
+            if (res.status === 200) {
+                setVideoList(res.data.videos)
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+    }
+    // end ********
+
+    // start **********************
+    const createVideo = async (data) => {
+        const formData = new FormData()
+        formData.append('file', data.file)
+        try {
+            const res = await axiosJWT.post(`/api/craete-video`, formData)
+            if (res.status === 200) {
+                successHandler(res.data.message)
+                navigate('view-video')
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+    }
+    // end *********
+
+    // start **********************
+    const deleteVideo = async (id) => {
+
+        try {
+            const res = await axiosJWT.delete(`/api/deleteVideo/${id}`)
+            if (res.status === 201) {
+                setVideoList(videoList.filter(item => item.id != id))
+                successHandler(res?.data?.message)
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+    }
+    // end *********
+
+
+
+
+    // Videos APIs end
+
+
     // Users APIs start
 
     // start **********************
@@ -301,7 +355,7 @@ export const AdminContextProvider = ({ children }) => {
             token,
             createNews,
             newsData,
-            getNewsHandler,
+            getAllNews,
             deleteNews,
             getNewsById,
             getCategory,
@@ -310,7 +364,11 @@ export const AdminContextProvider = ({ children }) => {
             editNews,
             addCategory,
             editCategory,
-            deleteCategory
+            deleteCategory,
+            getAllVideo,
+            videoList,
+            deleteVideo,
+            createVideo
         }}>
             {children}
         </AdminContext.Provider>
