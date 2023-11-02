@@ -3,11 +3,11 @@ import Dashbord from '../../Dashbord'
 import { useContext, useEffect, useState } from "react"
 import { AdminContext } from "../../../context/context"
 import Modal from "@src/components/Modal"
-import BtnAdd from "@src/components/BtnAdd"
+import BtnAdd from "@src/components/Btns/BtnAdd"
 import Table from "@src/components/Table"
 import { Link } from 'react-router-dom'
 
-const ViewCategory = () => {
+const ViewCategories = () => {
 
     const [showModal, setShowModal] = useState(false)
     const { getCategory, categoryList, deleteCategory } = useContext(AdminContext)
@@ -80,4 +80,4 @@ const ViewCategory = () => {
     )
 }
 
-export default ViewCategory
+export default ViewCategories

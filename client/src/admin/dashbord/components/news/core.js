@@ -1,8 +1,5 @@
 import * as Yup from 'yup'
 
-
-
-
 export const formSchema = Yup.object({
     title: Yup.string()
         .required('عنوان الزامی است')

@@ -4,7 +4,7 @@ import './News.css'
 import { useContext, useEffect, useState } from "react"
 import { AdminContext } from "../../../context/context"
 import Modal from "@src/components/Modal"
-import BtnAdd from "@src/components/BtnAdd"
+import BtnAdd from "@src/components/Btns/BtnAdd"
 import Table from "@src/components/Table"
 
 

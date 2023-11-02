@@ -1,9 +1,10 @@
 import "./Login.css"
 import { useFormik } from "formik"
 import { LoginFormSchema } from "./core"
-import HelpMessage from "../../components/HelpMessage"
 import { useContext } from "react"
 import { AdminContext } from "../context/context"
+import Input from "@src/components/formInputs/Input"
+import BtnSubmit from "@src/components/btns/BtnSubmit"
 
 
 
@@ -35,64 +36,38 @@ const Login = () => {
                             <form
                                 onSubmit={formik.handleSubmit}
                                 className="box has-background-black-ter is-rounded ">
-                                <h1 className="tile has-text-centered mb-5 has-text-grey-lighter">
+                                <h3 className="tile has-text-centered mb-5 has-text-grey-lighter">
                                     ورود به پنل مدیریت
-                                </h1>
-                                <div className="field ">
-                                    <label className="label has-text-grey-light">ایمیل</label>
-                                    <div className="field">
-                                        <p className="control has-icons-left ">
-                                            <input
-                                                value={formik.values.email}
-                                                onChange={formik.handleChange('email')}
-                                                onBlur={formik.handleBlur('email')}
-                                                name="email"
-                                                className="input"
-                                                type="email"
-                                                placeholder="Email"
-                                            />
-                                            <span className="icon is-small is-left">
-                                                <box-icon name='envelope'></box-icon>
-                                            </span>
-                                        </p>
-                                        <HelpMessage textColor={'has-text-danger'}>
-                                            {formik.touched.email && formik.errors.email}
-                                        </HelpMessage>
-                                    </div>
-                                    <div className="field">
-                                        <label className="label has-text-grey-light">رمز عبور</label>
-                                        <p className="control has-icons-left">
-                                            <input
-                                                value={formik.values.password}
-                                                onChange={formik.handleChange('password')}
-                                                onBlur={formik.handleBlur('password')}
-                                                name="password"
-                                                className="input"
-                                                type="password"
-                                                placeholder="Password"
-                                            />
-                                            <span className="icon is-small is-left">
-                                                <box-icon name='lock-alt'></box-icon>
-                                            </span>
-                                        </p>
-                                        <HelpMessage textColor={'has-text-danger'}>
-                                            {formik.touched.password && formik.errors.password}
-                                        </HelpMessage>
-                                    </div>
-                                    <div className="field mt-5">
-                                        <button
-                                            type="submit"
-                                            className="button is-info is-fullwidth">
-                                            ورود
-                                        </button>
-                                    </div>
-                                </div>
+                                </h3>
+                                <Input
+                                    label="ایمیل"
+                                    value={formik.values.email}
+                                    onChange={formik.handleChange('email')}
+                                    onBlur={formik.handleBlur('email')}
+                                    name="email"
+                                    type="email"
+                                    placeholder="Email"
+                                    errorCondition={formik.touched.email}
+                                    errorMessage={formik.errors.email}
+                                />
+                                <Input
+                                    label="رمز عبور"
+                                    value={formik.values.password}
+                                    onChange={formik.handleChange('password')}
+                                    onBlur={formik.handleBlur('password')}
+                                    name="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    errorCondition={formik.touched.password}
+                                    errorMessage={formik.errors.password}
+                                />
+                                <BtnSubmit />
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </div >
+            </div >
+        </section >
     )
 }
 

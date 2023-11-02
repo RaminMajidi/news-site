@@ -1,9 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
-import { errorHandler, successHandler } from "@src/utils/Toast";
+import { errorHandler, successHandler } from "@src/utils/toast";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -56,7 +55,6 @@ export const AdminContextProvider = ({ children }) => {
     axiosJWT.interceptors.response.use(
         (response) => response,
         async (error) => {
-            const pathname = window.location.pathname
             if (error.response.status === 404) {
                 navigate('/404')
             }
@@ -276,11 +274,7 @@ export const AdminContextProvider = ({ children }) => {
     const getAllUser = async () => {
 
         try {
-            const res = await axiosJWT.get('/api/users', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const res = await axiosJWT.get('/api/users')
             console.log(res);
         } catch (error) {
             errorHandler(error)

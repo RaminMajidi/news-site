@@ -12,15 +12,17 @@
 }
 
 .modal-news {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: self-start;
+    align-items: start;
     width: 90%;
     height: 150px;
     max-width: 500px;
     padding: .8rem;
     border-radius: .5rem;
+    animation: fade .5s;
 }
 
 .modal-news-title {
@@ -43,4 +45,14 @@
     left: -.6rem;
     top: -.5rem;
     cursor: pointer;
+}
+
+@keyframes fade {
+    from {
+        top: -100dvh;
+    }
+
+    to {
+        top: 0;
+    }
 }
