@@ -44,7 +44,7 @@ const AddNews = () => {
     // end ***************************
 
     return (
-        <Dashbord>
+        <Dashbord title={"افزودن خبر"}>
             <form onSubmit={formik.handleSubmit} className='container'>
                 <div className="field ">
                     <label className='label has-text-light'>عنوان خبر</label>

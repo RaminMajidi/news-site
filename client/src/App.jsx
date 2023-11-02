@@ -6,7 +6,8 @@ import Main from './admin/dashbord/components/main/Main';
 import AddNews from './admin/dashbord/components/news/add/AddNews';
 import EditNews from './admin/dashbord/components/news/edit/EditNews';
 import NotFound from './pages/NotFound';
-import Categories from './admin/dashbord/components/category/Categories';
+import ViewCategory from './admin/dashbord/components/category/ViewCategory';
+import AddOrEdit from './admin/dashbord/components/category/AddOrEdit';
 
 function App() {
 
@@ -22,7 +23,9 @@ function App() {
         <Route path="/add-news" element={<AddNews />} />
         <Route path="/edit-news/:id" element={<EditNews />} />
 
-        <Route path="/view-category" element={<Categories />} />
+        <Route path="/view-category" element={<ViewCategory />} />
+        <Route path="/add-category" element={<AddOrEdit />} />
+        <Route path="/edit-category/:id" element={<AddOrEdit />} />
 
 
         <Route path="/404" element={<NotFound />} />

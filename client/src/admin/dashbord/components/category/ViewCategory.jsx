@@ -1,59 +1,53 @@
-import { Link } from "react-router-dom"
-import Dashbord from "../../Dashbord"
-import './News.css'
+import React from 'react'
+import Dashbord from '../../Dashbord'
 import { useContext, useEffect, useState } from "react"
 import { AdminContext } from "../../../context/context"
 import Modal from "@src/components/Modal"
 import BtnAdd from "@src/components/BtnAdd"
 import Table from "@src/components/Table"
+import { Link } from 'react-router-dom'
 
+const ViewCategory = () => {
 
-const ViewNews = () => {
     const [showModal, setShowModal] = useState(false)
-    const { newsData, getNewsHandler, deleteNews } = useContext(AdminContext)
-    const [newsId, setNewsId] = useState(null)
+    const { getCategory, categoryList, deleteCategory } = useContext(AdminContext)
+    const [catId, setCatId] = useState(null)
 
 
     const deleteHandler = (id) => {
-        deleteNews(id)
+        deleteCategory(id)
         setShowModal(false)
     }
 
     useEffect(() => {
-        getNewsHandler()
+        getCategory()
     }, [])
 
+
     return (
-        <Dashbord title={"مدیریت اخبار"}>
+        <Dashbord title={"مدیریت دسته بندی ها"}>
             {/* start btn add */}
             <BtnAdd
-                text={'افزودن خبر'}
-                url={'/add-news'} />
+                text={'افزودن دسته بندی'}
+                url={'/add-category'} />
             {/* end btn add */}
 
             {/* start  table */}
-            {newsData &&
-                < Table titles={['شماره', 'عنوان', 'تصویر', 'نویسنده', 'عملیات']}>
+            {categoryList &&
+                < Table titles={['شماره', 'نام', 'عملیات']}>
                     {
-                        newsData.map((news, index) => (
-                            <tr key={news?.id}>
+                        categoryList.map((item, index) => (
+                            <tr key={item.id}>
                                 <td>{index + 1}</td>
-                                <td>{news?.title}</td>
+                                <td>{item.name}</td>
                                 <td>
-                                    <img
-                                        className="table-image"
-                                        src={news?.url}
-                                        alt={news?.title} />
-                                </td>
-                                <td>{news?.user?.name}</td>
-                                <td>
-                                    <Link state={news}
-                                        to={`/edit-news/${news.id}`}
+                                    <Link state={item}
+                                        to={`/edit-category/${item.id}`}
                                         className="button m-1 is-info">
                                         ویرایش
                                     </Link>
                                     <button
-                                        onClick={() => setNewsId(news.id)}
+                                        onClick={() => setCatId(item.id)}
                                         className="button m-1 is-danger">
                                         <span onClick={() => setShowModal(true)}>
                                             حذف
@@ -74,7 +68,7 @@ const ViewNews = () => {
                     isOpen={setShowModal}
                     title={"آیا از حذف اطمینان دارید؟"} >
                     <button
-                        onClick={() => deleteHandler(newsId)}
+                        onClick={() => deleteHandler(catId)}
                         className="button is-danger mx-1"
                         type="button">
                         تایید
@@ -82,9 +76,8 @@ const ViewNews = () => {
                 </Modal>
             }
             {/* end delete  moda */}
-
         </Dashbord >
     )
 }
 
-export default ViewNews
+export default ViewCategory

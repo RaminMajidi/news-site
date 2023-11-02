@@ -63,3 +63,28 @@ body::-webkit-scrollbar {
   max-width: 1400px !important;
   margin: 0 auto;
 }
+
+.table_container {
+  width: 100%;
+  padding: 0;
+  overflow-x: auto;
+}
+
+table thead tr {
+  background-color: #c8c8c8;
+}
+
+table tr:nth-child(even) {
+  background-color: #dff0ff;
+}
+
+table tbody tr:hover {
+  background-color: #fffddf;
+}
+
+@media(max-width:780px) {
+  table th,
+  table td {
+    min-width: 200px;
+  }
+}

@@ -53,7 +53,7 @@ const EditNews = () => {
     }, [])
 
     return (
-        <Dashbord>
+        <Dashbord title={"ویرایش خبر"}>
             <>
                 {state &&
                     <form onSubmit={formik.handleSubmit} className='container'>

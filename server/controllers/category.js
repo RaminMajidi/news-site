@@ -16,6 +16,7 @@ export const getCategory = async (req, res, next) => {
 
 // start ********************************************
 export const createCategory = async (req, res, next) => {
+    console.log(req.body);
     const { name } = req.body
 
     try {
