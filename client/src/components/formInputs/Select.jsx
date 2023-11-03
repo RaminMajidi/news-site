@@ -7,8 +7,6 @@ const Select = ({
     onChange,
     onBlur,
     name,
-    type,
-    placeholder,
     errorCondition,
     errorMessage
 }) => {
@@ -20,11 +18,12 @@ const Select = ({
             <div className="control">
                 <div className="select is-fullwidth ">
                     <select
+                        name={name}
                         value={value}
                         onChange={onChange}
                         onBlur={onBlur}
                         className='has-background-grey-lighter'>
-                        <option >انتخاب کنید</option>
+                        <option>انتخاب کنید</option>
                         {optionList &&
                             optionList.map(item => (
                                 <option

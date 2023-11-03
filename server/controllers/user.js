@@ -11,7 +11,9 @@ const error = new Error()
 //start *********************
 export const getAllUsers = async (req, res, next) => {
   try {
-    const users = await Users.findAll({});
+    const users = await Users.findAll({
+      attributes: ["id", "email", "url", "name", "isAdmin"]
+    });
     res.status(200).json({ users })
   } catch (err) {
     next(error)
@@ -23,6 +25,12 @@ export const getAllUsers = async (req, res, next) => {
 export const registerUser = async (req, res, next) => {
 
   const { name, email, password, confPassword, isAdmin } = req.body;
+
+  if (!name || !email || !password || !confPassword) {
+    error.message = "لطفا مقادیر درخواستی را به صورت کامل ارسال کنید"
+    error.statusCode = 406
+    return next(error)
+  }
 
   if (password !== confPassword) {
     error.statusCode = 406
@@ -298,7 +306,7 @@ export const updateProfile = async (req, res, next) => {
         id: req.params.id
       }
     })
-    res.json({ msg: "کاربر با موفقیت ویرایش شد" })
+    res.json({ message: "کاربر با موفقیت ویرایش شد" })
   } catch (error) {
     console.log(error);
   }

@@ -13,6 +13,7 @@ export const AdminContextProvider = ({ children }) => {
     const navigate = useNavigate()
     const [token, setToken] = useState('')
     const [userData, setUserData] = useState(null)
+    const [userList, setUserList] = useState(null)
     const [expire, setExpire] = useState(null)
     const [newsData, setNewsData] = useState(null)
     const [categoryList, setCategoryList] = useState(null)
@@ -329,10 +330,60 @@ export const AdminContextProvider = ({ children }) => {
 
         try {
             const res = await axiosJWT.get('/api/users')
-            console.log(res);
+            if (res.status === 200) {
+                setUserList(res.data.users)
+            }
         } catch (error) {
             errorHandler(error)
         }
+    }
+    // end *********
+
+
+    // start **********************
+    const deleteUser = async (id) => {
+
+        try {
+            const res = await axiosJWT.delete(`/api/users/${id}`)
+            if (res.status === 200) {
+                setUserList(userList.filter(item => item.id != id))
+                successHandler(res.data.message)
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+    }
+    // end *********
+
+
+    // start **********************
+    const addNewUser = async (values) => {
+
+        try {
+            const res = await axiosJWT.post(`/api/users/register`, values)
+            if (res.status === 200) {
+                navigate("/view-users")
+                successHandler(res.data.message)
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+    }
+    // end *********
+
+    // start **********************
+    const updateUser = async (values, id) => {
+        try {
+            const res = await axiosJWT.put(`/api/users/${id}`, values)
+            if (res.status === 201) {
+                successHandler(res?.data?.message)
+                navigate("/view-users")
+            }
+
+        } catch (error) {
+            errorHandler(error)
+        }
+
     }
     // end *********
 
@@ -350,7 +401,6 @@ export const AdminContextProvider = ({ children }) => {
         <AdminContext.Provider value={{
             login,
             userData,
-            getAllUser,
             axiosJWT,
             token,
             createNews,
@@ -368,7 +418,12 @@ export const AdminContextProvider = ({ children }) => {
             getAllVideo,
             videoList,
             deleteVideo,
-            createVideo
+            createVideo,
+            getAllUser,
+            userList,
+            deleteUser,
+            addNewUser,
+            updateUser
         }}>
             {children}
         </AdminContext.Provider>
