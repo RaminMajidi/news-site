@@ -11,6 +11,7 @@ import ViewVideo from './admin/dashbord/components/videos/ViewVideo';
 import AddVideo from './admin/dashbord/components/videos/AddVideo';
 import ViewUsers from './admin/dashbord/components/users/ViewUsers';
 import AddOrEditUser from './admin/dashbord/components/users/AddOrEditUser';
+import ProfileUpdate from './admin/dashbord/components/users/profile/ProfileUpdate';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
         <Route path='/view-users' element={<ViewUsers />} />
         <Route path='/add-user' element={<AddOrEditUser />} />
         <Route path='/edit-user/:id' element={<AddOrEditUser />} />
+        <Route path='/edit-profile/:id' element={<ProfileUpdate />} />
 
 
         <Route path="/404" element={<NotFound />} />

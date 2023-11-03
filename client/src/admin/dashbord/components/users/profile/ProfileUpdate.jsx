@@ -1,44 +1,61 @@
-import Dashbord from "../../Dashbord"
+import Dashbord from '../../../Dashbord'
+import { formSchema } from "./core"
+import { useFormik } from "formik"
+import { useContext, useState } from "react"
+import { AdminContext } from "../../../../context/context"
+import { useParams } from 'react-router-dom'
 import BtnPrevPage from "@src/components/Btns/BtnPrevPage"
 import BtnSubmit from '@src/components/Btns/BtnSubmit'
 import Input from '@src/components/formInputs/Input'
-import Select from '@src/components/formInputs/Select'
-import { formSchema, userRols } from "./core"
-import { useFormik } from "formik"
-import { useContext} from "react"
-import { AdminContext } from "../../../context/context"
-import { useLocation, useParams } from "react-router-dom"
+import InputFile from '@src/components/formInputs/InputFile'
 
-const AddOrEditUser = () => {
+const ProfileUpdate = () => {
     const { id } = useParams()
-    const { state } = useLocation()
-    const { addNewUser, updateUser } = useContext(AdminContext)
+
+    const { userData, updateProfile } = useContext(AdminContext)
+    const [file, setFile] = useState(null)
+    const [preview, setPreview] = useState(userData?.url || "")
+
+
+
+    // start ***************************
+    const loadImage = (e) => {
+        const image = e.target.files[0]
+        if (image) {
+            setFile(image)
+            setPreview(URL.createObjectURL(image))
+        } else {
+            setFile(null)
+            setPreview(userData?.url || "")
+        }
+
+    }
+    // end ***************************
+
+
 
     // start ***************************
     const formik = useFormik({
         initialValues: {
-            name: state?.name || '',
-            email: state?.email || '',
-            isAdmin: state?.isAdmin ? 1 : 0,
+            name: userData?.name || "",
             password: "",
             confPassword: "",
+            file: null
         },
         onSubmit: (values) => {
-            if (state && id) {
-                updateUser(values, id);
-            } else {
-                addNewUser(values)
+            const data = {
+                ...values,
+                file: file
             }
+            updateProfile(data,id);
         },
         validationSchema: formSchema
     })
     // end ***************************
 
 
-
-
     return (
-        <Dashbord title={state ? "ویرایش کاربر" : "افزودن کاربر جدید"}>
+        <Dashbord title="ویرایش پروفایل">
             <BtnPrevPage />
             <form onSubmit={formik.handleSubmit}>
                 <Input
@@ -51,18 +68,6 @@ const AddOrEditUser = () => {
                     placeholder='مثال * رامین مجیدی'
                     errorCondition={formik.touched.name}
                     errorMessage={formik.errors.name}
-                />
-
-                <Input
-                    label="ایمیل"
-                    value={formik.values.email}
-                    onChange={formik.handleChange('email')}
-                    onBlur={formik.handleBlur('email')}
-                    name='email'
-                    type="email"
-                    placeholder="مثال * example@gmail.com"
-                    errorCondition={formik.touched.email}
-                    errorMessage={formik.errors.email}
                 />
 
                 <Input
@@ -88,20 +93,10 @@ const AddOrEditUser = () => {
                     errorCondition={formik.touched.confPassword}
                     errorMessage={formik.errors.confPassword}
                 />
-                {userRols &&
-                    <Select
-                        label="نقش کاربر"
-                        value={formik.values.isAdmin}
-                        onChange={formik.handleChange('isAdmin')}
-                        onBlur={formik.handleBlur('isAdmin')}
-                        name="isAdmin"
-                        errorCondition={formik.touched.isAdmin}
-                        errorMessage={formik.errors.isAdmin}
-                        optionList={userRols}
-                    />
-
-                }
-
+                <InputFile
+                    onChange={loadImage}
+                    preview={preview}
+                />
 
                 <BtnSubmit />
             </form>
@@ -109,4 +104,4 @@ const AddOrEditUser = () => {
     )
 }
 
-export default AddOrEditUser
+export default ProfileUpdate

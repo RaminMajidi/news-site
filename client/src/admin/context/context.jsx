@@ -408,6 +408,27 @@ export const AdminContextProvider = ({ children }) => {
     }
     // end *********
 
+    // start **********************
+    const updateProfile = async (data, id) => {
+        try {
+            const formData = new FormData()
+            formData.append('name', data.name)
+            formData.append('password', data.password)
+            formData.append('confPassword', data.confPassword)
+            formData.append('file', data.file)
+            const res = await axiosJWT.put(`/api/users/profile/${id}`, formData)
+            if (res.status === 201) {
+                successHandler(res?.data?.message)
+                refreshToken()
+                navigate("/main")
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+
+    }
+    // end *********
+
     // Users APIs end
 
 
@@ -445,6 +466,7 @@ export const AdminContextProvider = ({ children }) => {
             deleteUser,
             addNewUser,
             updateUser,
+            updateProfile,
             logOut
         }}>
             {children}

@@ -21,8 +21,13 @@ const AddOrEditNews = () => {
     // start ***************************
     const loadImage = (e) => {
         const image = e.target.files[0]
-        setFile(image)
-        setPreview(URL.createObjectURL(image))
+        if (image) {
+            setFile(image)
+            setPreview(URL.createObjectURL(image))
+        } else {
+            setFile(null)
+            setPreview(state?.url || "")
+        }
     }
     // end ***************************
 

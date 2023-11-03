@@ -306,9 +306,9 @@ export const updateProfile = async (req, res, next) => {
         id: req.params.id
       }
     })
-    res.json({ message: "کاربر با موفقیت ویرایش شد" })
+    res.status(201).json({ message: "کاربر با موفقیت ویرایش شد" })
   } catch (error) {
-    console.log(error);
+    next(error)
   }
 }
 // End **************************************************

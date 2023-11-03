@@ -18,7 +18,7 @@ const Information = () => {
             href="/">مشاهده وب سایت</a>
         </div>
         <div className="view-profile">
-          <Link to={''}>
+          <Link  to={`/edit-profile/${userData?.id}`}>
             <img
               className="image profile-photo"
               src={userData?.url || userImage}
