@@ -57,6 +57,9 @@ export const AdminContextProvider = ({ children }) => {
     axiosJWT.interceptors.response.use(
         (response) => response,
         async (error) => {
+            if (error.response.status === 401) {
+                navigate("/administrator")
+            }
             if (error.response.status === 404) {
                 navigate('/404')
             }
@@ -70,8 +73,9 @@ export const AdminContextProvider = ({ children }) => {
 
     // start **************************
     const refreshToken = async () => {
+        if (location.pathname == "/administrator") return
         try {
-            const res = await axiosJWT.get(`/token`)
+            const res = await axios.get(`${BASE_URL}/token`)
             if (res.status === 200) {
                 const token = res.data.accessToken
                 const decoded = jwtDecode(token)
@@ -86,6 +90,9 @@ export const AdminContextProvider = ({ children }) => {
                 setToken(token)
             }
         } catch (error) {
+            if (error.response.status === 401) {
+                navigate('/administrator')
+            }
             errorHandler(error)
         }
     }
@@ -94,7 +101,7 @@ export const AdminContextProvider = ({ children }) => {
     // start ***********************
     const login = async (inputs) => {
         try {
-            const res = await axiosJWT.post(`/api/users/login`, inputs)
+            const res = await axios.post(`${BASE_URL}/api/users/login`, inputs)
             if (res.status === 200) {
                 const user = await res.data.user
                 setToken(user.accessToken)
@@ -106,6 +113,20 @@ export const AdminContextProvider = ({ children }) => {
                     url: user.url
                 })
                 navigate('/main')
+                successHandler(res?.data?.message)
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+    }
+    // end ********
+
+    // start ***********************
+    const logOut = async () => {
+        try {
+            const res = await axiosJWT.delete(`/api/users/logout`)
+            if (res.status === 200) {
+                navigate('/administrator')
                 successHandler(res?.data?.message)
             }
         } catch (error) {
@@ -423,7 +444,8 @@ export const AdminContextProvider = ({ children }) => {
             userList,
             deleteUser,
             addNewUser,
-            updateUser
+            updateUser,
+            logOut
         }}>
             {children}
         </AdminContext.Provider>

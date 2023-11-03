@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom"
 import "./Sidbar.css"
 import logo from '@src/assets/images/logo.png'
-import { useState } from "react"
+import { useContext } from "react"
+import { AdminContext } from "../../../context/context"
 const Sidbar = () => {
 
-    const [showNews, setShowNews] = useState(false)
+    const { logOut } = useContext(AdminContext)
 
     return (
         <div className='sidbar has-background-dark pt-6 '>
@@ -75,15 +76,14 @@ const Sidbar = () => {
                     </NavLink>
                 </li> */}
 
-                {/* <li className="">
-                    <NavLink
-                        className={({ isActive }) =>
-                            isActive ? "nav_linK active" : "nav_linK"
-                        }
-                        to={''}>
+                <li className="">
+                    <span
+                        onClick={logOut}
+                        className='nav_linK'
+                    >
                         خروج
-                    </NavLink>
-                </li> */}
+                    </span>
+                </li>
             </ul>
         </div>
     )

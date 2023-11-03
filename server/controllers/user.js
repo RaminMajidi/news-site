@@ -136,7 +136,7 @@ export const logOutUser = async (req, res, next) => {
       return next(error)
     }
 
-    const user = await Users.findOne({ refresh_token: refreshToken })
+    const user = await Users.findOne({ where: { refresh_token: refreshToken } })
     if (!user) {
       error.message = "کاربر یافت نشد !"
       error.statusCode = 404

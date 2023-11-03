@@ -9,7 +9,7 @@ export const refreshToken = async (req, res, next) => {
         const refreshToken = req.cookies.refreshToken;
         if (!refreshToken) {
             error.statusCode = 401
-            error.message = "نیاز به ورود  !"
+            error.message = "لطفا وارد حساب خود شوید"
             return next(error)
         }
 
@@ -20,15 +20,15 @@ export const refreshToken = async (req, res, next) => {
         })
 
         if (!user[0]) {
-            error.message = "عدم تطابق اطلاعات !!"
-            error.statusCode = 403
+            error.message = "لطفا وارد حساب خود شوید"
+            error.statusCode = 401
             return next(error)
         }
 
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (error, decoded) => {
 
             if (error) {
-                error.statusCode = 403
+                error.statusCode = 401
                 error.message = "نیاز به ورود مجدد !!"
                 return next(error)
             }
