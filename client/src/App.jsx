@@ -12,6 +12,7 @@ import AddVideo from './admin/dashbord/components/videos/AddVideo';
 import ViewUsers from './admin/dashbord/components/users/ViewUsers';
 import AddOrEditUser from './admin/dashbord/components/users/AddOrEditUser';
 import ProfileUpdate from './admin/dashbord/components/users/profile/ProfileUpdate';
+import Home from './pages/Home';
 
 function App() {
 
@@ -19,6 +20,12 @@ function App() {
     <>
       <ToastContainer />
       <Routes>
+
+        <Route path='/' element={<Home />} />
+
+
+
+
         <Route path="/administrator" element={<Login />} />
 
         <Route path="/main" element={<Main />} />
