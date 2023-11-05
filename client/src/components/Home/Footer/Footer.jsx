@@ -34,7 +34,7 @@ const Footer = () => {
                     </div>
                     <div className="column is-one-third">
                         <div className="footer-logo">
-                            <img src={logo} alt="" />
+                            <img className="img-logo" src={logo} alt="" />
                         </div>
                         <div className="footer-address is-flex is-align-items-center mt-4">
                             <box-icon name='info-circle' color='#008fff' size="md"></box-icon>

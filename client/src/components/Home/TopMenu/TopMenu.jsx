@@ -13,12 +13,12 @@ const TopMenu = () => {
                         <div className='column is-two-thirds is-flex is-justify-content-start'>
                             <span className='is-flex is-justify-content-center is-align-items-center'>
                                 <box-icon name='envelope' color='red' size="sm" ></box-icon>
-                                <span className='mx-2'>برقراری ارتباط : ramindev01@gmail.com</span>
+                                <span className='mx-2'>برقراری ارتباط : example@gmail.com</span>
                             </span>
                         </div>
                         <div className="column is-one-third is-flex is-justify-content-end">
                             <span className='is-flex is-justify-content-center is-align-items-center '>
-                                <box-icon name='phone-incoming' color='green' size="sm"></box-icon>
+                                <box-icon name='phone' color='green' size="sm"></box-icon>
                                 <span className='mx-2'>09917572781</span>
                             </span>
                         </div>
@@ -33,7 +33,7 @@ const TopMenu = () => {
                         </div>
 
                         <div className="column is-one-third logo mx-1 is-flex is-justify-content-end ">
-                            <img src={Logo} alt="logo-img" />
+                            <img className='img-logo' src={Logo} alt="logo-img" />
                         </div>
                     </div>
                 </div>
