@@ -1,20 +1,16 @@
-import TopMenu from "@src/components/Home/TopMenu/TopMenu"
-import Navbar from "@src/components/Home/Navbar/Navbar"
+import Layout from "./Layout"
 import HomeWrapper from "@src/components/Home/HomeWrapper/HomeWrapper"
 import WhatsNews from "@src/components/Home/WhatsNews/WhatsNews"
 import PopularNews from "@src/components/Home/Popular/PopularNews"
-import Footer from "@src/components/Home/Footer/Footer"
+
 
 const Home = () => {
     return (
-        <div className="wrapper">
-            <TopMenu />
-            <Navbar />
+        <Layout>
             <HomeWrapper />
             <WhatsNews />
             <PopularNews />
-            <Footer/>
-        </div>
+        </Layout>
     )
 }
 

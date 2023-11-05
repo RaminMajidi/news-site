@@ -8,9 +8,9 @@ const Navbar = () => {
                 <div className="container">
                     <div className="nav">
                         <ul className="nav-ul is-flex">
-                            <li><Link>خانه</Link></li>
-                            <li><Link>درباره ما</Link></li>
-                            <li><Link>تماس با ما</Link></li>
+                            <li><Link to={'/'}>خانه</Link></li>
+                            <li><Link to={'/about'}>درباره ما</Link></li>
+                            <li><Link to={'contact'}>تماس با ما</Link></li>
                         </ul>
                     </div>
                 </div>
