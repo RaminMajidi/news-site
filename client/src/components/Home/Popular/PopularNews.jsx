@@ -9,10 +9,9 @@ const PopularNews = () => {
       <div className="columns">
         <div className="column is-four-fifths has-background-white p-4">
           <div className="popular mb-5">
-            <h1>محبوبتری اخبار</h1>
+            <h1>محبوبترین اخبار</h1>
           </div>
-          <div className="columns">
-
+          <div className="columns is-flex is-flex-wrap-wrap">
 
             <div className="column popular-news">
               <div className="popular-img is-relative">
@@ -36,9 +35,10 @@ const PopularNews = () => {
                 </h6>
               </div>
               <div className="author mt-4">
-                <span className="is-size-6 has-text-grey ml-2">
+                <span className="is-size-6 has-text-grey mr-2">
                   1402/08/15
                 </span>
+                <br />
                 <span className="is-size-6 has-text-grey mr-2">
                   رامین مجیدی
                 </span>
@@ -67,15 +67,15 @@ const PopularNews = () => {
                 </h6>
               </div>
               <div className="author mt-4">
-                <span className="is-size-6 has-text-grey ml-2">
+                <span className="is-size-6 has-text-grey mr-2">
                   1402/08/15
                 </span>
+                <br />
                 <span className="is-size-6 has-text-grey mr-2">
                   رامین مجیدی
                 </span>
               </div>
             </div>
-
 
             <div className="column popular-news">
               <div className="popular-img is-relative">
@@ -99,20 +99,20 @@ const PopularNews = () => {
                 </h6>
               </div>
               <div className="author mt-4">
-                <span className="is-size-6 has-text-grey ml-2">
+                <span className="is-size-6 has-text-grey mr-2">
                   1402/08/15
                 </span>
+                <br />
                 <span className="is-size-6 has-text-grey mr-2">
                   رامین مجیدی
                 </span>
               </div>
             </div>
 
-         
           </div>
         </div>
         <div className="column is-one-fifth has-text-centered">
-          <img src={travel} alt="" />
+          <img className="popular_tarvel_img" src={travel} alt="" />
         </div>
       </div>
     </div>
