@@ -17,6 +17,13 @@
   text-align: right;
   text-decoration: none !important;
 }
+body{
+  background-color: whitesmoke !important;
+}
+
+a{
+  color: rgb(36, 36, 36);
+}
 
 
 /* scrollbars ------------------ */
@@ -80,6 +87,16 @@ table tr:nth-child(even) {
 
 table tbody tr:hover {
   background-color: #fffddf;
+}
+
+.container{
+  padding: 0 3rem;
+}
+
+@media(max-width:600px){
+  .container{
+    padding: 0 .5rem;
+  }
 }
 
 @media(max-width:780px) {
