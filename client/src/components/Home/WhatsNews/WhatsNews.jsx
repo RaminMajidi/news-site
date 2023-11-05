@@ -13,7 +13,7 @@ const WhatsNews = () => {
                     </div>
                     <div className="column is-three-quarters-widescreen is-justify-content-center">
                         <div className="whats-news has-background-white p-5">
-                            <div className="whats-news-title is-flex is-justify-content-space-between is-align-items-center">
+                            <div className="whats-news-title is-flex is-flex-wrap-wrap is-justify-content-space-between is-align-items-center">
                                 <div className="whats-news-nav">
                                     <ul className="is-flex">
                                         <li className="ml-5 has-text-weight-bold">

@@ -1,0 +1,27 @@
+.popular-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.popular-img {
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.num-views {
+    position: absolute;
+    background-color: rgb(51, 51, 51);
+    color: #fff;
+    width: 80px;
+    top: 20px;
+    left: -45px;
+    padding: 3px 6px;
+    border-radius: 3rem;
+    font-size: 1.2rem;
+    transition: all .5s ease-in-out;
+}
+
+.popular-img:hover .num-views {
+    left: -8px;
+}
