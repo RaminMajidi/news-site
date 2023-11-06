@@ -5,7 +5,7 @@ const Content = () => {
     return (
         <section className='content-detail'>
             <div className="detail-image">
-                <img src={testImg} alt="" />
+                <img style={{ borderRadius: "10px" }} src={testImg} alt="" />
             </div>
             <div className="detail-title">
                 <h1 className="title mt-5">تست عنوان</h1>
