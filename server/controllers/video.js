@@ -73,7 +73,7 @@ export const getSingleVideo = async (req, res, next) => {
     try {
         // ASC or DESC
         const video = await Video.findOne({ order: [['createdAt', 'DESC']] })
-        res.status(200).json({ data: video })
+        res.status(200).json({ video })
 
     } catch (err) {
         next(err)
