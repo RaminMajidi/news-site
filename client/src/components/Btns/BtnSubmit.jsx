@@ -1,13 +1,15 @@
 import React from 'react'
 
-const BtnSubmit = () => {
+const BtnSubmit = ({ text = "ثیت" }) => {
     return (
         <div className="field">
             <div className="control">
                 <button
                     type='submit'
-                    className='button is-success px-6 mt-6'
-                >ثبت</button>
+                    className='button is-success px-6 mt-4'
+                >
+                    {text}
+                </button>
             </div>
         </div>
     )
