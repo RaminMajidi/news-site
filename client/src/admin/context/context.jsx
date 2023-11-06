@@ -90,7 +90,7 @@ export const AdminContextProvider = ({ children }) => {
                 setToken(token)
             }
         } catch (error) {
-            if (error.response.status === 401) {
+            if (error?.response.status === 401) {
                 navigate('/administrator')
             }
             errorHandler(error)
