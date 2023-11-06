@@ -1,4 +1,5 @@
 import testImg from '@src/assets/images/1.jpeg'
+import Comment from '../comment/Comment'
 
 const Content = () => {
     return (
@@ -14,6 +15,9 @@ const Content = () => {
                     لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
                     لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
                 </p>
+            </div>
+            <div className="comment">
+                <Comment />
             </div>
         </section>
     )

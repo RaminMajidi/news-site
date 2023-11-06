@@ -17,11 +17,12 @@
   text-align: right;
   text-decoration: none !important;
 }
-body{
+
+body {
   background-color: whitesmoke !important;
 }
 
-a{
+a {
   color: rgb(36, 36, 36);
 }
 
@@ -89,16 +90,20 @@ table tbody tr:hover {
   background-color: #fffddf;
 }
 
-.container{
+.container {
   padding: 0 3rem;
 }
 
-.has-background-danger{
+.has-background-danger {
   background-color: #c00 !important;
 }
 
-@media(max-width:600px){
-  .container{
+form.lable_black label {
+  color: #2e2e2e !important;
+}
+
+@media(max-width:600px) {
+  .container {
     padding: 0 .5rem;
   }
 }

@@ -53,7 +53,7 @@ const Contact = () => {
                                 <span>تلفن تماس : </span>
                                 <span>03187654321</span>
                             </div>
-                            <form onSubmit={formik.handleSubmit} id="contact_form">
+                            <form onSubmit={formik.handleSubmit} className='lable_black'>
                                 <Input
                                     label="ایمیل شما"
                                     value={formik.values.email}
