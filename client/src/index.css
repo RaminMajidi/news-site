@@ -93,6 +93,10 @@ table tbody tr:hover {
   padding: 0 3rem;
 }
 
+.has-background-danger{
+  background-color: #c00 !important;
+}
+
 @media(max-width:600px){
   .container{
     padding: 0 .5rem;
