@@ -73,7 +73,7 @@ export const AdminContextProvider = ({ children }) => {
 
     // start **************************
     const refreshToken = async () => {
-        if (location.pathname == "/administrator") return
+        if (location.pathname == "/administrator" || location.pathname == "/" ) return
         try {
             const res = await axios.get(`${BASE_URL}/token`)
             if (res.status === 200) {

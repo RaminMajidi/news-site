@@ -19,7 +19,7 @@ const TopMenu = () => {
                         <div className="column is-one-third is-flex is-justify-content-end">
                             <span className='is-flex is-justify-content-center is-align-items-center '>
                                 <box-icon name='phone' color='green' size="sm"></box-icon>
-                                <span className='mx-2'>09917572781</span>
+                                <span className='mx-2'>09130004321</span>
                             </span>
                         </div>
                     </div>
