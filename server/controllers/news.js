@@ -253,7 +253,7 @@ export const getCategoryNews = async (req, res, next) => {
             }) :
             await News.findAll({ order: ['id', "DESC"] })
 
-        res.status(200).json({ data: news })
+        res.status(200).json({ news })
     } catch (err) {
         next(err)
     }

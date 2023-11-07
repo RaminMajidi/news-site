@@ -9,3 +9,9 @@ export const INITIAL_STATE_LAST_NEWS = {
     error: "",
     lastNews: []
 }
+
+export const INITIAL_STATE_CATEGORY_NEWS = {
+    loading: true,
+    error: "",
+    news: []
+}

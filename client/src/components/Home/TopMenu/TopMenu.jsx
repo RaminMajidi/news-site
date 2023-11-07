@@ -12,13 +12,13 @@ const TopMenu = () => {
                     <div className="columns ">
                         <div className='column is-two-thirds is-flex is-justify-content-start'>
                             <span className='is-flex is-justify-content-center is-align-items-center'>
-                                <box-icon name='envelope' color='red' size="sm" ></box-icon>
+                                <box-icon name='envelope' color='#008fff' size="sm" ></box-icon>
                                 <span className='mx-2'>برقراری ارتباط : example@gmail.com</span>
                             </span>
                         </div>
                         <div className="column is-one-third is-flex is-justify-content-end">
                             <span className='is-flex is-justify-content-center is-align-items-center '>
-                                <box-icon name='phone' color='green' size="sm"></box-icon>
+                                <box-icon name='phone' color='#008fff' size="sm"></box-icon>
                                 <span className='mx-2'>09130004321</span>
                             </span>
                         </div>

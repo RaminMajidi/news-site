@@ -1,9 +1,15 @@
 import "./WhatsNews.css"
 import sendImg from "@src/assets/images/sendnews.jpg"
-import testImg from '@src/assets/images/1.jpeg'
 import { Link, NavLink } from "react-router-dom"
+import { useContext } from "react"
+import { HomeContext } from "@src/context/context"
+import Loader from "@src/components/Loader/Loader"
+import { convertDateToJalali } from "../../../utils/convertDate"
 
 const WhatsNews = () => {
+
+    const { categories, loadingCatNews, catNewsData } = useContext(HomeContext)
+
     return (
         <div id="whats-news" className="py-5">
             <div className="container">
@@ -19,68 +25,49 @@ const WhatsNews = () => {
                                         <li className="ml-5 has-text-weight-bold">
                                             <NavLink to={'/'}>همه</NavLink>
                                         </li>
-                                        <li className="ml-5 has-text-weight-bold">
-                                            <NavLink to={'/'}>طنز</NavLink>
-                                        </li>
-                                        <li className="ml-5 has-text-weight-bold">
-                                            <NavLink to={'/'}>اجتماعی</NavLink>
-                                        </li>
+                                        {
+                                            categories?.map(item => (
+                                                <li key={item.id} className="ml-5 has-text-weight-bold">
+                                                    <NavLink to={'/'}>{item?.name}</NavLink>
+                                                </li>
+                                            ))
+                                        }
                                     </ul>
                                 </div>
                                 <div className="whats-news-name">
                                     <h1 className="is-size-2 title">چه خبر !؟</h1>
                                 </div>
                             </div>
-
-                            <div className="whats-news-post mt-6">
-                                <div className="whats-news-post-item">
-                                    <div className="whats-news-post-item-img">
-                                        <Link to={'/'}>
-                                            <img src={testImg} alt="" />
-                                        </Link>
-                                    </div>
-                                    <div className="whats-news-post-item-desc">
-                                        <Link to={'/'}>
-                                        <p>لورم ایپسوم متن فارسی برای تست است .ورم ایپسوم متن فارسی برای تست است .ورم ایپسوم متن فارسی برای تست است .</p>
-                                        </Link>
-                                        <div className="whats-news-post-item-date">
-                                            <p>1402/08/15</p>
-                                        </div>
-                                    </div>
+                            {loadingCatNews &&
+                                <div className="">
+                                    <Loader />
                                 </div>
-
-                                <div className="whats-news-post-item">
-                                    <div className="whats-news-post-item-img">
-                                        <Link to={'/'}>
-                                            <img src={testImg} alt="" />
-                                        </Link>
-                                    </div>
-                                    <div className="whats-news-post-item-desc">
-                                        <Link to={'/'}>
-                                        <p>لورم ایپسوم متن فارسی برای تست است .ورم ایپسوم متن فارسی برای تست است .ورم ایپسوم متن فارسی برای تست است .</p>
-                                        </Link>
-                                        <div className="whats-news-post-item-date">
-                                            <p>1402/08/15</p>
+                            }
+                            <article className="whats-news-post mt-6">
+                                {(!loadingCatNews && catNewsData) &&
+                                    catNewsData.map(item => (
+                                        <div key={item.id} className="whats-news-post-item">
+                                            <div className="whats-news-post-item-img">
+                                                <Link to={'/'}>
+                                                    <img src={item?.url} alt="" />
+                                                </Link>
+                                            </div>
+                                            <div className="whats-news-post-item-desc">
+                                                <Link to={'/'}>
+                                                    <p className="has-text-justified">
+                                                        {item?.desc}
+                                                    </p>
+                                                </Link>
+                                                <div className="whats-news-post-item-date">
+                                                    <p>
+                                                        {convertDateToJalali(item?.updatededAt)}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div className="whats-news-post-item">
-                                    <div className="whats-news-post-item-img">
-                                        <Link to={'/'}>
-                                            <img src={testImg} alt="" />
-                                        </Link>
-                                    </div>
-                                    <div className="whats-news-post-item-desc">
-                                        <Link to={'/'}>
-                                            <p>لورم ایپسوم متن فارسی برای تست است .ورم ایپسوم متن فارسی برای تست است .ورم ایپسوم متن فارسی برای تست است .</p>
-                                        </Link>
-                                        <div className="whats-news-post-item-date">
-                                            <p>1402/08/15</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    ))
+                                }
+                            </article>
                         </div>
                     </div>
                 </div>

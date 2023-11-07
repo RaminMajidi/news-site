@@ -3,6 +3,18 @@ import Category from "../models/categoryModels.js";
 const error = new Error()
 
 // start ********************************************
+export const getCategoryHome = async (req, res, next) => {
+    try {
+        const categories = await Category.findAll({})
+        res.status(200).json({ categories })
+    } catch (err) {
+        next(err)
+    }
+}
+// end ********************************************
+
+
+// start ********************************************
 export const getCategory = async (req, res, next) => {
     try {
         const categories = await Category.findAll({})
