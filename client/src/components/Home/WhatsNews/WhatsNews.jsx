@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom"
 import { useContext } from "react"
 import { HomeContext } from "@src/context/context"
 import Loader from "@src/components/Loader/Loader"
-import { convertDateToJalali } from "../../../utils/convertDate"
+import { convertDateToJalali } from "@src/utils/convertDate"
 
 const WhatsNews = () => {
 

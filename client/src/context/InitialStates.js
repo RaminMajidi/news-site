@@ -15,3 +15,10 @@ export const INITIAL_STATE_CATEGORY_NEWS = {
     error: "",
     news: []
 }
+
+
+export const INITIAL_STATE_POPULAR_NEWS = {
+    loading: true,
+    error: "",
+    popularNews: []
+}

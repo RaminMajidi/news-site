@@ -4,10 +4,12 @@ import axios from 'axios'
 import { VIDEO_REQUEST, VIDEO_SUCCESS, VIDEO_FAIL } from "./constants/videoConstans"
 import { LAST_NEWS_REQUEST, LAST_NEWS_SUCCESS, LAST_NEWS_FAIL } from "./constants/lastNewsConstans"
 import { CATEGORY_NEWS_REQUEST, CATEGORY_NEWS_SUCCESS, CATEGORY_NEWS_FAIL } from "./constants/categoryNewsConstans"
-import { INITIAL_STATE, INITIAL_STATE_LAST_NEWS, INITIAL_STATE_CATEGORY_NEWS } from "./InitialStates"
+import { INITIAL_STATE, INITIAL_STATE_LAST_NEWS, INITIAL_STATE_CATEGORY_NEWS, INITIAL_STATE_POPULAR_NEWS } from "./InitialStates"
 import { lastNewsRaducer } from "./reducer/lastNewsRaducer"
 import { videoReducer } from "./reducer/videoReducer"
 import { categoryNewsRaducer } from "./reducer/categoryNewsRaducer"
+import { popularNewsRaducer } from "./reducer/popularNewsRaducer"
+import { POPULAR_NEWS_FAIL, POPULAR_NEWS_REQUEST, POPULAR_NEWS_SUCCESS } from "./constants/popularNewsConstans"
 
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -20,6 +22,7 @@ export const HomeContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(videoReducer, INITIAL_STATE)
     const [stateCatNews, catNewsDispatch] = useReducer(categoryNewsRaducer, INITIAL_STATE_CATEGORY_NEWS)
     const [stateLastNews, lastNewsDispatch] = useReducer(lastNewsRaducer, INITIAL_STATE_LAST_NEWS)
+    const [statePopularNews, popularNewsDispatch] = useReducer(popularNewsRaducer, INITIAL_STATE_POPULAR_NEWS)
 
     const [categories, setCategories] = useState(null);
 
@@ -80,6 +83,22 @@ export const HomeContextProvider = ({ children }) => {
     }
     // end ******
 
+        // start ******
+        const loadPopularNews = async () => {
+            try {
+                popularNewsDispatch({ type: POPULAR_NEWS_REQUEST })
+                const res = await axios.get(`${BASE_URL}/api/News/popular-news`)
+                if (res.status === 200) {
+                    const data = await res.data.news
+                    popularNewsDispatch({ type: POPULAR_NEWS_SUCCESS, payload: data })
+                }
+    
+            } catch (error) {
+                popularNewsDispatch({ type: POPULAR_NEWS_FAIL, payload: error.response.data.message })
+                errorHandler(error)
+            }
+        }
+        // end ******
 
 
 
@@ -105,6 +124,7 @@ export const HomeContextProvider = ({ children }) => {
         loadLastNews()
         loadCategory()
         loadCatNews()
+        loadPopularNews()
     }, [])
 
 
@@ -116,10 +136,10 @@ export const HomeContextProvider = ({ children }) => {
             loadingLastNews: stateLastNews.loading,
             errorLastNews: stateLastNews.error,
             lastNewsData: stateLastNews.lastNews,
-            loadingCatNews:stateCatNews.loading,
-            errorCatNews:stateCatNews.error,
-            catNewsData:stateCatNews.news,
-            
+            loadingCatNews: stateCatNews.loading,
+            errorCatNews: stateCatNews.error,
+            catNewsData: stateCatNews.news,
+
             categories: categories
 
         }}>

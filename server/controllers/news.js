@@ -233,7 +233,7 @@ export const getPopularNews = async (req, res, next) => {
             }]
         })
 
-        res.status(200).json({ data: news })
+        res.status(200).json({ news })
 
     } catch (err) {
         next(err)
