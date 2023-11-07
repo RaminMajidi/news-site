@@ -17,7 +17,7 @@ const LastVideo = () => {
                             <video
                                 width="100%"
                                 height="100%"
-                                src={videos.url}
+                                src={videos?.url}
                                 controls>
                             </video>
                         )

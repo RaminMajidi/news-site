@@ -1,4 +1,3 @@
-
 .popular-image {
     width: 100%;
     height: 100%;
@@ -27,10 +26,18 @@
     left: -8px;
 }
 
-.popular_tarvel_img{
+.popular_tarvel_img {
     width: 100%;
+    height: 100%;
     max-width: 250px;
-    object-fit: cover;
-    -o-object-fit: cover;
 }
 
+.popular-title a{
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    max-width: 240px;
+}

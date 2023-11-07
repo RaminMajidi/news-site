@@ -1,119 +1,39 @@
-import { Link } from "react-router-dom"
 import "./PopularNews.css"
-import pImg from '@src/assets/images/1.jpeg'
-import travel from '@src/assets/images/traveling.jpg'
+import { useContext } from "react"
+import { HomeContext } from "../../../context/context"
+import Loader from "../../Loader/Loader"
+import PopularItem from "./PopularItem"
+import PopularTitle from "./PopularTitle"
+import Baner from "./Baner"
 
 const PopularNews = () => {
+
+  const { loadingPopularNews, popularNewsData } = useContext(HomeContext)
+
+  
   return (
     <div className="container mt-6">
       <div className="columns">
-        <div className="column is-four-fifths has-background-white p-4">
-          <div className="popular mb-5">
-            <h1>محبوبترین اخبار</h1>
+        {loadingPopularNews &&
+          <div className="column is-four-fifths has-background-white p-4">
+            <Loader />
           </div>
-          <div className="columns is-flex is-flex-wrap-wrap">
+        }
 
-            <div className="column popular-news">
-              <div className="popular-img is-relative">
-                <Link to={'/'}>
-                  <img
-                    className="is-fullwidth popular-image"
-                    src={pImg} alt="" />
-                </Link>
-                <div className="num-views is-flex is-align-items-center is-justify-content-space-between">
-                  <box-icon name='show-alt' color="#fff" size="sm"></box-icon>
-                  <span className="mx-2">
-                    167
-                  </span>
-                </div>
-              </div>
-              <div className="popular-title">
-                <h6 className="is-flex has-text-weight-bold is-size-5">
-                  <Link to={'/'}>
-                    تست عنوان
-                  </Link>
-                </h6>
-              </div>
-              <div className="author mt-4">
-                <span className="is-size-6 has-text-grey mr-2">
-                  1402/08/15
-                </span>
-                <br />
-                <span className="is-size-6 has-text-grey mr-2">
-                  رامین مجیدی
-                </span>
-              </div>
+        {(!loadingPopularNews && popularNewsData) &&
+
+          <div className="column is-four-fifths has-background-white p-4">
+            <PopularTitle />
+            <div className="columns is-flex is-flex-wrap-wrap">
+              {
+                popularNewsData.map(item => (
+                  <PopularItem key={item.id} news={item} />
+                ))
+              }
             </div>
-
-            <div className="column popular-news">
-              <div className="popular-img is-relative">
-                <Link to={'/'}>
-                  <img
-                    className="is-fullwidth popular-image"
-                    src={pImg} alt="" />
-                </Link>
-                <div className="num-views is-flex is-align-items-center is-justify-content-space-between">
-                  <box-icon name='show-alt' color="#fff" size="sm"></box-icon>
-                  <span className="mx-2">
-                    167
-                  </span>
-                </div>
-              </div>
-              <div className="popular-title">
-                <h6 className="is-flex has-text-weight-bold is-size-5">
-                  <Link to={'/'}>
-                    تست عنوان
-                  </Link>
-                </h6>
-              </div>
-              <div className="author mt-4">
-                <span className="is-size-6 has-text-grey mr-2">
-                  1402/08/15
-                </span>
-                <br />
-                <span className="is-size-6 has-text-grey mr-2">
-                  رامین مجیدی
-                </span>
-              </div>
-            </div>
-
-            <div className="column popular-news">
-              <div className="popular-img is-relative">
-                <Link to={'/'}>
-                  <img
-                    className="is-fullwidth popular-image"
-                    src={pImg} alt="" />
-                </Link>
-                <div className="num-views is-flex is-align-items-center is-justify-content-space-between">
-                  <box-icon name='show-alt' color="#fff" size="sm"></box-icon>
-                  <span className="mx-2">
-                    167
-                  </span>
-                </div>
-              </div>
-              <div className="popular-title">
-                <h6 className="is-flex has-text-weight-bold is-size-5">
-                  <Link to={'/'}>
-                    تست عنوان
-                  </Link>
-                </h6>
-              </div>
-              <div className="author mt-4">
-                <span className="is-size-6 has-text-grey mr-2">
-                  1402/08/15
-                </span>
-                <br />
-                <span className="is-size-6 has-text-grey mr-2">
-                  رامین مجیدی
-                </span>
-              </div>
-            </div>
-
           </div>
-        </div>
-        <div className="column is-one-fifth has-text-centered">
-          <img className="popular_tarvel_img" src={travel} alt="" />
-        </div>
+        }
+        <Baner />
       </div>
     </div>
   )

@@ -37,7 +37,10 @@ export const HomeContextProvider = ({ children }) => {
             }
 
         } catch (error) {
-            dispatch({ type: VIDEO_FAIL, payload: error.response.data.message })
+            dispatch({
+                type: VIDEO_FAIL,
+                payload: error?.response?.data?.message
+            })
             errorHandler(error)
         }
     }
@@ -59,7 +62,7 @@ export const HomeContextProvider = ({ children }) => {
         } catch (error) {
             lastNewsDispatch({
                 type: LAST_NEWS_FAIL,
-                payload: error.response.data.message
+                payload: error?.response?.data?.message
             })
             errorHandler(error)
         }
@@ -77,28 +80,34 @@ export const HomeContextProvider = ({ children }) => {
             }
 
         } catch (error) {
-            catNewsDispatch({ type: CATEGORY_NEWS_FAIL, payload: error.response.data.message })
+            catNewsDispatch({
+                type: CATEGORY_NEWS_FAIL,
+                payload: error?.response?.data?.message
+            })
             errorHandler(error)
         }
     }
     // end ******
 
-        // start ******
-        const loadPopularNews = async () => {
-            try {
-                popularNewsDispatch({ type: POPULAR_NEWS_REQUEST })
-                const res = await axios.get(`${BASE_URL}/api/News/popular-news`)
-                if (res.status === 200) {
-                    const data = await res.data.news
-                    popularNewsDispatch({ type: POPULAR_NEWS_SUCCESS, payload: data })
-                }
-    
-            } catch (error) {
-                popularNewsDispatch({ type: POPULAR_NEWS_FAIL, payload: error.response.data.message })
-                errorHandler(error)
+    // start ******
+    const loadPopularNews = async () => {
+        try {
+            popularNewsDispatch({ type: POPULAR_NEWS_REQUEST })
+            const res = await axios.get(`${BASE_URL}/api/News/popular-news`)
+            if (res.status === 200) {
+                const data = await res.data.news
+                popularNewsDispatch({ type: POPULAR_NEWS_SUCCESS, payload: data })
             }
+
+        } catch (error) {
+            popularNewsDispatch({
+                type: POPULAR_NEWS_FAIL,
+                payload: error?.response?.data?.message
+            })
+            errorHandler(error)
         }
-        // end ******
+    }
+    // end ******
 
 
 
@@ -139,6 +148,9 @@ export const HomeContextProvider = ({ children }) => {
             loadingCatNews: stateCatNews.loading,
             errorCatNews: stateCatNews.error,
             catNewsData: stateCatNews.news,
+            loadingPopularNews: statePopularNews.loading,
+            errorPopularNews: statePopularNews.error,
+            popularNewsData: statePopularNews.popularNews,
 
             categories: categories
 
