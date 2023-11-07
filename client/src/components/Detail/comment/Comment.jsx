@@ -1,41 +1,30 @@
 import Input from '@src/components/formInputs/Input'
 import Textarea from '@src/components/formInputs/Textarea'
 import BtnSubmit from "@src/components/btns/BtnSubmit"
-import * as Yup from 'yup'
 import { useFormik } from "formik"
 import ViewComment from './ViewComment'
-
-
-const formSchema = Yup.object({
-    comment: Yup.string()
-        .required('پر کردن فیلد الزامی است')
-    ,
-    name: Yup.string()
-        .required('پر کردن فیلد الزامی است')
-    ,
-    email: Yup.string()
-        .email("لطفا فرمت ایمیل را رعایت کنید")
-        .required('پر کردن فیلد الزامی است')
-    ,
-    subject: Yup.string()
-        .required('پر کردن فیلد الزامی است')
-
-})
+import { useParams } from "react-router-dom"
+import { useContext } from 'react'
+import { HomeContext } from '@src/context/context'
+import { formSchema } from './core'
 
 
 const Comment = () => {
 
+    const { id } = useParams()
+    const { createComment } = useContext(HomeContext)
 
     // start ********************
     const formik = useFormik({
         initialValues: {
-            comment: "",
+            newsId: id,
+            description: "",
             name: "",
             email: "",
             subject: ""
         },
         onSubmit: (values) => {
-            console.log(values);
+            createComment(values)
         },
         validationSchema: formSchema
     })
@@ -48,13 +37,13 @@ const Comment = () => {
                 <form className='lable_black ' onSubmit={formik.handleSubmit}>
                     <Textarea
                         label="نظر شما"
-                        value={formik.values.comment}
-                        onChange={formik.handleChange('comment')}
-                        onBlur={formik.handleBlur('comment')}
+                        value={formik.values.description}
+                        onChange={formik.handleChange('description')}
+                        onBlur={formik.handleBlur('description')}
                         className='textarea has-background-grey-lighter'
                         placeholder='متن نظر شما'
-                        errorCondition={formik.touched.comment}
-                        errorMessage={formik.errors.comment}
+                        errorCondition={formik.touched.description}
+                        errorMessage={formik.errors.description}
                     />
                     <div className='columns'>
                         <div className="column">

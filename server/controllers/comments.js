@@ -105,8 +105,10 @@ export const getNewsComment = async (req, res, next) => {
 
     try {
         const newsId = req.params.newsId
-        const comments = await Comments.findAll({ where: { newsId: newsId } })
-        res.status(200).json({ data: comments })
+        const comments = await Comments.findAll({
+            where: { newsId: newsId, isActive: false }
+        })
+        res.status(200).json({ comments })
 
     } catch (err) {
         next(err)

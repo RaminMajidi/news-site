@@ -2,8 +2,8 @@ import { toast } from "react-toastify"
 
 export const errorHandler = async (
     error,
-    position = 'top-left',
     autoClose = 2000,
+    position = 'top-left',
     closeOnClick = true,
     pauseOnHover = true
 ) => {
@@ -18,8 +18,8 @@ export const errorHandler = async (
 
 export const successHandler = async (
     message = "عملیات موفقیت آمیز بود",
-    position = 'top-left',
     autoClose = 2000,
+    position = 'top-left',
     closeOnClick = true,
     pauseOnHover = true
 ) => {

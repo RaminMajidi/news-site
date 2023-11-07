@@ -91,7 +91,7 @@ export const AdminContextProvider = ({ children }) => {
             }
         } catch (error) {
             if (error?.response.status === 401) {
-                navigate('/administrator')
+                navigate('/')
             }
             errorHandler(error)
         }

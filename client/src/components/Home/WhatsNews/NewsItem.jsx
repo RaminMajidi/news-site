@@ -5,12 +5,12 @@ const NewsItem = ({ news }) => {
     return (
         <div className="whats-news-post-item">
             <div className="whats-news-post-item-img">
-                <Link to={'/'}>
+                <Link to={`/detail/${news.id}`} state={news}>
                     <img src={news?.url} alt="" />
                 </Link>
             </div>
             <div className="whats-news-post-item-desc">
-                <Link to={'/'}>
+                <Link to={`/detail/${news.id}`} state={news}>
                     <p className="has-text-justified">
                         {news?.desc}
                     </p>

@@ -1,19 +1,21 @@
-import testImg from '@src/assets/images/1.jpeg'
 import Comment from '../comment/Comment'
 
-const Content = () => {
+const Content = ({ data }) => {
     return (
         <section className='content-detail'>
             <div className="detail-image">
-                <img style={{ borderRadius: "10px" }} src={testImg} alt="" />
+                <img
+                    style={{ borderRadius: "10px" }}
+                    src={data?.url}
+                    alt=""
+                />
             </div>
             <div className="detail-title">
-                <h1 className="title mt-5">تست عنوان</h1>
+                <h1 className="title mt-5">{data?.title}</h1>
             </div>
             <div className="detail-description">
-                <p className="description mt-5">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+                <p className="description mt-5 has-text-justified">
+                   {data?.desc}
                 </p>
             </div>
             <div className="comment">

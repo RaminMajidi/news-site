@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer, useState } from "react"
-import { errorHandler } from "@src/utils/toast"
+import { errorHandler, successHandler } from "@src/utils/toast"
 import axios from 'axios'
 import { VIDEO_REQUEST, VIDEO_SUCCESS, VIDEO_FAIL } from "./constants/videoConstans"
 import { LAST_NEWS_REQUEST, LAST_NEWS_SUCCESS, LAST_NEWS_FAIL } from "./constants/lastNewsConstans"
@@ -111,6 +111,21 @@ export const HomeContextProvider = ({ children }) => {
 
 
 
+    // start ******
+    const createComment = async (vlalus) => {
+        try {
+            const res = await axios.post(`${BASE_URL}/api/create-comment`, vlalus)
+            if (res.status === 200) {
+                successHandler(res.data?.message, 4000)
+            }
+
+        } catch (error) {
+            errorHandler(error, 4000)
+        }
+    }
+    // end ******
+
+    
 
     // start ******
     const loadCategory = async () => {
@@ -152,7 +167,8 @@ export const HomeContextProvider = ({ children }) => {
             errorPopularNews: statePopularNews.error,
             popularNewsData: statePopularNews.popularNews,
 
-            categories: categories
+            categories: categories,
+            createComment
 
         }}>
             {children}

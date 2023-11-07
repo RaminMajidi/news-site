@@ -1,45 +1,69 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import Loader from "@src/components/Loader/Loader"
+import { errorHandler, successHandler } from '../../../utils/toast'
+import axios from 'axios'
+import CommentBox from './CommentBox'
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const ViewComment = () => {
+    const { id } = useParams()
+    const [loading, setLoading] = useState(false)
+    const [data, setData] = useState(null)
+
+
+    // start ******
+    const getNewsComment = async (newsId) => {
+        try {
+            setLoading(true)
+            const res = await axios.get(`${BASE_URL}/api/comment/${newsId}`)
+            if (res.status === 200) {
+                const data = await res.data.comments
+                setData(data)
+            }
+
+        } catch (error) {
+            errorHandler(error, 4000)
+        } finally {
+            setLoading(false)
+        }
+    }
+    // end ******
+
+
+    useEffect(() => {
+        getNewsComment(id)
+    }, [])
+
+
+
     return (
-        <div className='comment-view my-5'>
-            <div className="box">
-                <div className="name is-size-5">
-                    رامین مجیدی
-                </div>
-                <div className="subject has-text-grey">
-                    <div className="pr-2 mt-2 is-flex">
-                        <box-icon name='subdirectory-left'></box-icon>
-                        <span className='pr-2  is-size-6'>موضوع فلان</span>
-                    </div>
-                </div>
-                <div className="desc pt-4 ">
-                    <p className='has-text-justified'>
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                    </p>
-                </div>
-            </div>
+        <>
 
-            <div className="box">
-                <div className="name is-size-5">
-                    رامین مجیدی
+            {loading &&
+                <div className='comment-view my-5 py-3 has-background-white'>
+                    <Loader />
                 </div>
-                <div className="subject has-text-grey">
-                    <div className="pr-2 mt-2 is-flex">
-                        <box-icon name='subdirectory-left'></box-icon>
-                        <span className='pr-2  is-size-6'>موضوع فلان</span>
-                    </div>
-                </div>
-                <div className="desc pt-4 ">
-                    <p className='has-text-justified'>
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                    </p>
-                </div>
-            </div>
+            }
+            {(!loading && data?.length > 0) &&
+                <div className='comment-view my-5'>
+                    {
+                        data.map(item => (
+                            <CommentBox key={item.id} comment={item} />
+                        ))
+                    }
 
-        </div>
+                </div>
+            }
+
+            {(!loading && data?.length == 0) &&
+                <div className='comment-view my-5 py-3 has-background-white'>
+                    <h3 className='px-3 py-4'>هیچ نظری برای این خبر ثبت نشده است ، شما اولین نظر را ارسال کنید.</h3>
+                </div>
+            }
+        </>
+
     )
 }
 
