@@ -19,6 +19,7 @@ export const AdminContextProvider = ({ children }) => {
     const [categoryList, setCategoryList] = useState(null)
     const [singleNews, setSingleNews] = useState(null)
     const [videoList, setVideoList] = useState(null)
+    const [commentList, setCommentList] = useState(null)
 
 
     //Axios code start ***************
@@ -70,10 +71,8 @@ export const AdminContextProvider = ({ children }) => {
 
 
     // Authentication APIs code satrt
-
-    // start **************************
     const refreshToken = async () => {
-        if (location.pathname == "/administrator" || location.pathname == "/" ) return
+        if (location.pathname == "/administrator" || location.pathname == "/") return
         try {
             const res = await axios.get(`${BASE_URL}/token`)
             if (res.status === 200) {
@@ -96,9 +95,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *******
 
-    // start ***********************
     const login = async (inputs) => {
         try {
             const res = await axios.post(`${BASE_URL}/api/users/login`, inputs)
@@ -119,9 +116,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end ********
 
-    // start ***********************
     const logOut = async () => {
         try {
             const res = await axiosJWT.delete(`/api/users/logout`)
@@ -133,14 +128,10 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end ********
-
     // Authentication APIs code end
 
 
     // News APIs code start 
-
-    // start *********************
     const createNews = async (data) => {
         const formData = new FormData();
         formData.append('title', data.title)
@@ -159,9 +150,7 @@ export const AdminContextProvider = ({ children }) => {
         }
 
     }
-    // end *********
 
-    // start ************************
     const getAllNews = async () => {
         try {
             const res = await axiosJWT(`/api/news`)
@@ -172,9 +161,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end **********
 
-    // start *************************
     const deleteNews = async (id) => {
         try {
             const res = await axiosJWT.delete(`/api/news/${id}`)
@@ -187,9 +174,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end ********
 
-    // start *************************
     const getNewsById = async (id) => {
         try {
             const res = await axiosJWT.get(`/api/news/${id}`)
@@ -200,10 +185,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *******
 
-
-    // start **************************
     const editNews = async (data) => {
         const formData = new FormData();
         formData.append('title', data.title)
@@ -221,15 +203,10 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *********
-
     // News APIs code end
 
 
-
     // Ctegories APIs start
-
-    // start *******************
     const getCategory = async () => {
         try {
             const res = await axiosJWT.get(`/api/get-category`)
@@ -241,9 +218,6 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *******
-
-    // start *******************
 
     const addCategory = async (value) => {
         try {
@@ -256,9 +230,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *******
 
-    // start *******************
     const editCategory = async (value) => {
         try {
             const res = await axiosJWT.put(`/api/update-category/${value.id}`, value)
@@ -270,9 +242,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *******
 
-    // start *******************
     const deleteCategory = async (id) => {
         try {
             const res = await axiosJWT.delete(`/api/delete-category/${id}`)
@@ -285,16 +255,10 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *******
-
-
     // Ctegories APIs end
 
 
-
     // Videos APIs start
-
-    // start *******************
     const getAllVideo = async () => {
         try {
             const res = await axiosJWT(`/api/allVideo`)
@@ -305,9 +269,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end ********
 
-    // start **********************
     const createVideo = async (data) => {
         const formData = new FormData()
         formData.append('file', data.file)
@@ -321,9 +283,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *********
 
-    // start **********************
     const deleteVideo = async (id) => {
 
         try {
@@ -336,17 +296,10 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *********
-
-
-
-
     // Videos APIs end
 
 
     // Users APIs start
-
-    // start **********************
     const getAllUser = async () => {
 
         try {
@@ -358,10 +311,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *********
 
-
-    // start **********************
     const deleteUser = async (id) => {
 
         try {
@@ -374,10 +324,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *********
 
-
-    // start **********************
     const addNewUser = async (values) => {
 
         try {
@@ -390,9 +337,7 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
-    // end *********
 
-    // start **********************
     const updateUser = async (values, id) => {
         try {
             const res = await axiosJWT.put(`/api/users/${id}`, values)
@@ -406,9 +351,7 @@ export const AdminContextProvider = ({ children }) => {
         }
 
     }
-    // end *********
 
-    // start **********************
     const updateProfile = async (data, id) => {
         try {
             const formData = new FormData()
@@ -427,17 +370,38 @@ export const AdminContextProvider = ({ children }) => {
         }
 
     }
-    // end *********
-
     // Users APIs end
 
+    // Comments APIs start
+    const getAllComment = async () => {
+        try {
+            const res = await axiosJWT.get(`${BASE_URL}/api/comments`)
+            if (res.status === 200) {
+                const data = await res.data.comments
+                setCommentList(data)
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+    }
+    const deleteComment = async (id) => {
+        try {
+            const res = await axiosJWT.delete(`${BASE_URL}/api/comment/${id}`)
+            if (res.status === 200) {
+                getAllComment()
+                successHandler(res?.data?.message)
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+    }
+    // Comments APIs end
 
 
-    // start ***************
     useEffect(() => {
         refreshToken()
     }, [])
-    // end ******
+
 
     return (
         <AdminContext.Provider value={{
@@ -467,7 +431,10 @@ export const AdminContextProvider = ({ children }) => {
             addNewUser,
             updateUser,
             updateProfile,
-            logOut
+            logOut,
+            getAllComment,
+            commentList,
+            deleteComment
         }}>
             {children}
         </AdminContext.Provider>

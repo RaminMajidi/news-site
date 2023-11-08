@@ -7,7 +7,7 @@ export const getAllComment = async (req, res, next) => {
 
     try {
         const comments = await Comments.findAll({})
-        res.status(200).json({ data: comments })
+        res.status(200).json({ comments })
     } catch (err) {
         next(err)
     }
@@ -50,7 +50,7 @@ export const updateComment = async (req, res, next) => {
             })
 
         if (comment == 1) {
-            return res.status(200).json({ message: 'عملیات با موفقیت انجام شد', data: comment })
+            return res.status(200).json({ message: 'عملیات با موفقیت انجام شد', comment })
         }
         error.message = "آیتمی یافت نشد ، عملیات ناموفق"
         error.status = 404
@@ -67,7 +67,7 @@ export const deleteComment = async (req, res, next) => {
     try {
         const comment = await Comments.destroy({ where: { id: req.params.id } })
         if (comment) {
-            return res.status(200).json({ message: "عملیات با موفقیت انجام شد", data: comment })
+            return res.status(200).json({ message: "عملیات حذف با موفقیت انجام شد" })
         }
         error.message = "آیتمی یافت نشد ، عملیات ناموفق"
         error.status = 404

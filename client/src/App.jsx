@@ -16,6 +16,7 @@ import Home from '@src/pages/Home';
 import About from '@src/pages/About';
 import Contact from '@src/pages/Contact';
 import Detail from '@src/pages/Detail';
+import ViewComments from './admin/dashbord/components/comment/ViewComments';
 
 
 const App = () => {
@@ -50,6 +51,9 @@ const App = () => {
                 <Route path='/add-user' element={<AddOrEditUser />} />
                 <Route path='/edit-user/:id' element={<AddOrEditUser />} />
                 <Route path='/edit-profile/:id' element={<ProfileUpdate />} />
+
+
+                <Route path='/view-comments' element={<ViewComments />} />
 
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<NotFound />} />

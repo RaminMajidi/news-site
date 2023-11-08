@@ -66,15 +66,15 @@ const Sidbar = () => {
                     </NavLink>
                 </li>
 
-                {/* <li className="">
+                <li className="">
                     <NavLink
                         className={({ isActive }) =>
                             isActive ? "nav_linK active" : "nav_linK"
                         }
-                        to={''}>
+                        to={'/view-comments'}>
                         نظرات
                     </NavLink>
-                </li> */}
+                </li>
 
                 <li className="">
                     <span
