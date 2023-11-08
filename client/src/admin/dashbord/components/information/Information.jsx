@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import "./Information.css"
 import { Link } from "react-router-dom"
 import InfoItem from "./InfoItem"
 import userImage from "@src/assets/images/profile.png"
-import { AdminContext } from "../../../context/context"
+import { AdminContext } from "@src/admin/context/context"
 
 const Information = () => {
 
@@ -56,7 +56,6 @@ const Information = () => {
           classStyle={'has-background-success has-text-light p-5 '}
         />
       </div>
-
     </div>
   )
 }

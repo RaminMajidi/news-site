@@ -209,7 +209,7 @@ export const getDetailNews = async (req, res, next) => {
         if (news) {
             const numViews = news.numViews + 1;
             await News.update({ numViews }, { where: { id: req.params.id } })
-            return res.status(200).json({ data: news })
+            return res.status(200).json({ news })
         }
         error.message = "آیتمی یافت نشد"
         error.statusCode = 404

@@ -20,7 +20,7 @@ const PopularItem = ({ news }) => {
             </div>
             <div className="popular-title">
                 <h6 className="is-flex has-text-weight-bold is-size-6">
-                    <Link to={`/detail/${news.id}`} state={news}>
+                    <Link to={`/detail/${news.id}`}>
                         {news?.title}
                     </Link>
                 </h6>

@@ -125,7 +125,7 @@ export const HomeContextProvider = ({ children }) => {
     }
     // end ******
 
-    
+
 
     // start ******
     const loadCategory = async () => {
@@ -168,7 +168,8 @@ export const HomeContextProvider = ({ children }) => {
             popularNewsData: statePopularNews.popularNews,
 
             categories: categories,
-            createComment
+            createComment,
+            loadPopularNews
 
         }}>
             {children}
