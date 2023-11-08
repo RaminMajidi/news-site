@@ -7,7 +7,7 @@ import "./ViewComments.css"
 
 const ViewComments = () => {
 
-    const { getAllComment, commentList, deleteComment } = useContext(AdminContext)
+    const { getAllComment, commentList, deleteComment, changeActiveComment } = useContext(AdminContext)
     const [showModal, setShowModal] = useState(false)
     const [commentId, setCommentId] = useState(null)
 
@@ -41,9 +41,17 @@ const ViewComments = () => {
                                 <td>
                                     {
                                         item.isActive ? (
-                                            <button className="button is-success">فعال</button>
+                                            <button
+                                                onClick={() => changeActiveComment(item.id, 0)}
+                                                className="button is-success">
+                                                فعال
+                                            </button>
                                         ) : (
-                                            <button className="button is-warning">غیرفعال</button>
+                                            <button
+                                                onClick={() => changeActiveComment(item.id, 1)}
+                                                className="button is-warning">
+                                                غیرفعال
+                                            </button>
                                         )
                                     }
                                 </td>

@@ -384,9 +384,24 @@ export const AdminContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
+
     const deleteComment = async (id) => {
         try {
             const res = await axiosJWT.delete(`${BASE_URL}/api/comment/${id}`)
+            if (res.status === 200) {
+                getAllComment()
+                successHandler(res?.data?.message)
+            }
+        } catch (error) {
+            errorHandler(error)
+        }
+    }
+
+    const changeActiveComment = async (id, isActive) => {
+        try {
+            const res = await axiosJWT.put(`${BASE_URL}/api/comment/active/${id}`, {
+                isActive: isActive
+            })
             if (res.status === 200) {
                 getAllComment()
                 successHandler(res?.data?.message)
@@ -434,7 +449,8 @@ export const AdminContextProvider = ({ children }) => {
             logOut,
             getAllComment,
             commentList,
-            deleteComment
+            deleteComment,
+            changeActiveComment
         }}>
             {children}
         </AdminContext.Provider>
