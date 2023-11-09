@@ -6,6 +6,9 @@ import Textarea from '@src/components/formInputs/Textarea'
 import BtnSubmit from "@src/components/btns/BtnSubmit"
 import * as Yup from 'yup'
 import { useFormik } from "formik"
+import { useContext, useState } from "react"
+import { HomeContext } from "../context/context"
+import BtnLoading from "../components/Btns/BtnLoading"
 
 
 const formSchema = Yup.object({
@@ -21,6 +24,8 @@ const formSchema = Yup.object({
 
 const Contact = () => {
 
+    const { sendEmailHandler } = useContext(HomeContext)
+    const [isLoading, setIsloading] = useState(false)
 
     // start ********************
     const formik = useFormik({
@@ -30,7 +35,7 @@ const Contact = () => {
             message: ""
         },
         onSubmit: (values) => {
-            console.log(values);
+            sendEmailHandler(values,setIsloading);
         },
         validationSchema: formSchema
     })
@@ -87,7 +92,13 @@ const Contact = () => {
                                     errorCondition={formik.touched.message}
                                     errorMessage={formik.errors.message}
                                 />
-                                <BtnSubmit text="ارسال" />
+                                {isLoading ? (
+                                    <BtnLoading />
+                                ) : (
+                                    <BtnSubmit text="ارسال" />
+                                )
+                                }
+
                             </form>
                         </div>
                     </div>

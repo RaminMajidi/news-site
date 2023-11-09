@@ -10,7 +10,7 @@ import { videoReducer } from "./reducer/videoReducer"
 import { categoryNewsRaducer } from "./reducer/categoryNewsRaducer"
 import { popularNewsRaducer } from "./reducer/popularNewsRaducer"
 import { POPULAR_NEWS_FAIL, POPULAR_NEWS_REQUEST, POPULAR_NEWS_SUCCESS } from "./constants/popularNewsConstans"
-
+import { useNavigate } from "react-router-dom"
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -18,6 +18,7 @@ export const HomeContext = createContext()
 
 
 export const HomeContextProvider = ({ children }) => {
+    const navigate = useNavigate()
 
     const [state, dispatch] = useReducer(videoReducer, INITIAL_STATE)
     const [stateCatNews, catNewsDispatch] = useReducer(categoryNewsRaducer, INITIAL_STATE_CATEGORY_NEWS)
@@ -112,10 +113,11 @@ export const HomeContextProvider = ({ children }) => {
 
 
     // start ******
-    const createComment = async (vlalus) => {
+    const createComment = async (vlalus, formik) => {
         try {
             const res = await axios.post(`${BASE_URL}/api/create-comment`, vlalus)
             if (res.status === 200) {
+                formik.resetForm()
                 successHandler(res.data?.message, 4000)
             }
 
@@ -140,6 +142,27 @@ export const HomeContextProvider = ({ children }) => {
             errorHandler(error)
         }
     }
+    // end ******
+
+
+    // start ******
+    const sendEmailHandler = async (values, setIsloading) => {
+        try {
+            setIsloading(true)
+            const res = await axios.post(`${BASE_URL}/api/sendEmial`, values)
+            if (res.status === 200) {
+                successHandler(res.data.message, 4000)
+                navigate('/')
+            }
+
+        } catch (error) {
+            errorHandler(error, 4000)
+        } finally {
+            setIsloading(false)
+        }
+
+    }
+
     // end ******
 
 
@@ -169,8 +192,8 @@ export const HomeContextProvider = ({ children }) => {
 
             categories: categories,
             createComment,
-            loadPopularNews
-
+            loadPopularNews,
+            sendEmailHandler
         }}>
             {children}
         </HomeContext.Provider>

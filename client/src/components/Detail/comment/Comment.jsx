@@ -23,8 +23,8 @@ const Comment = () => {
             email: "",
             subject: ""
         },
-        onSubmit: (values) => {
-            createComment(values)
+        onSubmit: (values,formik) => {
+            createComment(values,formik)
         },
         validationSchema: formSchema
     })
