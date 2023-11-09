@@ -42,7 +42,7 @@ const Detail = () => {
     if (id) {
       getDetailNews(id)
     }
-  }, [])
+  }, [id])
 
   return (
     <Layout>

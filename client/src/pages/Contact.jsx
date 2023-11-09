@@ -66,7 +66,7 @@ const Contact = () => {
                                     onBlur={formik.handleBlur('email')}
                                     name='email'
                                     type="email"
-                                    placeholder="exampel2gmail.com"
+                                    placeholder="exampel@gmail.com"
                                     errorCondition={formik.touched.email}
                                     errorMessage={formik.errors.email}
                                 />

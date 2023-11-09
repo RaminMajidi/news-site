@@ -6,7 +6,7 @@ const PopularItem = ({ news }) => {
     return (
         <div className="column popular-news">
             <div className="popular-img is-relative">
-                <Link to={`/detail/${news.id}`} state={news}>
+                <Link to={`/detail/${news.id}`}>
                     <img
                         className="is-fullwidth popular-image"
                         src={news?.url} alt={news?.title} />
