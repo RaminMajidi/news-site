@@ -17,9 +17,12 @@ import About from '@src/pages/About';
 import Contact from '@src/pages/Contact';
 import Detail from '@src/pages/Detail';
 import ViewComments from './admin/dashbord/components/comment/ViewComments';
-
+import { useContext } from 'react';
+import { AdminContext } from './admin/context/context';
+import AdminCheck from './admin/authCheck/AdminCheck';
 
 const App = () => {
+    const { userData } = useContext(AdminContext)
     // console.error = () => { }
     // console.log = () => { }
     return (
@@ -31,30 +34,34 @@ const App = () => {
                 <Route path='/contact' element={<Contact />} />
                 <Route path='/detail/:id' element={<Detail />} />
 
-
                 <Route path="/administrator" element={<Login />} />
+                {userData &&
+                    <>
+                        <Route path="/main" element={<Main />} />
 
-                <Route path="/main" element={<Main />} />
+                        <Route element={<AdminCheck />} >
+                            <Route path="/view-news" element={<ViewNews />} />
+                            <Route path="/add-news" element={<AddOrEditNews />} />
+                            <Route path="/edit-news/:id" element={<AddOrEditNews />} />
 
-                <Route path="/view-news" element={<ViewNews />} />
-                <Route path="/add-news" element={<AddOrEditNews />} />
-                <Route path="/edit-news/:id" element={<AddOrEditNews />} />
+                            <Route path="/view-category" element={<ViewCategories />} />
+                            <Route path="/add-category" element={<AddOrEditCategory />} />
+                            <Route path="/edit-category/:id" element={<AddOrEditCategory />} />
 
-                <Route path="/view-category" element={<ViewCategories />} />
-                <Route path="/add-category" element={<AddOrEditCategory />} />
-                <Route path="/edit-category/:id" element={<AddOrEditCategory />} />
+                            <Route path='/view-video' element={<ViewVideo />} />
+                            <Route path='/add-video' element={<AddVideo />} />
 
-                <Route path='/view-video' element={<ViewVideo />} />
-                <Route path='/add-video' element={<AddVideo />} />
+                            <Route path='/view-users' element={<ViewUsers />} />
+                            <Route path='/add-user' element={<AddOrEditUser />} />
+                        </Route>
 
-                <Route path='/view-users' element={<ViewUsers />} />
-                <Route path='/add-user' element={<AddOrEditUser />} />
-                <Route path='/edit-user/:id' element={<AddOrEditUser />} />
-                <Route path='/edit-profile/:id' element={<ProfileUpdate />} />
+                        <Route path='/edit-user/:id' element={<AddOrEditUser />} />
+                        <Route path='/edit-profile/:id' element={<ProfileUpdate />} />
 
 
-                <Route path='/view-comments' element={<ViewComments />} />
-
+                        <Route path='/view-comments' element={<ViewComments />} />
+                    </>
+                }
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom"
 const PopularNews = () => {
 
     const { loadingPopularNews, popularNewsData } = useContext(HomeContext)
-    
+
     return (
         <div className="column is-one-third">
             <h1 className="subtitle has-text-white-bis mb-5">محبوبترین خبرها</h1>
@@ -19,7 +19,7 @@ const PopularNews = () => {
                 }
                 {(!loadingPopularNews && popularNewsData) &&
                     popularNewsData.map(item => (
-                        <li className="mt-4">
+                        <li key={item.id} className="mt-4">
                             <div className="post-footer is-flex is-align-items-center">
                                 <div className="post-footer-image">
                                     <Link to={`/detail/${item.id}`}>

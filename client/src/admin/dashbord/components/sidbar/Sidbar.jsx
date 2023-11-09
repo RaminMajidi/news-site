@@ -5,7 +5,7 @@ import { useContext } from "react"
 import { AdminContext } from "../../../context/context"
 const Sidbar = () => {
 
-    const { logOut } = useContext(AdminContext)
+    const { logOut, userData } = useContext(AdminContext)
 
     return (
         <div className='sidbar has-background-dark pt-6 '>
@@ -36,35 +36,44 @@ const Sidbar = () => {
                     </NavLink>
                 </li>
 
-                <li className="">
-                    <NavLink
-                        className={({ isActive }) =>
-                            isActive ? "nav_linK active" : "nav_linK"
-                        }
-                        to={'/view-category'}>
-                        دسته بندی
-                    </NavLink>
-                </li>
 
-                <li className="">
-                    <NavLink
-                        className={({ isActive }) =>
-                            isActive ? "nav_linK active" : "nav_linK"
-                        }
-                        to={'/view-video'}>
-                        ویدیو
-                    </NavLink>
-                </li>
+                {
+                    userData.isAdmin &&
+                    <>
 
-                <li className="">
-                    <NavLink
-                        className={({ isActive }) =>
-                            isActive ? "nav_linK active" : "nav_linK"
-                        }
-                        to={'/view-users'}>
-                        کاربران
-                    </NavLink>
-                </li>
+
+                        <li className="">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive ? "nav_linK active" : "nav_linK"
+                                }
+                                to={'/view-category'}>
+                                دسته بندی
+                            </NavLink>
+                        </li>
+
+                        <li className="">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive ? "nav_linK active" : "nav_linK"
+                                }
+                                to={'/view-video'}>
+                                ویدیو
+                            </NavLink>
+                        </li>
+
+                        <li className="">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive ? "nav_linK active" : "nav_linK"
+                                }
+                                to={'/view-users'}>
+                                کاربران
+                            </NavLink>
+                        </li>
+                    </>
+
+                }
 
                 <li className="">
                     <NavLink

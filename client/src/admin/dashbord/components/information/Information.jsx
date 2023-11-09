@@ -7,13 +7,8 @@ import { AdminContext } from "@src/admin/context/context"
 
 const Information = () => {
 
-  const { getAllComment, getAllUser, getAllNews, userData, userList, newsData, commentList } = useContext(AdminContext)
+  const { userData, userList, newsData, commentList } = useContext(AdminContext)
 
-  useEffect(() => {
-    getAllComment()
-    getAllNews()
-    getAllUser()
-  }, [])
 
   return (
     <div className="information my_container">
