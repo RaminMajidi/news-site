@@ -16,7 +16,7 @@ import corse from "cors"
 dotenv.config();
 const app = express();
 
-app.use(corse({ credentials: true, origin: "http://localhost:5173" }))
+app.use(corse({ credentials: false, origin: "http://localhost:5173" }))
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload());

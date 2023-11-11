@@ -412,9 +412,6 @@ export const AdminContextProvider = ({ children }) => {
 
     useEffect(() => {
         refreshToken()
-        getAllComment()
-        getAllNews()
-        getAllUser()
     }, [])
 
 
