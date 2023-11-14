@@ -1,5 +1,4 @@
 
-
 const CopyRight = () => {
     return (
         <div className="has-background-black has-text-white py-4 px-1 mt-4">

@@ -6,14 +6,12 @@ const videoRoutes = require("./routes/videoRoute.js");
 const newsRoutes = require("./routes/newsRoute.js");
 const commentRoutes = require("./routes/commentsRoute.js");
 const emailRoutes = require("./routes/emailMsgRoute.js");
-const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const corse = require("cors");
-
-
-
+const dotenv = require("dotenv");
 dotenv.config();
+
 const app = express();
 
 app.use(corse({ credentials: true, origin: "http://localhost:5173" }))

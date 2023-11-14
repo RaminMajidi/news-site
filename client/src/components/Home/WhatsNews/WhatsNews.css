@@ -78,6 +78,9 @@
 .send-news {
     height: 350px;
 }
+.whats-news-nav ul li span{
+    cursor: pointer;
+}
 
 
 

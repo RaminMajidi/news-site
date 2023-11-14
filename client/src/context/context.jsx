@@ -71,10 +71,14 @@ export const HomeContextProvider = ({ children }) => {
     // end ******
 
     // start ******
-    const loadCatNews = async () => {
+    const loadCatNews = async (id) => {
+        let url = `${BASE_URL}/api/News/category`
+        if (id) {
+            url = `${BASE_URL}/api/News/category/?cat=${id}`
+        }
         try {
             catNewsDispatch({ type: CATEGORY_NEWS_REQUEST })
-            const res = await axios.get(`${BASE_URL}/api/News/category`)
+            const res = await axios.get(url)
             if (res.status === 200) {
                 const data = await res.data.news
                 catNewsDispatch({ type: CATEGORY_NEWS_SUCCESS, payload: data })
@@ -192,7 +196,8 @@ export const HomeContextProvider = ({ children }) => {
             categories: categories,
             createComment,
             loadPopularNews,
-            sendEmailHandler
+            sendEmailHandler,
+            loadCatNews
         }}>
             {children}
         </HomeContext.Provider>

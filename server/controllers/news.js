@@ -247,10 +247,14 @@ exports.getCategoryNews = async (req, res, next) => {
         const hasCategory = req.query.cat
         const news = hasCategory ?
             await News.findAll({
-                where: { catId: hasCategory },
+                limit: 4,
+                where: { categoryId: hasCategory },
                 order: ['id', 'DESC']
             }) :
-            await News.findAll({ order: ['id', "DESC"] })
+            await News.findAll({
+                limit: 4,
+                order: ['id', "DESC"]
+            })
 
         res.status(200).json({ news })
     } catch (err) {

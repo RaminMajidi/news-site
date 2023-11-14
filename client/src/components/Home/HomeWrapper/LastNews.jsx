@@ -1,8 +1,6 @@
-import testImg from '@src/assets/images/1.jpeg'
 import { useContext } from 'react'
 import { HomeContext } from '../../../context/context'
 import Loader from "../../Loader/Loader"
-import { convertDateToJalali } from '../../../utils/convertDate'
 import { Link } from 'react-router-dom'
 
 const LastNews = () => {
@@ -29,7 +27,6 @@ const LastNews = () => {
                                         <span>{item?.category?.name}</span>
                                     </div>
                                     <div className="post-title">{item?.title}</div>
-                                    <div className="post-date">{convertDateToJalali(item?.createdAt)}</div>
                                 </div>
                             </div>
                         </Link>
