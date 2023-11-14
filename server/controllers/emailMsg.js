@@ -1,5 +1,6 @@
-import nodemailer from 'nodemailer'
-import dotenv from "dotenv";
+const nodemailer = require('nodemailer');
+const dotenv = require("dotenv");
+
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
@@ -10,7 +11,7 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-export const senEmailMsg = async (req, res, next) => {
+exports.senEmailMsg = async (req, res, next) => {
     const { subject, message, email } = req.body
     const userSubject = `شما پیامی از طرف ${email} - با موضوع : ${subject} دارید`
     try {

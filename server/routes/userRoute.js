@@ -1,5 +1,5 @@
-import express from "express";
-import {
+const express = require("express");
+const {
     deleteUser,
     getAllUsers,
     loginUser,
@@ -8,9 +8,9 @@ import {
     updateProfile,
     updateUser,
     getProfile
-} from "../controllers/user.js";
-import { verifyToken } from "../middleware/VerifyToken.js";
-import { refreshToken } from "../controllers/refreshToken.js";
+} = require("../controllers/user");
+const { verifyToken } = require("../middleware/VerifyToken");
+const { refreshToken } = require("../controllers/refreshToken");
 
 
 const router = express.Router()
@@ -25,4 +25,4 @@ router.put("/api/users/:id", verifyToken, updateUser)
 router.put("/api/users/profile/:id", verifyToken, updateProfile)
 router.get("/api/users/profile", verifyToken, getProfile)
 
-export default router
+module.exports = router

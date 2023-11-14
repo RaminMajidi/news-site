@@ -1,7 +1,7 @@
-import { Sequelize } from "sequelize";
-import db from "../config/DataBase.js";
-import Users from './userModel.js'
-import Category from './categoryModels.js'
+const { Sequelize } = require("sequelize");
+const db = require("../config/DataBase");
+const Users = require('./userModel')
+const Category = require('./categoryModels')
 
 const { DataTypes } = Sequelize
 
@@ -10,7 +10,7 @@ const News = db.define('news', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    catId: {
+    categoryId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -40,8 +40,9 @@ const News = db.define('news', {
 Users.hasMany(News)
 News.belongsTo(Users, { foreignKey: 'userId' })
 Category.hasMany(News)
-News.belongsTo(Category, { foreignKey: 'catId' })
+News.belongsTo(Category, { foreignKey: 'categoryId' })
 // *************************************************
 
 
-export default News
+module.exports = News
+

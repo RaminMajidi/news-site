@@ -1,5 +1,5 @@
-import { Sequelize } from "sequelize";
-import db from "../config/DataBase.js";
+const { Sequelize } = require("sequelize");
+const db = require("../config/DataBase");
 
 const { DataTypes } = Sequelize;
 
@@ -14,4 +14,4 @@ const Category = db.define('category',
     }
 )
 
-export default Category
+module.exports = Category

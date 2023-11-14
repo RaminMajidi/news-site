@@ -1,28 +1,26 @@
-import express from "express";
-import db from "./config/DataBase.js";
-import userRoutes from "./routes/userRoute.js";
-import categoryRoutes from "./routes/categoryRoute.js";
-import videoRoutes from "./routes/videoRoute.js";
-import newsRoutes from "./routes/newsRoute.js";
-import commentRoutes from "./routes/commentsRoute.js";
-import emailRoutes from "./routes/emailMsgRoute.js";
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import fileUpload from "express-fileupload";
-import corse from "cors"
+const express = require("express");
+const db = require("./config/DataBase.js");
+const userRoutes = require("./routes/userRoute.js");
+const categoryRoutes = require("./routes/categoryRoute.js");
+const videoRoutes = require("./routes/videoRoute.js");
+const newsRoutes = require("./routes/newsRoute.js");
+const commentRoutes = require("./routes/commentsRoute.js");
+const emailRoutes = require("./routes/emailMsgRoute.js");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
+const corse = require("cors");
 
 
 
 dotenv.config();
 const app = express();
 
-app.use(corse({ credentials: false, origin: "http://localhost:5173" }))
+app.use(corse({ credentials: true, origin: "http://localhost:5173" }))
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload());
 app.use(express.static('public'))
-
-
 
 
 app.use(userRoutes)
@@ -38,18 +36,16 @@ app.use(emailRoutes)
 app.use((error, req, res, next) => {
     const status = error.statusCode || 500;
     const message = error.message || 'خطایی رخ داده است';
-    res.status(status).json({message})
+    res.status(status).json({ message })
     next();
 })
 //*********************
 
 
 try {
-    await db.authenticate();
-    // await db.sync()
-
+    db.authenticate();
+    db.sync()
     console.log("DataBase conencted")
-
     app.listen(5000, () => {
         console.log("server is running")
     })

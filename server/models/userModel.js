@@ -1,8 +1,9 @@
-import { Sequelize } from "sequelize";
-import db from "../config/DataBase.js"
+const { Sequelize } = require("sequelize");
+const db = require("../config/DataBase");
+
 const { DataTypes } = Sequelize;
 
-// This user is created new Table in DataBase 
+
 const Users = db.define("users", {
     name: {
         type: DataTypes.STRING,
@@ -33,4 +34,4 @@ const Users = db.define("users", {
 
 )
 
-export default Users
+module.exports = Users

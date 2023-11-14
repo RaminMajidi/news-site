@@ -1,6 +1,16 @@
-import express from "express";
-import { createNews, deleteNews, getCategoryNews, getDetailNews, getLastnews, getNews, getNewsById, getPopularNews, updateNews } from "../controllers/news.js";
-import { verifyToken } from "../middleware/VerifyToken.js";
+const express = require("express");
+const {
+    createNews,
+    deleteNews,
+    getCategoryNews,
+    getDetailNews,
+    getLastnews,
+    getNews,
+    getNewsById,
+    getPopularNews,
+    updateNews
+} = require("../controllers/news");
+const { verifyToken } = require("../middleware/VerifyToken");
 
 const router = express.Router()
 
@@ -17,4 +27,4 @@ router.get('/api/News', verifyToken, getNews)
 
 
 
-export default router
+module.exports = router

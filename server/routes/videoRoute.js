@@ -1,6 +1,11 @@
-import express from "express"
-import { verifyToken } from "../middleware/VerifyToken.js"
-import { createVideo, deleteVideo, getAllVideo, getSingleVideo } from "../controllers/video.js"
+const express = require("express")
+const { verifyToken } = require("../middleware/VerifyToken")
+const {
+    createVideo,
+    deleteVideo,
+    getAllVideo,
+    getSingleVideo
+} = require("../controllers/video")
 
 const router = express.Router()
 
@@ -11,4 +16,4 @@ router.get('/api/getSingleVideo', getSingleVideo)
 router.delete('/api/deleteVideo/:id', verifyToken, deleteVideo)
 
 
-export default router
+module.exports = router

@@ -1,6 +1,6 @@
-import { Sequelize } from "sequelize";
-import db from "../config/DataBase.js";
-import News from "./newsModel.js";
+const { Sequelize } = require("sequelize");
+const db = require("../config/DataBase");
+const News = require("./newsModel");
 
 const { DataTypes } = Sequelize
 
@@ -21,10 +21,6 @@ const Comments = db.define('comments', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    subject: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     isActive: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
@@ -38,4 +34,4 @@ const Comments = db.define('comments', {
 News.hasMany(Comments)
 Comments.belongsTo(News)
 
-export default Comments
+module.exports = Comments

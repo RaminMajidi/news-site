@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
-import Users from "../models/userModel.js"
+const jwt = require("jsonwebtoken");
+const Users = require("../models/userModel")
 
 
-export const refreshToken = async (req, res, next) => {
+exports.refreshToken = async (req, res, next) => {
     const error = new Error()
 
     try {

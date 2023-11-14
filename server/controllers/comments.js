@@ -1,9 +1,9 @@
-import Comments from "../models/commentModel.js";
+const Comments = require("../models/commentModel");
 
 const error = new Error()
 
 // start ********************************************
-export const getAllComment = async (req, res, next) => {
+exports.getAllComment = async (req, res, next) => {
 
     try {
         const comments = await Comments.findAll({})
@@ -15,9 +15,9 @@ export const getAllComment = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-export const createComment = async (req, res, next) => {
+exports.createComment = async (req, res, next) => {
 
-    const { newsId, description, name, email, subject } = req.body
+    const { newsId, description, name, email } = req.body
 
     try {
         await Comments.create({
@@ -25,7 +25,6 @@ export const createComment = async (req, res, next) => {
             description,
             name,
             email,
-            subject
         })
 
         res.status(200).json({ message: "نظر شما ثبت شد و بعد از تایید مدیریت قابل مشاهده خواهد بود" })
@@ -37,7 +36,7 @@ export const createComment = async (req, res, next) => {
 
 
 // start ********************************************
-export const deleteComment = async (req, res, next) => {
+exports.deleteComment = async (req, res, next) => {
     try {
         const comment = await Comments.destroy({ where: { id: req.params.id } })
         if (comment) {
@@ -53,7 +52,7 @@ export const deleteComment = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-export const activeComment = async (req, res, next) => {
+exports.activeComment = async (req, res, next) => {
 
     const { isActive } = req.body
     try {
@@ -75,7 +74,7 @@ export const activeComment = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-export const getNewsComment = async (req, res, next) => {
+exports.getNewsComment = async (req, res, next) => {
 
     try {
         const newsId = req.params.newsId

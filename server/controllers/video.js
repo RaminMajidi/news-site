@@ -1,12 +1,12 @@
-import Video from "../models/videoModel.js";
-import path from 'path'
-import fs from 'fs'
+const Video = require("../models/videoModel");
+const path = require('path')
+const fs = require('fs')
 
 
 const error = new Error()
 
 // start ********************************************
-export const getAllVideo = async (req, res, next) => {
+exports.getAllVideo = async (req, res, next) => {
 
     try {
         const videos = await Video.findAll({});
@@ -20,7 +20,7 @@ export const getAllVideo = async (req, res, next) => {
 
 
 // start ********************************************
-export const createVideo = async (req, res, next) => {
+exports.createVideo = async (req, res, next) => {
 
     if (req.files == null) {
         error.message = 'فایل ویدیو الزامی است'
@@ -68,7 +68,7 @@ export const createVideo = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-export const getSingleVideo = async (req, res, next) => {
+exports.getSingleVideo = async (req, res, next) => {
 
     try {
         // ASC or DESC
@@ -82,7 +82,7 @@ export const getSingleVideo = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-export const deleteVideo = async (req, res, next) => {
+exports.deleteVideo = async (req, res, next) => {
 
     const video = await Video.findOne({ where: { id: req.params.id } })
     if (!video) {

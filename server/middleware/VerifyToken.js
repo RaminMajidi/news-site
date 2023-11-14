@@ -1,6 +1,6 @@
-import Jwt from "jsonwebtoken";
+const Jwt = require("jsonwebtoken");
 
-export const verifyToken = (req, res, next) => {
+exports.verifyToken = (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     const error = new Error()

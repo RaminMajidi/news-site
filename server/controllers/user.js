@@ -1,15 +1,15 @@
-import Users from "../models/userModel.js"
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken";
-import path from "path"
-import fs from "fs"
+const Users = require("../models/userModel")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken");
+const path = require("path")
+const fs = require("fs")
 
 
 const error = new Error()
 
 
 //start *********************
-export const getAllUsers = async (req, res, next) => {
+exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await Users.findAll({
       attributes: ["id", "email", "url", "name", "isAdmin"]
@@ -22,7 +22,7 @@ export const getAllUsers = async (req, res, next) => {
 //End *********************
 
 //Start ****************************** 
-export const registerUser = async (req, res, next) => {
+exports.registerUser = async (req, res, next) => {
 
   const { name, email, password, confPassword, isAdmin } = req.body;
 
@@ -63,7 +63,7 @@ export const registerUser = async (req, res, next) => {
 //End ************************************* 
 
 //Start *********************************
-export const loginUser = async (req, res, next) => {
+exports.loginUser = async (req, res, next) => {
 
 
   try {
@@ -126,7 +126,7 @@ export const loginUser = async (req, res, next) => {
 
 
 //Start ***********************************
-export const logOutUser = async (req, res, next) => {
+exports.logOutUser = async (req, res, next) => {
 
   try {
     const refreshToken = req.cookies.refreshToken;
@@ -160,7 +160,7 @@ export const logOutUser = async (req, res, next) => {
 //End ******************************************* 
 
 //Start ************************************ 
-export const deleteUser = async (req, res, next) => {
+exports.deleteUser = async (req, res, next) => {
 
   const user = await Users.findOne({
     where: {
@@ -189,7 +189,7 @@ export const deleteUser = async (req, res, next) => {
 
 
 //start **************************************
-export const updateUser = async (req, res, next) => {
+exports.updateUser = async (req, res, next) => {
 
   const { name, email, password, confPassword, isAdmin } = req.body
 
@@ -233,7 +233,7 @@ export const updateUser = async (req, res, next) => {
 //End **************************************
 
 //start **************************************
-export const updateProfile = async (req, res, next) => {
+exports.updateProfile = async (req, res, next) => {
   const avatar = await Users.findOne({
     where: {
       id: req.params.id
@@ -314,7 +314,7 @@ export const updateProfile = async (req, res, next) => {
 // End **************************************************
 
 //start **************************************
-export const getProfile = async (req, res, next) => {
+exports.getProfile = async (req, res, next) => {
 
   try {
     const id = req.userId
