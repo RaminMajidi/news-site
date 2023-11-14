@@ -31,15 +31,13 @@ const AddOrEditNews = () => {
     }
     // end ***************************
 
-
-
     // start ***************************
     const formik = useFormik({
         initialValues: {
             id: id || null,
             title: state?.title || "",
             desc: state?.desc || "",
-            catId: state?.catId || "",
+            categoryId: state?.categoryId || "",
             file: null
         },
         onSubmit: (values) => {
@@ -90,12 +88,12 @@ const AddOrEditNews = () => {
                 />
                 {categoryList &&
                     <Select
-                        value={formik.values.catId}
-                        onChange={formik.handleChange('catId')}
-                        onBlur={formik.handleBlur('catId')}
+                        value={formik.values.categoryId}
+                        onChange={formik.handleChange('categoryId')}
+                        onBlur={formik.handleBlur('categoryId')}
                         className='has-background-grey-lighter'
-                        errorCondition={formik.touched.catId}
-                        errorMessage={formik.errors.catId}
+                        errorCondition={formik.touched.categoryId}
+                        errorMessage={formik.errors.categoryId}
                         optionList={categoryList}
                     />
                 }

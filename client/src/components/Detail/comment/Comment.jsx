@@ -21,7 +21,6 @@ const Comment = () => {
             description: "",
             name: "",
             email: "",
-            subject: ""
         },
         onSubmit: (values,formik) => {
             createComment(values,formik)
@@ -74,18 +73,6 @@ const Comment = () => {
                             />
                         </div>
                     </div>
-
-                    <Input
-                        label="موضوع"
-                        value={formik.values.subject}
-                        onChange={formik.handleChange('subject')}
-                        onBlur={formik.handleBlur('subject')}
-                        name='subject'
-                        type="text"
-                        placeholder="مثال * عنوان "
-                        errorCondition={formik.touched.subject}
-                        errorMessage={formik.errors.subject}
-                    />
                     <BtnSubmit text="ارسال" />
                 </form>
             </article>

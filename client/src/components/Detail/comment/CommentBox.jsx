@@ -10,15 +10,12 @@ const CommentBox = ({ comment }) => {
             <div className="subject has-text-grey">
                 <div className="pr-2 mt-2 is-flex is-align-items-center">
                     <box-icon name='subdirectory-left'></box-icon>
-                    <span className='pr-2  is-size-6'>
-                        {comment?.subject}
-                    </span>
-                    <span className='pr-6 is-size-6'>
+                    <span className='pr-2 is-size-6'>
                         {convertDateToJalali(comment?.createdAt)}
                     </span>
                 </div>
             </div>
-            <div className="desc pt-4 ">
+            <div className="desc pt-2 pr-5">
                 <p className='has-text-justified'>
                     {comment?.description}
                 </p>

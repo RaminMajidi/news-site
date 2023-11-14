@@ -7,6 +7,6 @@ export const formSchema = Yup.object({
     desc: Yup.string()
         .required('توضیحات الزامی است')
     ,
-    catId: Yup.string()
+    categoryId: Yup.string()
         .required(' دسته بندی الزامی است'),
 })

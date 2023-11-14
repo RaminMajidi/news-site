@@ -6,6 +6,7 @@ import { AdminContext } from "../../../context/context"
 import Modal from "@src/components/Modal"
 import BtnAdd from "@src/components/Btns/BtnAdd"
 import Table from "@src/components/Table"
+import ItemNotFound from "../ItemNotFound"
 
 
 const ViewNews = () => {
@@ -32,38 +33,46 @@ const ViewNews = () => {
             {/* end btn add */}
 
             {/* start  table */}
-            {newsData &&
-                < Table titles={['شماره', 'عنوان', 'تصویر', 'نویسنده', 'عملیات']}>
-                    {
-                        newsData.map((news, index) => (
-                            <tr key={news?.id}>
-                                <td>{index + 1}</td>
-                                <td>{news?.title}</td>
-                                <td>
-                                    <img
-                                        className="table-image"
-                                        src={news?.url}
-                                        alt={news?.title} />
-                                </td>
-                                <td>{news?.user?.name}</td>
-                                <td>
-                                    <Link state={news}
-                                        to={`/edit-news/${news.id}`}
-                                        className="button m-1 is-info">
-                                        ویرایش
-                                    </Link>
-                                    <button
-                                        onClick={() => setNewsId(news.id)}
-                                        className="button m-1 is-danger">
-                                        <span onClick={() => setShowModal(true)}>
-                                            حذف
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </Table>
+            {newsData?.length > 0 ?
+                (
+                    < Table titles={['شماره', 'عنوان', 'تصویر', 'نویسنده', 'عملیات']}>
+                        {
+                            newsData.map((news, index) => (
+                                <tr key={news?.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{news?.title}</td>
+                                    <td>
+                                        <img
+                                            className="table-image"
+                                            src={news?.url}
+                                            alt={news?.title} />
+                                    </td>
+                                    <td>{news?.user?.name}</td>
+                                    <td>
+                                        <Link state={news}
+                                            to={`/edit-news/${news.id}`}
+                                            className="button m-1 is-info">
+                                            ویرایش
+                                        </Link>
+                                        <button
+                                            onClick={() => setNewsId(news.id)}
+                                            className="button m-1 is-danger">
+                                            <span onClick={() => setShowModal(true)}>
+                                                حذف
+                                            </span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </Table>
+
+                )
+                :
+                (
+                    <ItemNotFound />
+                )
+
             }
             {/* end  table */}
 

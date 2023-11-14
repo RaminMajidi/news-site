@@ -25,14 +25,13 @@ exports.getNews = async (req, res, next) => {
 
 // start ********************************************
 exports.createNews = async (req, res, next) => {
-
     if (req.files == null) {
         error.message = "انتخاب عکس الزامی است"
         error.statusCode = 406
         return next(error)
     }
 
-    const { title, desc, catId, userId } = req.body;
+    const { title, desc, categoryId, userId } = req.body;
     const file = req.files.file
     const fileSize = file.data.length
     const ext = path.extname(file.name)
@@ -60,7 +59,7 @@ exports.createNews = async (req, res, next) => {
         try {
             const news = await News.create({
                 title: title,
-                catId: catId,
+                categoryId: categoryId,
                 userId: userId,
                 desc: desc,
                 image: fileName,

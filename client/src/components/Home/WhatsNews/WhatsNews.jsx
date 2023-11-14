@@ -6,6 +6,7 @@ import Baner from "./Baner"
 import FilterNavs from "./FilterNavs"
 import WhatsNewsTitle from "./WhatsNewsTitle"
 import NewsItem from "./NewsItem"
+import NotNews from "../NotNews"
 
 const WhatsNews = () => {
 
@@ -31,10 +32,15 @@ const WhatsNews = () => {
                                     <WhatsNewsTitle />
                                 </article>
                                 <article className="whats-news-post mt-6">
-                                    {
+                                    {catNewsData?.length > 0 ? (
                                         catNewsData?.map(item => (
                                             <NewsItem key={item.id} news={item} />
                                         ))
+                                    )
+                                        :
+                                        (
+                                            <NotNews/>
+                                        )
                                     }
                                 </article>
                             </div>

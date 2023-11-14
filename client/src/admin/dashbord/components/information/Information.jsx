@@ -13,7 +13,7 @@ const Information = () => {
     getAllComment()
     getAllNews()
     getAllUser()
-  }, [])
+  }, [userData])
 
   return (
     <div className="information my_container">

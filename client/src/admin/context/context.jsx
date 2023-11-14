@@ -98,7 +98,10 @@ export const AdminContextProvider = ({ children }) => {
             const res = await axios.post(`${BASE_URL}/api/users/login`, inputs)
             if (res.status === 200) {
                 const user = await res.data.user
+                const token = await user?.accessToken
+                const decoded = jwtDecode(token)
                 setToken(user.accessToken)
+                setExpire(decoded.exp)
                 setUserData({
                     id: user.id,
                     email: user.email,
@@ -133,7 +136,7 @@ export const AdminContextProvider = ({ children }) => {
         const formData = new FormData();
         formData.append('title', data.title)
         formData.append('desc', data.desc)
-        formData.append('catId', data.catId)
+        formData.append('categoryId', data.categoryId)
         formData.append('file', data.file)
         formData.append('userId', userData.id)
         try {

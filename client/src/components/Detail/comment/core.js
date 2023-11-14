@@ -10,8 +10,5 @@ export const formSchema = Yup.object({
     email: Yup.string()
         .email("لطفا فرمت ایمیل را رعایت کنید")
         .required('پر کردن فیلد الزامی است')
-    ,
-    subject: Yup.string()
-        .required('پر کردن فیلد الزامی است')
 
 })
