@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const Users = require("../models/userModel")
 
 
-exports.refreshToken = async (req, res, next) => {
+async function refreshToken(req, res, next) {
     const error = new Error()
 
     try {
@@ -47,3 +47,4 @@ exports.refreshToken = async (req, res, next) => {
         next(err)
     }
 }
+module.exports = { refreshToken }

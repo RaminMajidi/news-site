@@ -6,7 +6,7 @@ const fs = require('fs')
 const error = new Error()
 
 // start ********************************************
-exports.getAllVideo = async (req, res, next) => {
+async function getAllVideo(req, res, next) {
 
     try {
         const videos = await Video.findAll({});
@@ -20,7 +20,7 @@ exports.getAllVideo = async (req, res, next) => {
 
 
 // start ********************************************
-exports.createVideo = async (req, res, next) => {
+async function createVideo(req, res, next) {
 
     if (req.files == null) {
         error.message = 'فایل ویدیو الزامی است'
@@ -48,27 +48,26 @@ exports.createVideo = async (req, res, next) => {
         return next(error)
     }
 
-    file.mv(`./public/videos/${fileName}`, async (err) => {
+    file.mv(`./public/videos/${fileName}`, (err) => {
         if (err) {
             error.message = err
             error.statusCode = 501
             return next(error)
         }
-
-        try {
-            const video = await Video.create({ video: fileName, url: url })
-            res.status(200).json({ message: "عملیات با موفقیت انجام شد", data: video })
-
-        } catch (err) {
-            next(err)
-        }
     })
+    try {
+        const video = await Video.create({ video: fileName, url: url })
+        res.status(200).json({ message: "عملیات با موفقیت انجام شد", data: video })
+
+    } catch (err) {
+        next(err)
+    }
 
 }
 // end ********************************************
 
 // start ********************************************
-exports.getSingleVideo = async (req, res, next) => {
+async function getSingleVideo(req, res, next) {
 
     try {
         // ASC or DESC
@@ -82,7 +81,7 @@ exports.getSingleVideo = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.deleteVideo = async (req, res, next) => {
+async function deleteVideo(req, res, next) {
 
     const video = await Video.findOne({ where: { id: req.params.id } })
     if (!video) {
@@ -103,4 +102,9 @@ exports.deleteVideo = async (req, res, next) => {
 }
 // end ********************************************
 
-
+module.exports = {
+    getAllVideo,
+    getSingleVideo,
+    createVideo,
+    deleteVideo
+}

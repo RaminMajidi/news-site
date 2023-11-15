@@ -1,10 +1,12 @@
 const Jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 
-exports.verifyToken = (req, res, next) => {
+async function verifyToken(req, res, next) {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     const error = new Error()
-    if (token == null) {
+    if (token === null) {
         error.statusCode = 401
         error.message = 'ابتدا واردحساب کاربری خود شوید!'
         return next(error)
@@ -18,4 +20,6 @@ exports.verifyToken = (req, res, next) => {
         req.userId = decoded.id;
         next();
     })
-} 
+}
+
+module.exports = {verifyToken}

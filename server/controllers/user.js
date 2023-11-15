@@ -1,15 +1,17 @@
 const Users = require("../models/userModel")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken");
 const path = require("path")
 const fs = require("fs")
+const dotenv = require("dotenv");
+dotenv.config();
 
 
 const error = new Error()
 
 
 //start *********************
-exports.getAllUsers = async (req, res, next) => {
+async function getAllUsers(req, res, next) {
   try {
     const users = await Users.findAll({
       attributes: ["id", "email", "url", "name", "isAdmin"]
@@ -22,7 +24,7 @@ exports.getAllUsers = async (req, res, next) => {
 //End *********************
 
 //Start ****************************** 
-exports.registerUser = async (req, res, next) => {
+async function registerUser(req, res, next) {
 
   const { name, email, password, confPassword, isAdmin } = req.body;
 
@@ -63,8 +65,7 @@ exports.registerUser = async (req, res, next) => {
 //End ************************************* 
 
 //Start *********************************
-exports.loginUser = async (req, res, next) => {
-
+async function loginUser(req, res, next) {
 
   try {
     const user = await Users.findAll({
@@ -126,7 +127,7 @@ exports.loginUser = async (req, res, next) => {
 
 
 //Start ***********************************
-exports.logOutUser = async (req, res, next) => {
+async function logOutUser(req, res, next) {
 
   try {
     const refreshToken = req.cookies.refreshToken;
@@ -160,7 +161,7 @@ exports.logOutUser = async (req, res, next) => {
 //End ******************************************* 
 
 //Start ************************************ 
-exports.deleteUser = async (req, res, next) => {
+async function deleteUser(req, res, next) {
 
   const user = await Users.findOne({
     where: {
@@ -189,7 +190,7 @@ exports.deleteUser = async (req, res, next) => {
 
 
 //start **************************************
-exports.updateUser = async (req, res, next) => {
+async function updateUser(req, res, next) {
 
   const { name, email, password, confPassword, isAdmin } = req.body
 
@@ -233,7 +234,7 @@ exports.updateUser = async (req, res, next) => {
 //End **************************************
 
 //start **************************************
-exports.updateProfile = async (req, res, next) => {
+async function updateProfile(req, res, next) {
   const avatar = await Users.findOne({
     where: {
       id: req.params.id
@@ -314,7 +315,7 @@ exports.updateProfile = async (req, res, next) => {
 // End **************************************************
 
 //start **************************************
-exports.getProfile = async (req, res, next) => {
+async function getProfile(req, res, next) {
 
   try {
     const id = req.userId
@@ -330,3 +331,14 @@ exports.getProfile = async (req, res, next) => {
   }
 }
 // End **************************************************
+
+module.exports={
+  getAllUsers,
+  getProfile,
+  registerUser,
+  loginUser,
+  logOutUser,
+  deleteUser,
+  updateUser,
+  updateProfile
+}

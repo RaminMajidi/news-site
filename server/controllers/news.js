@@ -8,7 +8,7 @@ const Users = require("../models/userModel");
 const error = new Error()
 
 // start ********************************************
-exports.getNews = async (req, res, next) => {
+async function getNews(req, res, next) {
     try {
         const news = await News.findAll({
             include: [{
@@ -24,7 +24,7 @@ exports.getNews = async (req, res, next) => {
 // end **********************************************
 
 // start ********************************************
-exports.createNews = async (req, res, next) => {
+async function createNews(req, res, next) {
     if (req.files == null) {
         error.message = "انتخاب عکس الزامی است"
         error.statusCode = 406
@@ -75,7 +75,7 @@ exports.createNews = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.getNewsById = async (req, res, next) => {
+async function getNewsById(req, res, next) {
 
     try {
         const news = await News.findOne({
@@ -100,7 +100,7 @@ exports.getNewsById = async (req, res, next) => {
 
 
 // start ********************************************
-exports.updateNews = async (req, res, next) => {
+async function updateNews(req, res, next) {
 
     const news = await News.findOne({ where: { id: req.params.id } })
 
@@ -163,7 +163,7 @@ exports.updateNews = async (req, res, next) => {
 
 
 // start ********************************************
-exports.deleteNews = async (req, res, next) => {
+async function deleteNews(req, res, next) {
 
     const id = req.params.id
     const news = await News.findByPk(id)
@@ -185,7 +185,7 @@ exports.deleteNews = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.getLastnews = async (req, res, next) => {
+async function getLastnews(req, res, next) {
 
     try {
         const news = await News.findAll({
@@ -201,7 +201,7 @@ exports.getLastnews = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.getDetailNews = async (req, res, next) => {
+async function getDetailNews(req, res, next) {
 
     try {
         const news = await News.findOne({ where: { id: req.params.id } })
@@ -220,7 +220,7 @@ exports.getDetailNews = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.getPopularNews = async (req, res, next) => {
+async function getPopularNews(req, res, next) {
 
     try {
         const news = await News.findAll({
@@ -241,7 +241,7 @@ exports.getPopularNews = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.getCategoryNews = async (req, res, next) => {
+async function getCategoryNews(req, res, next) {
 
     try {
         const hasCategory = req.query.cat
@@ -263,4 +263,14 @@ exports.getCategoryNews = async (req, res, next) => {
 }
 // end ********************************************
 
-
+module.exports = {
+    getCategoryNews,
+    getDetailNews,
+    getPopularNews,
+    getLastnews,
+    getNews,
+    getNewsById,
+    createNews,
+    deleteNews,
+    updateNews
+}

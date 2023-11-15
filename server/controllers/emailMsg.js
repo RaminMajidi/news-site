@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-exports.senEmailMsg = async (req, res, next) => {
+async function sendEmailMsg(req, res, next) {
     const { subject, message, email } = req.body
     const userSubject = `شما پیامی از طرف ${email} - با موضوع : ${subject} دارید`
     try {
@@ -26,4 +26,7 @@ exports.senEmailMsg = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
+}
+module.exports ={
+    sendEmailMsg
 }

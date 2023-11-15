@@ -1,6 +1,6 @@
 const express = require("express");
 const db = require("./config/DataBase.js");
-const userRoutes = require("./routes/userRoute.js");
+const userRoutes = require("./routes/userRoute");
 const categoryRoutes = require("./routes/categoryRoute.js");
 const videoRoutes = require("./routes/videoRoute.js");
 const newsRoutes = require("./routes/newsRoute.js");
@@ -20,7 +20,9 @@ app.use(cookieParser());
 app.use(fileUpload());
 app.use(express.static('public'))
 
-
+app.get('/',(req,res)=>{
+    res.send(`<p>${process.env.ACCESS_TOKEN_SECRET}</P>`)
+})
 app.use(userRoutes)
 app.use(categoryRoutes)
 app.use(videoRoutes)

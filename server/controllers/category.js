@@ -3,7 +3,7 @@ const Category = require("../models/categoryModels");
 const error = new Error()
 
 // start ********************************************
-exports.getCategoryHome = async (req, res, next) => {
+async function getCategoryHome(req, res, next) {
     try {
         const categories = await Category.findAll({})
         res.status(200).json({ categories })
@@ -15,7 +15,7 @@ exports.getCategoryHome = async (req, res, next) => {
 
 
 // start ********************************************
-exports.getCategory = async (req, res, next) => {
+async function getCategory(req, res, next) {
     try {
         const categories = await Category.findAll({})
         res.status(200).json({ categories })
@@ -27,7 +27,7 @@ exports.getCategory = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.createCategory = async (req, res, next) => {
+async function createCategory(req, res, next) {
     console.log(req.body);
     const { name } = req.body
 
@@ -44,7 +44,7 @@ exports.createCategory = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.updateCategory = async (req, res, next) => {
+async function updateCategory(req, res, next) {
 
     const { name } = req.body
     try {
@@ -66,7 +66,7 @@ exports.updateCategory = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.deleteCategory = async (req, res, next) => {
+async function deleteCategory(req, res, next) {
 
     try {
         const category = await Category.destroy({ where: { id: req.params.id } })
@@ -84,3 +84,12 @@ exports.deleteCategory = async (req, res, next) => {
     }
 }
 // end ********************************************
+
+
+module.exports = {
+    getCategory,
+    getCategoryHome,
+    createCategory,
+    updateCategory,
+    deleteCategory
+}

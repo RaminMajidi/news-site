@@ -3,7 +3,7 @@ const Comments = require("../models/commentModel");
 const error = new Error()
 
 // start ********************************************
-exports.getAllComment = async (req, res, next) => {
+async function getAllComment(req, res, next) {
 
     try {
         const comments = await Comments.findAll({})
@@ -15,7 +15,7 @@ exports.getAllComment = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.createComment = async (req, res, next) => {
+async function createComment(req, res, next) {
 
     const { newsId, description, name, email } = req.body
 
@@ -36,7 +36,7 @@ exports.createComment = async (req, res, next) => {
 
 
 // start ********************************************
-exports.deleteComment = async (req, res, next) => {
+async function deleteComment(req, res, next) {
     try {
         const comment = await Comments.destroy({ where: { id: req.params.id } })
         if (comment) {
@@ -52,7 +52,7 @@ exports.deleteComment = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.activeComment = async (req, res, next) => {
+async function activeComment(req, res, next) {
 
     const { isActive } = req.body
     try {
@@ -74,7 +74,7 @@ exports.activeComment = async (req, res, next) => {
 // end ********************************************
 
 // start ********************************************
-exports.getNewsComment = async (req, res, next) => {
+async function getNewsComment(req, res, next) {
 
     try {
         const newsId = req.params.newsId
@@ -89,3 +89,11 @@ exports.getNewsComment = async (req, res, next) => {
 }
 // end ********************************************
 
+
+module.exports={
+    getAllComment,
+    createComment,
+    deleteComment,
+    activeComment,
+    getNewsComment
+}

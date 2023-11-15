@@ -10,10 +10,9 @@ const {
 const router = express.Router()
 
 
+router.get('/api/getSingleVideo', getSingleVideo)
 router.get('/api/allVideo', verifyToken, getAllVideo)
 router.post('/api/craete-video', verifyToken, createVideo)
-router.get('/api/getSingleVideo', getSingleVideo)
 router.delete('/api/deleteVideo/:id', verifyToken, deleteVideo)
-
 
 module.exports = router

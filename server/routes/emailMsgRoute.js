@@ -1,9 +1,9 @@
 const express = require("express")
-const { senEmailMsg } = require("../controllers/emailMsg")
+const { sendEmailMsg } = require("../controllers/emailMsg")
 
 const router = express.Router()
 
-router.post('/api/sendEmial',senEmailMsg)
+router.post('/api/sendEmial',sendEmailMsg)
 
 
 module.exports = router
