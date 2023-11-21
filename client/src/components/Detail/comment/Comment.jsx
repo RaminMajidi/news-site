@@ -4,15 +4,17 @@ import BtnSubmit from "@src/components/btns/BtnSubmit"
 import { useFormik } from "formik"
 import ViewComment from './ViewComment'
 import { useParams } from "react-router-dom"
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { HomeContext } from '@src/context/context'
 import { formSchema } from './core'
+import BtnLoading from "@src/components/Btns/BtnLoading"
 
 
 const Comment = () => {
 
     const { id } = useParams()
     const { createComment } = useContext(HomeContext)
+    const [isLoading, setIsloading] = useState(false)
 
     // start ********************
     const formik = useFormik({
@@ -22,8 +24,8 @@ const Comment = () => {
             name: "",
             email: "",
         },
-        onSubmit: (values,formik) => {
-            createComment(values,formik)
+        onSubmit: (values, formik) => {
+            createComment(values, formik,setIsloading)
         },
         validationSchema: formSchema
     })
@@ -73,7 +75,12 @@ const Comment = () => {
                             />
                         </div>
                     </div>
-                    <BtnSubmit text="ارسال" />
+                    {isLoading ? (
+                        <BtnLoading />
+                    ) : (
+                        <BtnSubmit text="ارسال" />
+                    )
+                    }
                 </form>
             </article>
             <ViewComment />

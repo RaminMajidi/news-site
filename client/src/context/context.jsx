@@ -117,8 +117,9 @@ export const HomeContextProvider = ({ children }) => {
 
 
     // start ******
-    const createComment = async (vlalus, formik) => {
+    const createComment = async (vlalus, formik, setIsloading) => {
         try {
+            setIsloading(true)
             const res = await axios.post(`${BASE_URL}/api/create-comment`, vlalus)
             if (res.status === 200) {
                 formik.resetForm()
@@ -127,6 +128,8 @@ export const HomeContextProvider = ({ children }) => {
 
         } catch (error) {
             errorHandler(error, 4000)
+        } finally {
+            setIsloading(false)
         }
     }
     // end ******
