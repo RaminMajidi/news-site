@@ -1,15 +1,18 @@
 const nodemailer = require('nodemailer');
 const dotenv = require("dotenv");
-
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "news-server.ramindev01.ir",
+    port:465,
+    secure:true,
     auth: {
         user: process.env.ADMIN_EMAIL,
         pass: process.env.ADMIN_EMAIL_PASSWORD
-    }
+    },
+    tls:{rejectUnauthorized:false}
 })
+
 
 async function sendEmailMsg(req, res, next) {
     const { subject, message, email } = req.body
@@ -17,7 +20,7 @@ async function sendEmailMsg(req, res, next) {
     try {
         let details = {
             from: email,
-            to: "ramindev01@gmail.com",
+            to: process.env.ADMIN_EMAIL,
             subject: userSubject,
             text: message,
         }
