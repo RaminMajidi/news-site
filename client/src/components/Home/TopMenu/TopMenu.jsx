@@ -13,7 +13,7 @@ const TopMenu = () => {
                         <div className='column is-two-thirds is-flex is-justify-content-start'>
                             <span className='is-flex is-justify-content-center is-align-items-center'>
                                 <box-icon name='envelope' color='#008fff' size="sm" ></box-icon>
-                                <span className='mx-2'>برقراری ارتباط : example@gmail.com</span>
+                                <span className='mx-2'> example@gmail.com</span>
                             </span>
                         </div>
                         <div className="column is-one-third is-flex is-justify-content-end">

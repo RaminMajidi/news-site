@@ -14,12 +14,12 @@ const FilterNavs = ({ items }) => {
         <div className="whats-news-nav">
             {items?.length > 0 &&
                 <ul className="is-flex">
-                    <li className="ml-5 has-text-weight-bold">
+                    <li className="ml-3 has-text-weight-bold">
                         <span onClick={() => filterHandler()}>همه</span>
                     </li>
                     {
                         items?.map(item => (
-                            <li key={item?.id} className="ml-5 has-text-weight-bold">
+                            <li key={item?.id} className="ml-3 has-text-weight-bold">
                                 <span onClick={() => filterHandler(item.id)}>{item?.name}</span>
                             </li>
                         ))
